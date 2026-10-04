@@ -238,7 +238,7 @@
    "source": [
     "## Computing stable ranks\n",
     "\n",
-    "Compute $H_0$ and $H_1$ for each sample and convert the barcodes to stable ranks. The sample axis is 2; the last axis indexes homology dimension.\n",
+    "We compute $H_0$ and $H_1$ for each sample and convert the resulting barcodes to stable ranks. The sample axis is 2; the last axis indexes homology dimension.\n",
     "\n",
     "`reduced=True` removes the essential $H_0$ component so the curves have finite norms. $H_1$ is unchanged."
    ]
