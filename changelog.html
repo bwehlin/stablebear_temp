@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Changelog &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/changelog.c5abeb4e-6afc-46d0-ad72-b87786a8b123.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'changelog';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Deterministic random generation" href="internals/deterministic_random.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="#">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Changelog</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Link to this heading">#</a></h1>
+<section id="unreleased">
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Link to this heading">#</a></h2>
+<section id="new-features">
+<h3>New features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Distribution heatmaps</strong> — <code class="docutils literal notranslate"><span class="pre">plotting.plot_distance_weight_heatmap</span></code> plots distribution weights against distance from a query point, with automatic bounds from <code class="docutils literal notranslate"><span class="pre">distribution.plot_range()</span></code>, configurable resolution, support for existing axes, and Matplotlib styling. Unbounded ranges require an explicit extent.</p></li>
+<li><p><strong>Distribution weight evaluation</strong> — <code class="docutils literal notranslate"><span class="pre">distributions.Gaussian</span></code>, <code class="docutils literal notranslate"><span class="pre">Uniform</span></code>, and <code class="docutils literal notranslate"><span class="pre">Mixture</span></code> provide a <code class="docutils literal notranslate"><span class="pre">.weight(values)</span></code> method accepting scalar or array-like filter values for plotting curves and heatmaps. Gaussian uses <code class="docutils literal notranslate"><span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">std</span></code> parameters. Gaussian and bounded Uniform weights are normalized densities; <code class="docutils literal notranslate"><span class="pre">Uniform()</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1)</span></code>, and explicitly unbounded Uniform intervals use unit weights. Mixture mixing coefficients are passed as <code class="docutils literal notranslate"><span class="pre">coefficients</span></code> and stored in <code class="docutils literal notranslate"><span class="pre">.coefficients</span></code>; they sum to one independently of the supplied values.</p></li>
+<li><p><strong>Partial-sample policies</strong> — <code class="docutils literal notranslate"><span class="pre">random.subsample</span></code> and <code class="docutils literal notranslate"><span class="pre">random.subsample_relative</span></code> accept <code class="docutils literal notranslate"><span class="pre">allow_partial=&quot;keep&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code>, or <code class="docutils literal notranslate"><span class="pre">&quot;drop&quot;</span></code>. The default is now <code class="docutils literal notranslate"><span class="pre">&quot;keep&quot;</span></code>, returning available points when sampling without replacement from a small input. Use <code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code> for the previous strict behavior or <code class="docutils literal notranslate"><span class="pre">&quot;drop&quot;</span></code> to return an empty sample below the requested support size, even with replacement. Existing <code class="docutils literal notranslate"><span class="pre">True</span></code>/<code class="docutils literal notranslate"><span class="pre">False</span></code> values remain aliases for <code class="docutils literal notranslate"><span class="pre">&quot;keep&quot;</span></code>/<code class="docutils literal notranslate"><span class="pre">&quot;no&quot;</span></code>.</p></li>
+<li><p><strong>Relative subsampling</strong> — <code class="docutils literal notranslate"><span class="pre">random.subsample_relative</span></code> samples one point cloud or distance matrix relative to query coordinates or reference indices. Native <code class="docutils literal notranslate"><span class="pre">distributions.Gaussian</span></code>, <code class="docutils literal notranslate"><span class="pre">Uniform</span></code>, and <code class="docutils literal notranslate"><span class="pre">Mixture</span></code> combine densities with fixed normalized mixture coefficients, then normalize over reference points once for each query, and support separate distribution axes, weighted draws with or without replacement, partial samples, optional empty samples for insufficient support, and indexed results compatible with persistence and serialization. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/243">#243</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id1">
+<h2>0.5.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="breaking-changes">
+<h3>Breaking changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Updated binary save format</strong> — Files and pickles written by 0.5.0 require Stablebear 0.5.0 or later to read. Readers for supported earlier formats are retained.</p></li>
+<li><p><strong>Point-cloud elements return <code class="docutils literal notranslate"><span class="pre">PointCloud</span></code></strong> — Selecting a complete element from a <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code> now returns a <code class="docutils literal notranslate"><span class="pre">PointCloud</span></code> view instead of a <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code>. Coordinate indexing and assignment remain supported; use <code class="docutils literal notranslate"><span class="pre">np.asarray(cloud)</span></code> for general array operations such as reshaping. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/233">#233</a>)</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>New features<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Uniform subsampling</strong> — <code class="docutils literal notranslate"><span class="pre">random.subsample</span></code> draws samples from individual point clouds and distance matrices or tensors of them, with or without replacement. Samples own a snapshot of their input and support partial draws and duplicate removal (by coordinates for clouds, by vertex index for matrices). (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/229">#229</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/236">#236</a>)</p></li>
+<li><p><strong>Nested tensors and ragged indexing</strong> — <code class="docutils literal notranslate"><span class="pre">NestedTensor</span></code> supports recursively nested numeric tensors with differently shaped children. Nested <code class="docutils literal notranslate"><span class="pre">uint64</span></code> selections create indexed point-cloud and distance-matrix tensor views while preserving selection order and repetitions. <code class="docutils literal notranslate"><span class="pre">indices(values)</span></code> is shorthand for constructing a <code class="docutils literal notranslate"><span class="pre">uint64</span></code> selection tensor. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/231">#231</a>)</p></li>
+<li><p><strong>Standalone point clouds</strong> — Construct a cloud with <code class="docutils literal notranslate"><span class="pre">PointCloud(coordinates)</span></code> and pass it directly to subsampling, persistent homology, and homological-kernel computations. Clouds support coordinate views, NumPy conversion, copying, and binary/pickle serialization. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/233">#233</a>)</p></li>
+<li><p><strong>Selection inspection and independent copies</strong> — Point-cloud and distance-matrix tensors expose copied selections through <code class="docutils literal notranslate"><span class="pre">.indices</span></code>, returning <code class="docutils literal notranslate"><span class="pre">None</span></code> after materialization. Their <code class="docutils literal notranslate"><span class="pre">.to_dense()</span></code> method creates an independent tensor with ordinary storage. <code class="docutils literal notranslate"><span class="pre">DistanceMatrix.copy()</span></code> also provides an independent copy of an individual matrix. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/233">#233</a>)</p></li>
+<li><p><strong>Pointwise PCF sums</strong> — <code class="docutils literal notranslate"><span class="pre">sum</span></code> adds the PCFs in a tensor along a chosen <code class="docutils literal notranslate"><span class="pre">dim</span></code>, preserving precision and supporting negative dimensions. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/234">#234</a>)</p></li>
+<li><p><strong>Unified data serialization</strong> — Tensor and standalone data-object pickles use the same binary format as <code class="docutils literal notranslate"><span class="pre">save</span></code>/<code class="docutils literal notranslate"><span class="pre">load</span></code>, including standalone point clouds, nested tensors, and indexed tensors. Readers for supported legacy files and pickles are retained. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/230">#230</a>)</p></li>
+<li><p><strong>Barcode tensor comparison</strong> — <code class="docutils literal notranslate"><span class="pre">BarcodeTensor.is_isomorphic_to</span></code> compares aligned barcodes independently of bar order, with configurable endpoint tolerances, and returns one boolean for the whole tensor. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/232">#232</a>)</p></li>
+</ul>
+</section>
+<section id="bug-fixes">
+<h3>Bug fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Point clouds must have rank 2</strong> — Each cloud must have shape <code class="docutils literal notranslate"><span class="pre">(n_points,</span> <span class="pre">dimension)</span></code>, and <code class="docutils literal notranslate"><span class="pre">PointCloudTensor(...,</span> <span class="pre">cloud_ndim=...)</span></code> now accepts only <code class="docutils literal notranslate"><span class="pre">2</span></code>. Assigning higher-rank data raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/229">#229</a>)</p></li>
+<li><p><strong>Scalar tensor serialization preserves values</strong> — Binary save/load and pickle round trips now preserve the value of a zero-dimensional tensor instead of treating it as empty. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/233">#233</a>)</p></li>
+<li><p><strong>Windows free-threaded builds</strong> — Correct Python library discovery and compiler definitions for free-threaded Python builds on Windows. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/233">#233</a>)</p></li>
+</ul>
+</section>
+<section id="build-requirements">
+<h3>Build requirements<a class="headerlink" href="#build-requirements" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Source builds now require CMake 3.30.3 or newer. Use GCC 13 or newer on Linux.</p></li>
+</ul>
+</section>
+</section>
+<section id="id3">
+<h2>0.4.7<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3>New features<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>NumPy constructors for compressed matrices</strong> — <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> and <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code> can now be constructed directly from either a full square NumPy array or a one-dimensional compact array. <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> compact input follows SciPy condensed order; <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code> compact input contains the upper triangle, including the diagonal, in row-major order. Array dtype is inferred for <code class="docutils literal notranslate"><span class="pre">float32</span></code> and <code class="docutils literal notranslate"><span class="pre">float64</span></code>, or can be converted explicitly with <code class="docutils literal notranslate"><span class="pre">dtype=</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/228">#228</a>)</p></li>
+</ul>
+</section>
+<section id="deprecations">
+<h3>Deprecations<a class="headerlink" href="#deprecations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">DistanceMatrix.from_dense</span></code> and <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix.from_dense</span></code> are deprecated</strong> — pass a square array directly to the corresponding constructor instead. The methods remain available for compatibility and emit <code class="docutils literal notranslate"><span class="pre">DeprecationWarning</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/228">#228</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>0.4.6<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
+<section id="id6">
+<h3>New features<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>SciPy linkage conversion</strong> — <code class="docutils literal notranslate"><span class="pre">persistence.linkage_to_barcode</span></code> converts a linkage matrix to a <code class="docutils literal notranslate"><span class="pre">Barcode</span></code>, with optional reduced homology and no SciPy runtime dependency. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/221">#221</a>)</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Bug fixes<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>PCF collections dispatch correctly in <code class="docutils literal notranslate"><span class="pre">tensor()</span></code> and <code class="docutils literal notranslate"><span class="pre">plotting.plot()</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">tensor()</span></code> now detects lists, tuples, and nested collections of floating or integer <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> objects before NumPy dtype inference, preserving collection shape and avoiding ragged-array failures for unequal breakpoint counts. A single <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> becomes a one-element tensor, and <code class="docutils literal notranslate"><span class="pre">plotting.plot()</span></code> accepts PCF lists and tuples directly. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/224">#224</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id8">
+<h2>0.4.5<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
+<section id="id9">
+<h3>New features<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Homological kernels for paired point clouds and distance matrices</strong> — <code class="docutils literal notranslate"><span class="pre">persistence.compute_homological_kernel(X,</span> <span class="pre">Y)</span></code> computes the 0-dimensional relative-persistence barcode describing where a smaller distance <code class="docutils literal notranslate"><span class="pre">Y</span></code> merges components before a larger distance <code class="docutils literal notranslate"><span class="pre">X</span></code>. It accepts individual NumPy point clouds, <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code>s, <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> instances, or matching <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code>/<code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code> batches; batched computations run in parallel. Point clouds use Euclidean distance, while precomputed distance matrices support other metrics. The result is a <code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code> with one barcode per pair. Only <code class="docutils literal notranslate"><span class="pre">dim=0</span></code> is currently supported. (<a class="reference external" href="https://github.com/kthtda/stablebear/pull/217">#217</a>)</p></li>
+<li><p><strong>Guide for homological kernels</strong> — the documentation now explains the method, paired-input requirements, point-cloud and distance-matrix workflows, and how to summarize the resulting barcodes as correlation-style scores.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">plot_barcode</span></code> accepts NumPy bar arrays</strong> — pass an <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">2)</span></code> integer or floating-point NumPy array of <code class="docutils literal notranslate"><span class="pre">(birth,</span> <span class="pre">death)</span></code> pairs directly. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/159">#159</a>)</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>Bug fixes<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">plot_barcode</span></code> now rejects invalid inputs clearly</strong> — unsupported inputs and array dtypes raise <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>; arrays not shaped <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">2)</span></code> and barcode tensors with more than one dimension raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. Validation occurs before a plotting axes is created, so invalid calls no longer leave an empty figure behind. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/159">#159</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id11">
+<h2>0.4.4<a class="headerlink" href="#id11" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h3>Breaking changes<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Pcf</span></code> no longer sorts breakpoints</strong> — breakpoints must be supplied in non-decreasing time order and the first time must be 0; out-of-order, negative, or offset start times now raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> instead of being silently reordered. Evaluation at <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">&lt;</span> <span class="pre">0</span></code> also raises. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/11">#11</a>)</p></li>
+</ul>
+</section>
+<section id="id13">
+<h3>Bug fixes<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>A single point cloud is now subscriptable</strong> — a 0-d <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code> indexes as its underlying array, so <code class="docutils literal notranslate"><span class="pre">pc[:,</span> <span class="pre">0]</span></code> / <code class="docutils literal notranslate"><span class="pre">pc[:,</span> <span class="pre">1]</span></code> plotting works directly instead of raising <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/133">#133</a>)</p></li>
+<li><p><strong>Storing a matrix or point cloud in a tensor cell now copies it</strong> — <code class="docutils literal notranslate"><span class="pre">t[i]</span> <span class="pre">=</span> <span class="pre">m</span></code> / <code class="docutils literal notranslate"><span class="pre">t[0:2]</span> <span class="pre">=</span> <span class="pre">src</span></code> copy the element instead of sharing its buffer, so later mutation of the source no longer corrupts stored cells. Matches NumPy object-array assignment. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/39">#39</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/129">#129</a>)</p></li>
+<li><p><strong>Self-aliasing slice assignment no longer corrupts data</strong> — <code class="docutils literal notranslate"><span class="pre">a[:]</span> <span class="pre">=</span> <span class="pre">a[::-1]</span></code> and <code class="docutils literal notranslate"><span class="pre">a[1:]</span> <span class="pre">=</span> <span class="pre">a[:-1]</span></code> now reverse/shift correctly (the right-hand side is materialized first when it overlaps the destination), for both numeric and object-element tensors. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/6">#6</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/129">#129</a>)</p></li>
+<li><p><strong>Assigning an array into a <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code> slice distributes one cloud per cell</strong> — <code class="docutils literal notranslate"><span class="pre">t[:]</span> <span class="pre">=</span> <span class="pre">arr</span></code> now spreads the array across the selected cells (leading axes index cells, trailing <code class="docutils literal notranslate"><span class="pre">(n_points,</span> <span class="pre">dim)</span></code> form each cloud) instead of broadcasting the whole array into every cell; a mismatched shape raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/40">#40</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">==</span></code> / <code class="docutils literal notranslate"><span class="pre">!=</span></code> against a scalar return a <code class="docutils literal notranslate"><span class="pre">BoolTensor</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">==</span> <span class="pre">2.0</span></code> now broadcasts and returns an elementwise mask, so <code class="docutils literal notranslate"><span class="pre">t[t</span> <span class="pre">==</span> <span class="pre">2.0]</span></code> works (previously it returned a plain Python <code class="docutils literal notranslate"><span class="pre">bool</span></code>). (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/47">#47</a>)</p></li>
+<li><p><strong>Rank-0 (scalar) tensors are now computed instead of silently zeroed</strong> — <code class="docutils literal notranslate"><span class="pre">FloatTensor(np.array(3.5))</span></code> keeps its value and 0-d arithmetic (<code class="docutils literal notranslate"><span class="pre">zeros(())</span> <span class="pre">+</span> <span class="pre">1.0</span></code>) matches NumPy, instead of returning the dtype’s zero. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/3">#3</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/8">#8</a>)</p></li>
+<li><p><strong>A broadcast view is now read-only, matching NumPy</strong> — writing through a <code class="docutils literal notranslate"><span class="pre">broadcast_to</span></code> view raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> instead of silently scattering the write and corrupting the source; the view stays readable and <code class="docutils literal notranslate"><span class="pre">.copy()</span></code> is writeable. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/16">#16</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/9">#9</a>)</p></li>
+<li><p><strong>Ragged nested lists are rejected</strong> — building a tensor from a ragged nested list now raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> instead of scattering elements into the wrong positions. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/4">#4</a>)</p></li>
+<li><p><strong>Degenerate sampling/split inputs raise instead of crashing</strong> — <code class="docutils literal notranslate"><span class="pre">point_process.sample_poisson</span></code> (non-finite/negative <code class="docutils literal notranslate"><span class="pre">rate</span></code>, non-finite <code class="docutils literal notranslate"><span class="pre">lo</span></code>/<code class="docutils literal notranslate"><span class="pre">hi</span></code>), <code class="docutils literal notranslate"><span class="pre">random.noisy_sin</span></code>/<code class="docutils literal notranslate"><span class="pre">noisy_cos</span></code> (<code class="docutils literal notranslate"><span class="pre">n_points=0</span></code>), and <code class="docutils literal notranslate"><span class="pre">split(t,</span> <span class="pre">0)</span></code> previously crashed the interpreter (SIGSEGV/SIGFPE) and now raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/31">#31</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/32">#32</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/33">#33</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/19">#19</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id14">
+<h2>0.4.3<a class="headerlink" href="#id14" title="Link to this heading">#</a></h2>
+<section id="id15">
+<h3>New features<a class="headerlink" href="#id15" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>NumPy/list constructors for the non-numeric tensor families</strong> — <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code>, and <code class="docutils literal notranslate"><span class="pre">SymmetricMatrixTensor</span></code> can now be built directly from a NumPy array or nested list instead of <code class="docutils literal notranslate"><span class="pre">zeros()</span></code>-and-fill. <code class="docutils literal notranslate"><span class="pre">PointCloudTensor(arr)</span></code> reads a trailing <code class="docutils literal notranslate"><span class="pre">(n_points,</span> <span class="pre">dim)</span></code> block per cell (ragged lists accepted); <code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code>/<code class="docutils literal notranslate"><span class="pre">SymmetricMatrixTensor</span></code> accept a stack of square matrices. Dtype is inferred (overridable with <code class="docutils literal notranslate"><span class="pre">dtype=</span></code>), and a generic <code class="docutils literal notranslate"><span class="pre">sb.tensor(data,</span> <span class="pre">dtype=...)</span></code> factory dispatches to the right type. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/53">#53</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/92">#92</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/84">#84</a>)</p></li>
+</ul>
+</section>
+<section id="id16">
+<h3>Breaking changes<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>The <code class="docutils literal notranslate"><span class="pre">stablebear.tensor</span></code> submodule is now <code class="docutils literal notranslate"><span class="pre">stablebear.base_tensor</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">stablebear.tensor</span></code> is now the <code class="docutils literal notranslate"><span class="pre">tensor()</span></code> factory function (above), so the tensor classes moved. Update module-path imports (<code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">stablebear.tensor</span> <span class="pre">import</span> <span class="pre">FloatTensor</span></code> → <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">stablebear.base_tensor</span> <span class="pre">import</span> <span class="pre">FloatTensor</span></code>); the top-level <code class="docutils literal notranslate"><span class="pre">sb.FloatTensor</span></code> form is unaffected.</p></li>
+</ul>
+</section>
+<section id="id17">
+<h3>Bug fixes<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">compute_persistent_homology</span></code> reports malformed point clouds</strong> — a point cloud with per-cloud rank ≠ 2 now raises a <code class="docutils literal notranslate"><span class="pre">RuntimeError</span></code> instead of silently returning empty barcodes. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/27">#27</a>)</p></li>
+<li><p><strong>Reductions accept a negative <code class="docutils literal notranslate"><span class="pre">dim</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">mean</span></code>/<code class="docutils literal notranslate"><span class="pre">max_time</span></code> now take <code class="docutils literal notranslate"><span class="pre">dim=-1</span></code> (counting from the last axis), matching NumPy; out-of-range raises <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/26">#26</a>)</p></li>
+<li><p><strong>A <code class="docutils literal notranslate"><span class="pre">Generator</span></code> now advances between draws</strong> — consecutive draws (or draws after a single <code class="docutils literal notranslate"><span class="pre">random.seed(s)</span></code>) are now independent rather than identical, while staying reproducible for a given seed. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/86">#86</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">max_time</span></code> and <code class="docutils literal notranslate"><span class="pre">plotting.plot</span></code> handle empty tensors</strong> — <code class="docutils literal notranslate"><span class="pre">max_time</span></code> on a zero-size dimension now raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> instead of crashing, and <code class="docutils literal notranslate"><span class="pre">plotting.plot</span></code> becomes a no-op. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/46">#46</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">tensor</span> <span class="pre">+</span> <span class="pre">ndarray</span></code> works</strong> — arithmetic (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code> and in-place variants) with an ndarray/list/tuple on the right now works, matching the already-working reflected form. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/62">#62</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">np.asarray</span></code> on a <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code>/<code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code> returns the dense matrix</strong> — <code class="docutils literal notranslate"><span class="pre">np.asarray</span></code>/<code class="docutils literal notranslate"><span class="pre">np.array</span></code> now yield the dense <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">n)</span></code> matrix (plus a <code class="docutils literal notranslate"><span class="pre">to_numpy()</span></code> alias) instead of a 0-d object array. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/75">#75</a>)</p></li>
+<li><p><strong>Comparing a tensor to a scalar or array works</strong> — <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">&gt;</span> <span class="pre">3</span></code> (and <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;=</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>) now returns a <code class="docutils literal notranslate"><span class="pre">BoolTensor</span></code>, so <code class="docutils literal notranslate"><span class="pre">t[t</span> <span class="pre">&gt;</span> <span class="pre">3]</span></code> works; non-numeric tensors raise a clear <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/57">#57</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">transpose</span></code> and <code class="docutils literal notranslate"><span class="pre">squeeze</span></code> accept negative axes</strong> — <code class="docutils literal notranslate"><span class="pre">transpose(...,</span> <span class="pre">-1)</span></code> and <code class="docutils literal notranslate"><span class="pre">squeeze(axis=-1)</span></code> now resolve axes against the tensor’s rank instead of raising a <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>, matching NumPy and the existing <code class="docutils literal notranslate"><span class="pre">swapaxes</span></code> behavior. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/17">#17</a>, <a class="reference external" href="https://github.com/kthtda/stablebear/issues/18">#18</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id18">
+<h2>0.4.2<a class="headerlink" href="#id18" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>masspcf is now stablebear.</p></li>
+</ul>
+<section id="id19">
+<h3>Bug fixes<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">flatten()</span></code> now exposes correct data through NumPy and <code class="docutils literal notranslate"><span class="pre">print</span></code></strong> — <code class="docutils literal notranslate"><span class="pre">np.asarray(t.flatten())</span></code>, <code class="docutils literal notranslate"><span class="pre">print(t.flatten())</span></code>/<code class="docutils literal notranslate"><span class="pre">repr</span></code>, and operations chained after <code class="docutils literal notranslate"><span class="pre">flatten</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">expand_dims</span></code>, <code class="docutils literal notranslate"><span class="pre">transpose</span></code>) returned the first element repeated, because the flattened axis was given a stride of <code class="docutils literal notranslate"><span class="pre">0</span></code>. The flattened axis now has stride <code class="docutils literal notranslate"><span class="pre">1</span></code>, so the NumPy/buffer view reads the correct row-major data. Element indexing (<code class="docutils literal notranslate"><span class="pre">f[i]</span></code>) was already correct; the two paths now agree. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/15">#15</a>)</p></li>
+<li><p><strong>Out-of-range reduction axis raises instead of corrupting memory</strong> — <code class="docutils literal notranslate"><span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">max_time</span></code> with a <code class="docutils literal notranslate"><span class="pre">dim</span></code> outside the tensor’s rank silently returned a wrong-shaped result (<code class="docutils literal notranslate"><span class="pre">dim</span> <span class="pre">==</span> <span class="pre">ndim</span></code>) or corrupted the heap and aborted the interpreter (<code class="docutils literal notranslate"><span class="pre">dim</span> <span class="pre">&gt;</span> <span class="pre">ndim</span></code>). The dimension is now validated at the C++ root cause, raising a catchable <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/24">#24</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">l2_kernel</span></code> and <code class="docutils literal notranslate"><span class="pre">pdist</span></code> no longer crash on negative-step views</strong> — passing a PCF view with a negative step (e.g. <code class="docutils literal notranslate"><span class="pre">X[::-1]</span></code>) segfaulted, because the internal 1-D value iterator stored its stride as an unsigned <code class="docutils literal notranslate"><span class="pre">size_t</span></code> and a negative stride wrapped to a huge value. The iterator now tracks a signed logical position, so reversed and strided views integrate correctly. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/23">#23</a>)</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">from_serial_content</span></code> validates enumeration bounds</strong> — an enumeration entry whose <code class="docutils literal notranslate"><span class="pre">stop</span></code> exceeded the content length, or whose <code class="docutils literal notranslate"><span class="pre">start</span></code> was negative, read out of bounds: small overflows returned uninitialized heap memory and large ones segfaulted, both silently. Each entry is now validated as <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">start</span> <span class="pre">&lt;</span> <span class="pre">stop</span> <span class="pre">&lt;=</span> <span class="pre">len(content)</span></code> and raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> otherwise, matching the existing <code class="docutils literal notranslate"><span class="pre">start</span> <span class="pre">&gt;=</span> <span class="pre">stop</span></code> check. (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/37">#37</a>)</p></li>
+</ul>
+</section>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Reductions read input slices in place</strong> — <code class="docutils literal notranslate"><span class="pre">mean</span></code> and <code class="docutils literal notranslate"><span class="pre">max_time</span></code> no longer deep-copy every PCF into a temporary vector before reducing; they iterate each slice in place via the value iterator, cutting allocation on large reductions.</p></li>
+</ul>
+</section>
+<section id="persistence">
+<h3>Persistence<a class="headerlink" href="#persistence" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">barcode_to_accumulated_persistence</span></code> no longer prints progress by default (<code class="docutils literal notranslate"><span class="pre">verbose</span></code> default changed from <code class="docutils literal notranslate"><span class="pre">True</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>). (<a class="reference external" href="https://github.com/kthtda/stablebear/issues/30">#30</a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="id20">
+<h2>0.4.1<a class="headerlink" href="#id20" title="Link to this heading">#</a></h2>
+<section id="id21">
+<h3>Persistence<a class="headerlink" href="#id21" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Barcode.is_isomorphic_to</span></code> tolerates floating-point noise</strong> — bar endpoints are now compared with a numerical tolerance (<code class="docutils literal notranslate"><span class="pre">atol=1e-8</span></code>, <code class="docutils literal notranslate"><span class="pre">rtol=1e-5</span></code> by default; <code class="docutils literal notranslate"><span class="pre">abs(a</span> <span class="pre">-</span> <span class="pre">b)</span> <span class="pre">&lt;=</span> <span class="pre">atol</span> <span class="pre">+</span> <span class="pre">rtol</span> <span class="pre">*</span> <span class="pre">abs(b)</span></code>, with infinite endpoints matched exactly). This makes barcodes computed via different but mathematically equivalent routes — for example, from a point cloud versus a precomputed distance matrix — compare equal despite low-order rounding differences. Pass <code class="docutils literal notranslate"><span class="pre">atol=0,</span> <span class="pre">rtol=0</span></code> for the previous bitwise comparison.</p></li>
+</ul>
+</section>
+<section id="id22">
+<h3>Performance<a class="headerlink" href="#id22" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>x86-64 baseline raised to v3</strong> — distribution wheels now target the x86-64-v3 microarchitecture level (Haswell / Excavator / Zen 1 and newer, 2013+). On Linux this is <code class="docutils literal notranslate"><span class="pre">-march=x86-64-v3</span></code> (AVX2, FMA, BMI1/2, F16C, LZCNT, MOVBE); on Windows it is the equivalent <code class="docutils literal notranslate"><span class="pre">/arch:AVX2</span></code> baseline. This covers essentially all x86-64 laptops and workstations from the last decade. The main exceptions are pre-2022 Atom-derived chips such as Celeron N, Pentium Silver, and Jasper Lake. macOS x86_64 wheels are the exception: they use the SSE4.2 (<code class="docutils literal notranslate"><span class="pre">x86-64-v2</span></code>) baseline instead of AVX2, so they run under Rosetta 2 and on every Intel Mac (Apple Silicon wheels are native <code class="docutils literal notranslate"><span class="pre">arm64</span></code> and unaffected).</p></li>
+<li><p><strong>Parallel tensor evaluation</strong> — <code class="docutils literal notranslate"><span class="pre">tensor_eval</span></code> now dispatches across threads when the total work reaches a tunable threshold (500 by default). “Total work” is the element count for scalar evaluation, and the element count times the number of query points for the batch (array-of-times) overload. Set the threshold with <code class="docutils literal notranslate"><span class="pre">masspcf.system.set_parallel_eval_threshold(n)</span></code> and read it back with <code class="docutils literal notranslate"><span class="pre">masspcf.system.get_parallel_eval_threshold()</span></code>. On multi-core CPUs this gives a several-fold speedup on large tensors.</p></li>
+</ul>
+<section id="runtime-cpu-check">
+<h4>Runtime CPU check<a class="headerlink" href="#runtime-cpu-check" title="Link to this heading">#</a></h4>
+<p>masspcf now verifies at import time that the CPU supports the instruction set the wheel was built against, and raises a clear <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> with rebuild instructions if it does not — instead of letting the extension crash with an illegal-instruction signal. Set <code class="docutils literal notranslate"><span class="pre">SB_SKIP_CPU_CHECK</span></code> to any value other than <code class="docutils literal notranslate"><span class="pre">0</span></code> to bypass the check.</p>
+</section>
+<section id="building-from-source">
+<h4>Building from source<a class="headerlink" href="#building-from-source" title="Link to this heading">#</a></h4>
+<p>If the distribution wheel does not run on your CPU — or you simply want a build tuned to your exact hardware — install from source:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>--no-binary<span class="o">=</span>masspcf<span class="w"> </span>masspcf
+</pre></div>
+</div>
+<p>Source builds default to <code class="docutils literal notranslate"><span class="pre">-march=native</span></code> on Linux and macOS, and to a CPUID-probed <code class="docutils literal notranslate"><span class="pre">/arch:</span></code> flag on MSVC, so the resulting extension targets whatever features your CPU actually has (including AVX-512 where available). The baseline can also be pinned explicitly at configure time with <code class="docutils literal notranslate"><span class="pre">-DSB_X86_64_LEVEL=v1|v2|v3|v4|native</span></code>.</p>
+<p>The plain-cmake developer build (without <code class="docutils literal notranslate"><span class="pre">SKBUILD</span></code>) still defaults to <code class="docutils literal notranslate"><span class="pre">v3</span></code>.</p>
+</section>
+</section>
+<section id="indexing">
+<h3>Indexing<a class="headerlink" href="#indexing" title="Link to this heading">#</a></h3>
+<p>Tensor indexing is now much closer to NumPy. These changes apply to every tensor type, since they share one indexing implementation.</p>
+<ul class="simple">
+<li><p><strong>Negative indices and slice bounds</strong> — <code class="docutils literal notranslate"><span class="pre">t[-1]</span></code>, <code class="docutils literal notranslate"><span class="pre">t[-1,</span> <span class="pre">-1]</span></code>, <code class="docutils literal notranslate"><span class="pre">t[-3:-1]</span></code>, <code class="docutils literal notranslate"><span class="pre">t[:,</span> <span class="pre">-2:]</span></code>, and negative bounds with a negative step now resolve against the axis size like NumPy (previously they crashed, returned garbage, or gave the wrong shape). An out-of-range integer index raises <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>, and <code class="docutils literal notranslate"><span class="pre">t[::0]</span></code> raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p></li>
+<li><p><strong>Ellipsis and newaxis</strong> — <code class="docutils literal notranslate"><span class="pre">t[...]</span></code>, <code class="docutils literal notranslate"><span class="pre">t[...,</span> <span class="pre">0]</span></code>, <code class="docutils literal notranslate"><span class="pre">t[None]</span></code>, and <code class="docutils literal notranslate"><span class="pre">t[:,</span> <span class="pre">None]</span></code> / <code class="docutils literal notranslate"><span class="pre">t[:,</span> <span class="pre">np.newaxis]</span></code> are now supported.</p></li>
+<li><p><strong>More index objects</strong> — Python lists (<code class="docutils literal notranslate"><span class="pre">t[[0,</span> <span class="pre">2]]</span></code>), NumPy integer scalars (<code class="docutils literal notranslate"><span class="pre">t[np.int64(1)]</span></code>), scalar booleans (<code class="docutils literal notranslate"><span class="pre">t[True]</span></code> / <code class="docutils literal notranslate"><span class="pre">t[False]</span></code>), multi-dimensional integer index arrays, the empty tuple <code class="docutils literal notranslate"><span class="pre">t[()]</span></code>, and partial integer tuples (fewer indices than the rank) all behave as in NumPy. A multi-dimensional integer index array adopts its own shape into the result (e.g. a <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">6)</span></code> tensor indexed by a <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2)</span></code> array yields <code class="docutils literal notranslate"><span class="pre">(2,</span> <span class="pre">2,</span> <span class="pre">6)</span></code>). Invalid indices (e.g. floats) now raise <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>.</p></li>
+<li><p><strong>0-d tensors</strong> — iterating over or calling <code class="docutils literal notranslate"><span class="pre">len()</span></code> on a 0-d tensor now raises <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>, matching NumPy.</p></li>
+<li><p><strong>Leading-axes boolean masks</strong> — a boolean mask matching the leading axes of a tensor (e.g. a row mask <code class="docutils literal notranslate"><span class="pre">t[mask]</span></code>) selects along those axes instead of raising.</p></li>
+<li><p><strong>Assignment</strong> — assigning a scalar into a slice (<code class="docutils literal notranslate"><span class="pre">t[1:3]</span> <span class="pre">=</span> <span class="pre">5.0</span></code>), assigning into a single row of an N-D tensor (<code class="docutils literal notranslate"><span class="pre">t[1]</span> <span class="pre">=</span> <span class="pre">row</span></code>), and assigning a cross-dtype tensor (int → float) now work.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> / <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code></strong> — negative <code class="docutils literal notranslate"><span class="pre">(i,</span> <span class="pre">j)</span></code> indices are resolved, and out-of-range access raises <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>.</p></li>
+<li><p><strong>Memory safety</strong> — out-of-shape values in multi-axis (outer / <code class="docutils literal notranslate"><span class="pre">np.ix_</span></code>-style) assignment now raise instead of writing out of bounds, and out-of-bounds selectors in a multi-axis read now raise <code class="docutils literal notranslate"><span class="pre">IndexError</span></code>.</p></li>
+</ul>
+<p>Multiple advanced indices keep their outer (<code class="docutils literal notranslate"><span class="pre">np.ix_</span></code>-style) semantics, as documented in <a class="reference external" href="https://github.com/kthtda/stablebear/blob/main/docs/indexing.rst">Indexing and Masking</a>.</p>
+</section>
+<section id="packaging">
+<h3>Packaging<a class="headerlink" href="#packaging" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Self-contained Windows wheels</strong> — binary wheels for Windows now bundle the Microsoft Visual C++ runtime (e.g. <code class="docutils literal notranslate"><span class="pre">msvcp140.dll</span></code>, <code class="docutils literal notranslate"><span class="pre">msvcp140_atomic_wait.dll</span></code>) via <a class="reference external" href="https://github.com/adang1345/delvewheel">delvewheel</a>, so they import on machines without a separately installed Visual C++ Redistributable. This fixes the <code class="docutils literal notranslate"><span class="pre">DLL</span> <span class="pre">load</span> <span class="pre">failed</span></code> / <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> on <code class="docutils literal notranslate"><span class="pre">_sb_cpu</span></code> that affected stock Windows installs in prior releases.</p></li>
+</ul>
+</section>
+</section>
+<section id="id23">
+<h2>0.4.0<a class="headerlink" href="#id23" title="Link to this heading">#</a></h2>
+<p>Major rewrite of the core data structures and significant expansion of the API.</p>
+<section id="id24">
+<h3>New features<a class="headerlink" href="#id24" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Tensor type system</strong> — <code class="docutils literal notranslate"><span class="pre">NdArray</span></code> replaced with a family of purpose-built tensor classes: <code class="docutils literal notranslate"><span class="pre">PcfTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">IntPcfTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">IntTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">BoolTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">SymmetricMatrixTensor</span></code>, <code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code>. Each has a corresponding <code class="docutils literal notranslate"><span class="pre">dtype</span></code> sentinel.</p></li>
+<li><p><strong>NumPy-like tensor operations</strong> — <code class="docutils literal notranslate"><span class="pre">reshape</span></code>, <code class="docutils literal notranslate"><span class="pre">transpose</span></code>/<code class="docutils literal notranslate"><span class="pre">.T</span></code>, <code class="docutils literal notranslate"><span class="pre">squeeze</span></code>, <code class="docutils literal notranslate"><span class="pre">expand_dims</span></code>, <code class="docutils literal notranslate"><span class="pre">swapaxes</span></code>, <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>, <code class="docutils literal notranslate"><span class="pre">stack</span></code>, <code class="docutils literal notranslate"><span class="pre">split</span></code>, <code class="docutils literal notranslate"><span class="pre">array_split</span></code>, <code class="docutils literal notranslate"><span class="pre">astype</span></code>, iteration, <code class="docutils literal notranslate"><span class="pre">ndim</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>, <code class="docutils literal notranslate"><span class="pre">len()</span></code>.</p></li>
+<li><p><strong>Advanced indexing</strong> — slicing with negative strides, multi-axis boolean masking, mixed integer+boolean indexing, broadcasting assignment.</p></li>
+<li><p><strong>Arithmetic</strong> — element-wise <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">//</span></code>, <code class="docutils literal notranslate"><span class="pre">**</span></code>, unary <code class="docutils literal notranslate"><span class="pre">-</span></code> on numeric tensors; broadcasting support.</p></li>
+<li><p><strong>Persistence module</strong> — <code class="docutils literal notranslate"><span class="pre">compute_persistent_homology</span></code> (Ripser), <code class="docutils literal notranslate"><span class="pre">Barcode</span></code>, <code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code>, and barcode summaries: <code class="docutils literal notranslate"><span class="pre">barcode_to_stable_rank</span></code>, <code class="docutils literal notranslate"><span class="pre">barcode_to_betti_curve</span></code>, <code class="docutils literal notranslate"><span class="pre">barcode_to_accumulated_persistence</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> and <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code></strong> — dedicated types with I/O support, <code class="docutils literal notranslate"><span class="pre">from_dense</span></code> and <code class="docutils literal notranslate"><span class="pre">to_dense</span></code> for NumPy interop.</p></li>
+<li><p><strong>Tensor I/O</strong> — <code class="docutils literal notranslate"><span class="pre">save</span></code>/<code class="docutils literal notranslate"><span class="pre">load</span></code> for all tensor types; <code class="docutils literal notranslate"><span class="pre">from_serial_content</span></code> for in-memory deserialization.</p></li>
+<li><p><strong>PCF evaluation</strong> — evaluate PCFs at given time points.</p></li>
+<li><p><strong>Plotting</strong> — built-in plotting for PCFs and barcodes (matplotlib).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">lp_distance</span></code></strong> — scalar Lp distance between two individual PCFs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">cdist</span></code></strong> — cross-distance matrices between two collections of PCFs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">lp_norm</span></code></strong> — Lp norms for collections of PCFs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">allclose</span></code></strong> — free function for element-wise approximate equality (FloatTensor, DistanceMatrix, SymmetricMatrix).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">array_equal</span></code></strong> — exact element-wise equality check for tensors.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">iterate_rectangles</span></code></strong> — iterate over the rectangle decomposition of two PCFs.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">flatten</span></code>, <code class="docutils literal notranslate"><span class="pre">copy</span></code></strong> — tensor methods for flattening and deep-copying.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">pickle</span></code> support</strong> — all tensor types can be pickled and unpickled.</p></li>
+<li><p><strong>Deterministic random generation</strong> — seedable <code class="docutils literal notranslate"><span class="pre">Generator</span></code> for reproducible output across threads.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">point_process</span></code> submodule</strong> — <code class="docutils literal notranslate"><span class="pre">sample_poisson</span></code> for sampling spatial Poisson point processes.</p></li>
+</ul>
+</section>
+<section id="id25">
+<h3>Breaking changes<a class="headerlink" href="#id25" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pdist</span></code> returns a <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> instead of a NumPy array. Call <code class="docutils literal notranslate"><span class="pre">.to_dense()</span></code> to get the previous behavior.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">l2_kernel</span></code> returns a <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code> instead of a NumPy array. Call <code class="docutils literal notranslate"><span class="pre">.to_dense()</span></code> to get the previous behavior.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NdArray</span></code> replaced with <code class="docutils literal notranslate"><span class="pre">Tensor</span></code> classes (dropped <strong>xtensor</strong>/<strong>xtl</strong> dependencies).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pcf</span></code> construction now only accepts <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">2</span></code> arrays (not <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">x</span> <span class="pre">n</span></code>) to avoid ambiguity with <code class="docutils literal notranslate"><span class="pre">2x2</span></code> arrays.</p></li>
+<li><p>I/O format bumped to version 2.</p></li>
+<li><p>Requires C++20 (was C++17). Minimum Python version is 3.10.</p></li>
+</ul>
+</section>
+<section id="infrastructure">
+<h3>Infrastructure<a class="headerlink" href="#infrastructure" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>CUDA backend reworked: auto-detection, pip-installed CUDA toolkit support (<code class="docutils literal notranslate"><span class="pre">nvidia.cu12</span></code>/<code class="docutils literal notranslate"><span class="pre">nvidia.cu13</span></code>), version-specific modules.</p></li>
+<li><p>Wheels built for Linux (x86_64, aarch64), macOS (x86_64, arm64), and Windows (x86_64).</p></li>
+<li><p>CUDA matrix integration refactored into modular components.</p></li>
+<li><p>GPU occupancy floor added to block scheduler.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="internals/deterministic_random.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Deterministic random generation</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#unreleased">Unreleased</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New features</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">0.5.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">New features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-requirements">Build requirements</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">0.4.7</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">New features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations">Deprecations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">0.4.6</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">New features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">0.4.5</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">New features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">0.4.4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Breaking changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">0.4.3</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">New features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">Breaking changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">Bug fixes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">0.4.2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">Bug fixes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance">Performance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#persistence">Persistence</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">0.4.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id21">Persistence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id22">Performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#runtime-cpu-check">Runtime CPU check</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#building-from-source">Building from source</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing">Indexing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#packaging">Packaging</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id23">0.4.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id24">New features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id25">Breaking changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#infrastructure">Infrastructure</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/changelog.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

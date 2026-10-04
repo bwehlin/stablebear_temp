@@ -1,0 +1,1178 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>stablebear.persistence &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/api_persistence.67a91915-d882-47d7-b7a4-3482389e4573.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api_persistence';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Mathematical glossary" href="glossary.html" />
+    <link rel="prev" title="stablebear.point_process" href="api_point_process.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api_base.html">stablebear</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_plotting.html">stablebear.plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_random.html">stablebear.random</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_distributions.html">stablebear.distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_point_process.html">stablebear.point_process</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">stablebear.persistence</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="stablebear.html" class="nav-link">Python API reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">stablebear.persistence</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="stablebear-persistence">
+<h1>stablebear.persistence<a class="headerlink" href="#stablebear-persistence" title="Link to this heading">#</a></h1>
+<p>Persistent homology, barcodes, and stable rank functions.</p>
+<section id="module-stablebear.persistence.barcode">
+<span id="barcode"></span><span id="module-stablebear.persistence"></span><h2>barcode<a class="headerlink" href="#module-stablebear.persistence.barcode" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stablebear.persistence.barcode.Barcode">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stablebear.persistence.barcode.</span></span><span class="sig-name descname"><span class="pre">Barcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.barcode.Barcode" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_BinaryIoMixin</span></code></p>
+<p>A persistence barcode, i.e. a collection of bars (birth-death intervals).</p>
+<p>A barcode is represented as an (n, 2) array where each row is a bar
+given as a <code class="docutils literal notranslate"><span class="pre">(birth,</span> <span class="pre">death)</span></code> pair from a persistent homology computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>bc</strong> (<a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><em>Barcode</em></a><em> or </em><em>numpy.ndarray</em>) – An existing <code class="docutils literal notranslate"><span class="pre">Barcode</span></code> to copy, or an (n, 2) NumPy array of
+<code class="docutils literal notranslate"><span class="pre">(birth,</span> <span class="pre">death)</span></code> pairs (<code class="docutils literal notranslate"><span class="pre">float32</span></code> or <code class="docutils literal notranslate"><span class="pre">float64</span></code>).</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="stablebear.persistence.barcode.Barcode.is_isomorphic_to">
+<span class="sig-name descname"><span class="pre">is_isomorphic_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><span class="pre">Barcode</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.barcode.Barcode.is_isomorphic_to" title="Link to this definition">#</a></dt>
+<dd><p>Check whether two barcodes are isomorphic (same multiset of bars).</p>
+<p>Bar endpoints are compared with a numerical tolerance so that barcodes
+computed via different but mathematically equivalent routes (for example,
+from a point cloud versus a precomputed distance matrix) still compare
+equal despite floating-point rounding. Two endpoints <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are
+considered equal when <code class="docutils literal notranslate"><span class="pre">abs(a</span> <span class="pre">-</span> <span class="pre">b)</span> <span class="pre">&lt;=</span> <span class="pre">atol</span> <span class="pre">+</span> <span class="pre">rtol</span> <span class="pre">*</span> <span class="pre">abs(b)</span></code>; infinite
+endpoints must match exactly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bc</strong> (<a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><em>Barcode</em></a>) – The barcode to compare against.</p></li>
+<li><p><strong>atol</strong> (<em>float</em><em>, </em><em>optional</em>) – Absolute tolerance for endpoint comparison, by default <code class="docutils literal notranslate"><span class="pre">1e-8</span></code>.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em><em>, </em><em>optional</em>) – Relative tolerance for endpoint comparison, by default <code class="docutils literal notranslate"><span class="pre">1e-5</span></code>.
+Pass <code class="docutils literal notranslate"><span class="pre">atol=0,</span> <span class="pre">rtol=0</span></code> for a bitwise comparison.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="stablebear.persistence.barcode.Barcode.to_numpy">
+<span class="sig-name descname"><span class="pre">to_numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.barcode.Barcode.to_numpy" title="Link to this definition">#</a></dt>
+<dd><p>Return the bars as an (n, 2) NumPy array of <code class="docutils literal notranslate"><span class="pre">(birth,</span> <span class="pre">death)</span></code> pairs.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-stablebear.persistence.linkage">
+<span id="linkage"></span><h2>linkage<a class="headerlink" href="#module-stablebear.persistence.linkage" title="Link to this heading">#</a></h2>
+<p>Conversion of hierarchical clustering results to barcodes.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="stablebear.persistence.linkage.linkage_to_barcode">
+<span class="sig-prename descclassname"><span class="pre">stablebear.persistence.linkage.</span></span><span class="sig-name descname"><span class="pre">linkage_to_barcode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><span class="pre">Barcode</span></a></span></span><a class="headerlink" href="#stablebear.persistence.linkage.linkage_to_barcode" title="Link to this definition">#</a></dt>
+<dd><p>Convert a SciPy-format linkage matrix to an H0 barcode.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Z</strong> (<em>numpy.ndarray</em>) – An <code class="docutils literal notranslate"><span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">4)</span></code> float32 or float64 linkage matrix. Each row contains
+two active cluster indices, a finite nonnegative merge height, and
+the number of observations in the new cluster. The output preserves
+the input precision.
+An empty <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">4)</span></code> matrix represents one observation.</p></li>
+<li><p><strong>reduced</strong> (<em>bool</em><em>, </em><em>optional</em>) – Omit the essential <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">inf)</span></code> interval when True (default False).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Intervals born at zero and dying at the positive effective merge heights,
+plus one essential interval unless reduced. Zero-length bars are
+omitted. Empty input returns an empty barcode if reduced, otherwise
+one <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">inf)</span></code> interval. The input is not modified.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode">Barcode</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If Z is not a float32/float64 NumPy array.</p></li>
+<li><p><strong>ValueError</strong> – If the shape, cluster references, counts, or heights are invalid.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Warns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>UserWarning</strong> – If input merge heights decrease between consecutive rows, including
+independent branches. One warning is emitted per conversion.</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>SciPy is not required for conversion. Each effective merge height is
+the maximum of the supplied height and the effective heights of its
+two children. This delays inverted parent merges until both children
+exist, including inversions from centroid or median linkage. Cluster
+relationships are preserved; clustering is not recomputed.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">linkage_to_barcode</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="go">array([[0. , 1.5],</span>
+<span class="go">       [0. , 4.5],</span>
+<span class="go">       [0. , inf]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-stablebear.persistence.ph_tensor">
+<span id="ph-tensor"></span><h2>ph_tensor<a class="headerlink" href="#module-stablebear.persistence.ph_tensor" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stablebear.persistence.ph_tensor.BarcodeTensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stablebear.persistence.ph_tensor.</span></span><span class="sig-name descname"><span class="pre">BarcodeTensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Tensor</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="stablebear.persistence.ph_tensor.BarcodeTensor.is_isomorphic_to">
+<span class="sig-name descname"><span class="pre">is_isomorphic_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#stablebear.persistence.ph_tensor.BarcodeTensor.is_isomorphic_to" title="Link to this definition">#</a></dt>
+<dd><p>Check aligned barcodes for isomorphism across the whole tensor.</p>
+<p>The tensors must have the same outer shape and barcode dtype. Each
+aligned pair of barcodes is compared as an order-independent multiset
+of bars using the supplied endpoint tolerances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other</strong> (<a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><em>BarcodeTensor</em></a>) – The barcode tensor to compare against.</p></li>
+<li><p><strong>atol</strong> (<em>float</em><em>, </em><em>optional</em>) – Absolute endpoint tolerance, by default <code class="docutils literal notranslate"><span class="pre">1e-8</span></code>. For an endpoint
+<code class="docutils literal notranslate"><span class="pre">a</span></code> in this tensor and the corresponding endpoint <code class="docutils literal notranslate"><span class="pre">b</span></code> in
+<em>other</em>, the absolute contribution permits a fixed difference of
+up to <code class="docutils literal notranslate"><span class="pre">atol</span></code>.</p></li>
+<li><p><strong>rtol</strong> (<em>float</em><em>, </em><em>optional</em>) – Relative endpoint tolerance, by default <code class="docutils literal notranslate"><span class="pre">1e-5</span></code>. The endpoints
+match when <code class="docutils literal notranslate"><span class="pre">abs(a</span> <span class="pre">-</span> <span class="pre">b)</span> <span class="pre">&lt;=</span> <span class="pre">atol</span> <span class="pre">+</span> <span class="pre">rtol</span> <span class="pre">*</span> <span class="pre">abs(b)</span></code>. Infinite
+endpoints must match exactly. Pass <code class="docutils literal notranslate"><span class="pre">atol=0,</span> <span class="pre">rtol=0</span></code> for exact
+endpoint comparison.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether every aligned pair of barcodes is isomorphic.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <em>other</em> is not a <code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code> or has a different dtype.</p></li>
+<li><p><strong>ValueError</strong> – If the outer tensor shapes differ.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">All members, including inherited</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BarcodeTensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span></dt>
+<dd><dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">T</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">array_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rhs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span></dt>
+<dd><p class="sd-card-text">Test whether two tensors have the same shape and all equal elements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="sd-card-text"><strong>rhs</strong> (<em>Tensor</em>) – The tensor to compare with.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="sd-card-text">True if the tensors are elementwise equal, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="sd-card-text">bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">astype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dtype</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p class="sd-card-text">Return a new tensor with elements cast to the given dtype.</p>
+<p class="sd-card-text">Supported casts are same-family precision changes (e.g. float32 → float64,
+pcf32 → pcf64) and numeric cross-family (e.g. float → int).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">broadcast_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p class="sd-card-text">Return a broadcast view of this tensor with the given target shape.</p>
+<p class="sd-card-text">Dimensions of size 1 are expanded (stride set to 0); prepended
+dimensions also get stride 0. No data is copied — the result shares
+the underlying storage.</p>
+<p class="sd-card-text">The result is <strong>read-only</strong>, like <code class="docutils literal notranslate"><span class="pre">numpy.broadcast_to</span></code>: because the
+expanded axes have stride 0, several logical positions alias the same
+cell, so writing through the view (item assignment or in-place
+arithmetic) would corrupt the shared source. Such writes raise
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>; call <code class="docutils literal notranslate"><span class="pre">.copy()</span></code> for a writeable tensor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="sd-card-text"><strong>shape</strong> (<em>tuple</em><em> of </em><em>int</em>) – The target shape. Must be broadcast-compatible with the current
+shape.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="sd-card-text">A non-contiguous, read-only view of this tensor with the target shape.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="sd-card-text">Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p class="sd-card-text"><strong>ValueError</strong> – If the shapes are not broadcast-compatible.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">expand_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">flatten</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">is_isomorphic_to</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-05</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span></dt>
+<dd><p class="sd-card-text">Check aligned barcodes for isomorphism across the whole tensor.</p>
+<p class="sd-card-text">The tensors must have the same outer shape and barcode dtype. Each
+aligned pair of barcodes is compared as an order-independent multiset
+of bars using the supplied endpoint tolerances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="sd-card-text"><strong>other</strong> (<a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><em>BarcodeTensor</em></a>) – The barcode tensor to compare against.</p></li>
+<li><p class="sd-card-text"><strong>atol</strong> (<em>float</em><em>, </em><em>optional</em>) – Absolute endpoint tolerance, by default <code class="docutils literal notranslate"><span class="pre">1e-8</span></code>. For an endpoint
+<code class="docutils literal notranslate"><span class="pre">a</span></code> in this tensor and the corresponding endpoint <code class="docutils literal notranslate"><span class="pre">b</span></code> in
+<em>other</em>, the absolute contribution permits a fixed difference of
+up to <code class="docutils literal notranslate"><span class="pre">atol</span></code>.</p></li>
+<li><p class="sd-card-text"><strong>rtol</strong> (<em>float</em><em>, </em><em>optional</em>) – Relative endpoint tolerance, by default <code class="docutils literal notranslate"><span class="pre">1e-5</span></code>. The endpoints
+match when <code class="docutils literal notranslate"><span class="pre">abs(a</span> <span class="pre">-</span> <span class="pre">b)</span> <span class="pre">&lt;=</span> <span class="pre">atol</span> <span class="pre">+</span> <span class="pre">rtol</span> <span class="pre">*</span> <span class="pre">abs(b)</span></code>. Infinite
+endpoints must match exactly. Pass <code class="docutils literal notranslate"><span class="pre">atol=0,</span> <span class="pre">rtol=0</span></code> for exact
+endpoint comparison.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="sd-card-text">Whether every aligned pair of barcodes is isomorphic.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="sd-card-text">bool</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p class="sd-card-text"><strong>TypeError</strong> – If <em>other</em> is not a <code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code> or has a different dtype.</p></li>
+<li><p class="sd-card-text"><strong>ValueError</strong> – If the outer tensor shapes differ.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">ndim</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">offset</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">reshape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">_Mock</span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span></em></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">squeeze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">strides</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">swapaxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis2</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">BarcodeTensor.</span></span><span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</details></dd></dl>
+
+</section>
+<section id="module-stablebear.persistence.homology">
+<span id="homology"></span><h2>homology<a class="headerlink" href="#module-stablebear.persistence.homology" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="stablebear.persistence.homology.ComplexType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stablebear.persistence.homology.</span></span><span class="sig-name descname"><span class="pre">ComplexType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.homology.ComplexType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stablebear.persistence.homology.ComplexType.VietorisRips">
+<span class="sig-name descname"><span class="pre">VietorisRips</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#stablebear.persistence.homology.ComplexType.VietorisRips" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">All members, including inherited</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ComplexType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p class="sd-card-text">An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">ComplexType.</span></span><span class="sig-name descname"><span class="pre">VietorisRips</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</details></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="stablebear.persistence.homology.DistanceType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">stablebear.persistence.homology.</span></span><span class="sig-name descname"><span class="pre">DistanceType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.homology.DistanceType" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="stablebear.persistence.homology.DistanceType.Euclidean">
+<span class="sig-name descname"><span class="pre">Euclidean</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#stablebear.persistence.homology.DistanceType.Euclidean" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">All members, including inherited</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DistanceType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p class="sd-card-text">An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">DistanceType.</span></span><span class="sig-name descname"><span class="pre">Euclidean</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</details></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stablebear.persistence.homology.compute_persistent_homology">
+<span class="sig-prename descclassname"><span class="pre">stablebear.persistence.homology.</span></span><span class="sig-name descname"><span class="pre">compute_persistent_homology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloud" title="stablebear.point_cloud.PointCloud"><span class="pre">PointCloud</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloudTensor" title="stablebear.point_cloud.PointCloudTensor"><span class="pre">PointCloudTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrix" title="stablebear.distance_matrix.DistanceMatrix"><span class="pre">DistanceMatrix</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor" title="stablebear.distance_matrix.DistanceMatrixTensor"><span class="pre">DistanceMatrixTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.base_tensor.FloatTensor" title="stablebear.base_tensor.FloatTensor"><span class="pre">FloatTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.homology.DistanceType" title="stablebear.persistence.homology.DistanceType"><span class="pre">DistanceType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">DistanceType.Euclidean</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complex_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.homology.ComplexType" title="stablebear.persistence.homology.ComplexType"><span class="pre">ComplexType</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">ComplexType.VietorisRips</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduced</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></span><a class="headerlink" href="#stablebear.persistence.homology.compute_persistent_homology" title="Link to this definition">#</a></dt>
+<dd><p>Compute persistent homology of a point cloud or distance matrix.</p>
+<p>Returns barcodes for homology dimensions 0 through <code class="docutils literal notranslate"><span class="pre">max_dim</span></code>. When
+<code class="docutils literal notranslate"><span class="pre">complex_type</span></code> is <code class="docutils literal notranslate"><span class="pre">ComplexType.VietorisRips</span></code> (currently the only
+available option), the computation uses Ripser <a class="footnote-reference brackets" href="#footcite-bauer2021" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. When the input
+contains multiple point clouds or distance matrices, the computations are
+parallelized across them.</p>
+<p>For an input tensor of shape <span class="math notranslate nohighlight">\((d_1, \ldots, d_n)\)</span>, the output has
+shape <span class="math notranslate nohighlight">\((d_1, \ldots, d_n, \texttt{max_dim} + 1)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloud" title="stablebear.point_cloud.PointCloud"><em>PointCloud</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloudTensor" title="stablebear.point_cloud.PointCloudTensor"><em>PointCloudTensor</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrix" title="stablebear.distance_matrix.DistanceMatrix"><em>DistanceMatrix</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor" title="stablebear.distance_matrix.DistanceMatrixTensor"><em>DistanceMatrixTensor</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.base_tensor.FloatTensor" title="stablebear.base_tensor.FloatTensor"><em>FloatTensor</em></a><em>, or </em><em>numpy.ndarray</em>) – Input data. A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> or NumPy array is
+interpreted as a single point cloud (one row per point).
+A <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> or <code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code> provides
+precomputed pairwise distances directly; <code class="docutils literal notranslate"><span class="pre">distance_type</span></code> is
+ignored in that case.</p></li>
+<li><p><strong>max_dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum homology dimension to compute, by default 1.</p></li>
+<li><p><strong>distance_type</strong> (<a class="reference internal" href="#stablebear.persistence.homology.DistanceType" title="stablebear.persistence.homology.DistanceType"><em>DistanceType</em></a><em>, </em><em>optional</em>) – Distance metric for point cloud input, by default
+<code class="docutils literal notranslate"><span class="pre">DistanceType.Euclidean</span></code>. Ignored when the input is a distance
+matrix.</p></li>
+<li><p><strong>complex_type</strong> (<a class="reference internal" href="#stablebear.persistence.homology.ComplexType" title="stablebear.persistence.homology.ComplexType"><em>ComplexType</em></a><em>, </em><em>optional</em>) – Simplicial complex type, by default <code class="docutils literal notranslate"><span class="pre">ComplexType.VietorisRips</span></code>.</p></li>
+<li><p><strong>reduced</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, compute reduced homology (no essential H0 class).
+If <code class="docutils literal notranslate"><span class="pre">False</span></code> (default), an infinite bar <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">inf)</span></code> is added to
+H0 representing the single connected component.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show progress information, by default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tensor of barcodes.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor">BarcodeTensor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-stablebear.persistence.barcode_summary">
+<span id="barcode-summary"></span><h2>barcode_summary<a class="headerlink" href="#module-stablebear.persistence.barcode_summary" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="stablebear.persistence.barcode_summary.barcode_to_accumulated_persistence">
+<span class="sig-prename descclassname"><span class="pre">stablebear.persistence.barcode_summary.</span></span><span class="sig-name descname"><span class="pre">barcode_to_accumulated_persistence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><span class="pre">Barcode</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_death</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.barcode_summary.barcode_to_accumulated_persistence" title="Link to this definition">#</a></dt>
+<dd><p>Convert barcodes to accumulated persistence functions.</p>
+<p>The accumulated persistence function (APF) is defined as</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{APF}(t) = \sum_{i=1}^{N} \ell_i \, \mathbf{1}_{m_i \leq t}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of bars, <span class="math notranslate nohighlight">\(\ell_i = d_i - b_i\)</span> is the
+lifetime of bar <span class="math notranslate nohighlight">\(i\)</span>, and <span class="math notranslate nohighlight">\(m_i = (b_i + d_i) / 2\)</span> is its
+midpoint <a class="footnote-reference brackets" href="#footcite-biscio2019" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">max_death</span></code> is finite, only bars with <span class="math notranslate nohighlight">\(d_i \leq\)</span>
+<code class="docutils literal notranslate"><span class="pre">max_death</span></code> are included (Equation 2 in the paper).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bc</strong> (<a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><em>Barcode</em></a><em> or </em><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><em>BarcodeTensor</em></a>) – A single barcode or a tensor of barcodes.</p></li>
+<li><p><strong>max_death</strong> (<em>float</em><em>, </em><em>optional</em>) – If finite, exclude bars whose death time exceeds this value.
+By default <code class="docutils literal notranslate"><span class="pre">inf</span></code> (all finite bars included).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show progress information, by default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> if the input is a single <code class="docutils literal notranslate"><span class="pre">Barcode</span></code>, otherwise a
+<code class="docutils literal notranslate"><span class="pre">PcfTensor</span></code> with the same shape as the input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="api_base.html#stablebear.functional.pcf.Pcf" title="stablebear.functional.pcf.Pcf">Pcf</a> or <a class="reference internal" href="api_base.html#stablebear.base_tensor.PcfTensor" title="stablebear.base_tensor.PcfTensor">PcfTensor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stablebear.persistence.barcode_summary.barcode_to_betti_curve">
+<span class="sig-prename descclassname"><span class="pre">stablebear.persistence.barcode_summary.</span></span><span class="sig-name descname"><span class="pre">barcode_to_betti_curve</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><span class="pre">Barcode</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.barcode_summary.barcode_to_betti_curve" title="Link to this definition">#</a></dt>
+<dd><p>Convert barcodes to Betti curves.</p>
+<p>The Betti curve is the PCF that counts, for each filtration value
+<span class="math notranslate nohighlight">\(t \geq 0\)</span>, the number of bars alive at <span class="math notranslate nohighlight">\(t\)</span>
+(i.e., bars with birth <span class="math notranslate nohighlight">\(\leq t &lt;\)</span> death) <a class="footnote-reference brackets" href="#footcite-umeda2017" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-chazal2021" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bc</strong> (<a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><em>Barcode</em></a><em> or </em><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><em>BarcodeTensor</em></a>) – A single barcode or a tensor of barcodes.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show progress information, by default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> if the input is a single <code class="docutils literal notranslate"><span class="pre">Barcode</span></code>, otherwise a
+<code class="docutils literal notranslate"><span class="pre">PcfTensor</span></code> with the same shape as the input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="api_base.html#stablebear.functional.pcf.Pcf" title="stablebear.functional.pcf.Pcf">Pcf</a> or <a class="reference internal" href="api_base.html#stablebear.base_tensor.PcfTensor" title="stablebear.base_tensor.PcfTensor">PcfTensor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="stablebear.persistence.barcode_summary.barcode_to_stable_rank">
+<span class="sig-prename descclassname"><span class="pre">stablebear.persistence.barcode_summary.</span></span><span class="sig-name descname"><span class="pre">barcode_to_stable_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><span class="pre">Barcode</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stablebear.persistence.barcode_summary.barcode_to_stable_rank" title="Link to this definition">#</a></dt>
+<dd><p>Convert barcodes to stable rank functions.</p>
+<p>The stable rank of a barcode is the PCF that counts, for each
+<span class="math notranslate nohighlight">\(t \geq 0\)</span>, the number of bars with length (death minus birth)
+strictly greater than <span class="math notranslate nohighlight">\(t\)</span> <a class="footnote-reference brackets" href="#footcite-chacholski2020" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bc</strong> (<a class="reference internal" href="#stablebear.persistence.barcode.Barcode" title="stablebear.persistence.barcode.Barcode"><em>Barcode</em></a><em> or </em><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><em>BarcodeTensor</em></a>) – A single barcode or a tensor of barcodes.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show progress information, by default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A single <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> if the input is a single <code class="docutils literal notranslate"><span class="pre">Barcode</span></code>, otherwise a
+<code class="docutils literal notranslate"><span class="pre">PcfTensor</span></code> with the same shape as the input.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="api_base.html#stablebear.functional.pcf.Pcf" title="stablebear.functional.pcf.Pcf">Pcf</a> or <a class="reference internal" href="api_base.html#stablebear.base_tensor.PcfTensor" title="stablebear.base_tensor.PcfTensor">PcfTensor</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-stablebear.persistence.homological_kernel">
+<span id="homological-kernel"></span><h2>homological_kernel<a class="headerlink" href="#module-stablebear.persistence.homological_kernel" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="stablebear.persistence.homological_kernel.compute_homological_kernel">
+<span class="sig-prename descclassname"><span class="pre">stablebear.persistence.homological_kernel.</span></span><span class="sig-name descname"><span class="pre">compute_homological_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloud" title="stablebear.point_cloud.PointCloud"><span class="pre">PointCloud</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloudTensor" title="stablebear.point_cloud.PointCloudTensor"><span class="pre">PointCloudTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrix" title="stablebear.distance_matrix.DistanceMatrix"><span class="pre">DistanceMatrix</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor" title="stablebear.distance_matrix.DistanceMatrixTensor"><span class="pre">DistanceMatrixTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.base_tensor.FloatTensor" title="stablebear.base_tensor.FloatTensor"><span class="pre">FloatTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloud" title="stablebear.point_cloud.PointCloud"><span class="pre">PointCloud</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloudTensor" title="stablebear.point_cloud.PointCloudTensor"><span class="pre">PointCloudTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrix" title="stablebear.distance_matrix.DistanceMatrix"><span class="pre">DistanceMatrix</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor" title="stablebear.distance_matrix.DistanceMatrixTensor"><span class="pre">DistanceMatrixTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="api_base.html#stablebear.base_tensor.FloatTensor" title="stablebear.base_tensor.FloatTensor"><span class="pre">FloatTensor</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor"><span class="pre">BarcodeTensor</span></a></span></span><a class="headerlink" href="#stablebear.persistence.homological_kernel.compute_homological_kernel" title="Link to this definition">#</a></dt>
+<dd><p>Compute the homological kernel of two point clouds or distance matrices.</p>
+<p><code class="docutils literal notranslate"><span class="pre">X</span></code> carries the larger distances <span class="math notranslate nohighlight">\(d\)</span> and <code class="docutils literal notranslate"><span class="pre">Y</span></code> the smaller
+distances <span class="math notranslate nohighlight">\(d'\)</span> (<span class="math notranslate nohighlight">\(d' \le d\)</span> pointwise). Each bar of the
+output barcode is born when two clusters merge under <span class="math notranslate nohighlight">\(d'\)</span> and
+dies when the same clusters merge under <span class="math notranslate nohighlight">\(d\)</span>. Both inputs must
+be the same kind and the same shape; element <code class="docutils literal notranslate"><span class="pre">i</span></code> of <code class="docutils literal notranslate"><span class="pre">X</span></code> is
+paired with element <code class="docutils literal notranslate"><span class="pre">i</span></code> of <code class="docutils literal notranslate"><span class="pre">Y</span></code>. Point clouds always use the
+Euclidean metric; for any other metric, pass precomputed distance
+matrices. When the input contains multiple point clouds or distance
+matrices, the computations are parallelized across them. The method
+and the algorithm used to compute it are described in full in
+<a class="footnote-reference brackets" href="#footcite-kampnorthman2026" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloud" title="stablebear.point_cloud.PointCloud"><em>PointCloud</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloudTensor" title="stablebear.point_cloud.PointCloudTensor"><em>PointCloudTensor</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrix" title="stablebear.distance_matrix.DistanceMatrix"><em>DistanceMatrix</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor" title="stablebear.distance_matrix.DistanceMatrixTensor"><em>DistanceMatrixTensor</em></a><em>, </em><a class="reference internal" href="api_base.html#stablebear.base_tensor.FloatTensor" title="stablebear.base_tensor.FloatTensor"><em>FloatTensor</em></a><em>, or </em><em>numpy.ndarray</em>) – Input data for <span class="math notranslate nohighlight">\(d\)</span>. A <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code> or NumPy array is
+interpreted as a single point cloud (one row per point).</p></li>
+<li><p><strong>Y</strong> (same kind as <code class="docutils literal notranslate"><span class="pre">X</span></code>) – Input data for <span class="math notranslate nohighlight">\(d'\)</span>, with the same number of points per
+element as <code class="docutils literal notranslate"><span class="pre">X</span></code>. Point clouds stay in ambient dimension: express
+a lower-dimensional projection in the original coordinates.</p></li>
+<li><p><strong>dim</strong> (<em>int</em><em>, </em><em>optional</em>) – Homology dimension of the kernel, by default 0. Only <code class="docutils literal notranslate"><span class="pre">dim=0</span></code>
+is currently supported.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show progress information, by default False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Kernel barcodes with the same shape as the input, one per input
+element, each with <span class="math notranslate nohighlight">\(n - 1\)</span> finite bars. Single-instance
+inputs (a NumPy array, <code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code>, or <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code>)
+yield a tensor of shape <code class="docutils literal notranslate"><span class="pre">(1,)</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#stablebear.persistence.ph_tensor.BarcodeTensor" title="stablebear.persistence.ph_tensor.BarcodeTensor">BarcodeTensor</a></p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – If <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">Y</span></code> are not the same kind or not the same dtype.</p></li>
+<li><p><strong>ValueError</strong> – If the (outer) tensor shapes differ, or <code class="docutils literal notranslate"><span class="pre">dim</span></code> is negative.</p></li>
+<li><p><strong>NotImplementedError</strong> – If <code class="docutils literal notranslate"><span class="pre">dim</span></code> is positive.</p></li>
+<li><p><strong>RuntimeError</strong> – If <span class="math notranslate nohighlight">\(d\)</span> does not dominate <span class="math notranslate nohighlight">\(d'\)</span> (a death would land
+    below its birth by more than floating-point roundoff), or if
+    paired elements mismatch (for example, two point clouds with
+    different point counts, or a point cloud that is not an
+    <code class="docutils literal notranslate"><span class="pre">(n,</span> <span class="pre">dim)</span></code> array).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<div class="docutils container" id="id7">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-bauer2021" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Ulrich Bauer. Ripser: efficient computation of Vietoris–Rips persistence barcodes. <em>Journal of Applied and Computational Topology</em>, 5:391–423, 2021. <a class="reference external" href="https://doi.org/10.1007/s41468-021-00071-5">doi:10.1007/s41468-021-00071-5</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-biscio2019" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Christophe A. N. Biscio and Jesper Møller. The accumulated persistence function, a new useful functional summary statistic for topological data analysis, with a view to brain artery trees and spatial point process applications. <em>Journal of Computational and Graphical Statistics</em>, 28(3):671–681, 2019. <a class="reference external" href="https://doi.org/10.1080/10618600.2019.1573686">doi:10.1080/10618600.2019.1573686</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-umeda2017" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Yuhei Umeda. Time series classification via topological data analysis. <em>Information and Media Technologies</em>, 12:228–239, 2017. <a class="reference external" href="https://doi.org/10.11185/imt.12.228">doi:10.11185/imt.12.228</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-chazal2021" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Frédéric Chazal and Bertrand Michel. An introduction to topological data analysis: fundamental and practical aspects for data scientists. <em>Frontiers in Artificial Intelligence</em>, 2021. <a class="reference external" href="https://doi.org/10.3389/frai.2021.667963">doi:10.3389/frai.2021.667963</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-chacholski2020" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Wojciech Chachólski and Henri Riihimäki. Metrics and stabilization in one parameter persistence. <em>SIAM Journal on Applied Algebra and Geometry</em>, 4(1):69–98, 2020. <a class="reference external" href="https://doi.org/10.1137/19M1243932">doi:10.1137/19M1243932</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-kampnorthman2026" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<p>Gösta Kamp and Filip Northman. Computing the 0-th homological kernel. Master’s thesis, KTH Royal Institute of Technology, Stockholm, Sweden, 2026. To appear.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="api_point_process.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">stablebear.point_process</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="glossary.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Mathematical glossary</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-stablebear.persistence.barcode">barcode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.barcode.Barcode"><code class="docutils literal notranslate"><span class="pre">Barcode</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.barcode.Barcode.is_isomorphic_to"><code class="docutils literal notranslate"><span class="pre">Barcode.is_isomorphic_to()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.barcode.Barcode.to_numpy"><code class="docutils literal notranslate"><span class="pre">Barcode.to_numpy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-stablebear.persistence.linkage">linkage</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.linkage.linkage_to_barcode"><code class="docutils literal notranslate"><span class="pre">linkage_to_barcode()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-stablebear.persistence.ph_tensor">ph_tensor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.ph_tensor.BarcodeTensor"><code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.ph_tensor.BarcodeTensor.is_isomorphic_to"><code class="docutils literal notranslate"><span class="pre">BarcodeTensor.is_isomorphic_to()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-stablebear.persistence.homology">homology</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.homology.ComplexType"><code class="docutils literal notranslate"><span class="pre">ComplexType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.homology.ComplexType.VietorisRips"><code class="docutils literal notranslate"><span class="pre">ComplexType.VietorisRips</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.homology.DistanceType"><code class="docutils literal notranslate"><span class="pre">DistanceType</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.homology.DistanceType.Euclidean"><code class="docutils literal notranslate"><span class="pre">DistanceType.Euclidean</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.homology.compute_persistent_homology"><code class="docutils literal notranslate"><span class="pre">compute_persistent_homology()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-stablebear.persistence.barcode_summary">barcode_summary</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.barcode_summary.barcode_to_accumulated_persistence"><code class="docutils literal notranslate"><span class="pre">barcode_to_accumulated_persistence()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.barcode_summary.barcode_to_betti_curve"><code class="docutils literal notranslate"><span class="pre">barcode_to_betti_curve()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.barcode_summary.barcode_to_stable_rank"><code class="docutils literal notranslate"><span class="pre">barcode_to_stable_rank()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-stablebear.persistence.homological_kernel">homological_kernel</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stablebear.persistence.homological_kernel.compute_homological_kernel"><code class="docutils literal notranslate"><span class="pre">compute_homological_kernel()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/api_persistence.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

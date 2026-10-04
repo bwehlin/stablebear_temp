@@ -1,0 +1,1119 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Relative subsampling &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/relative_subsampling.db040821-f86a-4588-a6fc-0e2da1ca803a.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'relative_subsampling';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Shared subsampling options" href="subsampling_options.html" />
+    <link rel="prev" title="Subsampling" href="subsampling.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensors.html">Working with Tensors</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="random.html">Random Generation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling.html">Subsampling</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Relative subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling_options.html">Shared subsampling options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing.html">Indexing and Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic.html">Arithmetic &amp; Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation &amp; Reductions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving.html">Saving and loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distances.html">Distances and Norms</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="persistence.html">Persistent Homology</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="homological-kernel.html">Homological Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linkage.html">Converting SciPy linkage matrices</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="point_processes.html">Point Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpu.html">GPU Acceleration</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="userguide.html" class="nav-link">User guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="random.html" class="nav-link">Random Generation</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Relative subsampling</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="relative-subsampling">
+<h1>Relative subsampling<a class="headerlink" href="#relative-subsampling" title="Link to this heading">#</a></h1>
+<p>Relative subsampling starts with two datasets: a <strong>reference dataset</strong>
+<span class="math notranslate nohighlight">\(\mathcal{R}\)</span>, from which points are sampled, and a <strong>query dataset</strong>
+<span class="math notranslate nohighlight">\(\mathcal{Q}\)</span>. We draw samples from <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> for each query
+point <span class="math notranslate nohighlight">\(q \in \mathcal{Q}\)</span>. The two datasets live in the same
+space, but neither needs to be a subset of the other. In practice, however,
+the two datasets are often the same set, or the query dataset is a subset of
+the reference dataset.</p>
+<p><a class="reference internal" href="api_random.html#stablebear.random.subsample_relative" title="stablebear.random.subsample_relative"><code class="xref py py-func docutils literal notranslate"><span class="pre">subsample_relative()</span></code></a> implements the relative
+construction of Agerberg, Chachólski, and Ramanujam <a class="footnote-reference brackets" href="#footcite-agerberg2023" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>,
+with additional sampling options.</p>
+<p>For uniform sampling, see <a class="reference internal" href="subsampling.html"><span class="doc">Subsampling</span></a>. For the underlying data
+representations, see <a class="reference internal" href="concepts.html#point-clouds-and-distance-matrices"><span class="std std-ref">Point clouds and distance matrices</span></a>. Shared sampling
+options are documented in <a class="reference internal" href="subsampling_options.html"><span class="doc">Shared subsampling options</span></a>.</p>
+<section id="filter-functions-and-weights">
+<h2>Filter functions and weights<a class="headerlink" href="#filter-functions-and-weights" title="Link to this heading">#</a></h2>
+<p>We assign a <strong>filter function</strong> <span class="math notranslate nohighlight">\(f_q \colon \mathcal{R} \to \mathbb{R}\)</span> to
+each query point <span class="math notranslate nohighlight">\(q \in \mathcal{Q}\)</span>.
+This function assigns a scalar value <span class="math notranslate nohighlight">\(f_q(x)\)</span> to each reference point
+<span class="math notranslate nohighlight">\(x \in \mathcal{R}\)</span>. When
+<span class="math notranslate nohighlight">\(\mathcal{Q}, \mathcal{R} \subseteq \mathbb{R}^n\)</span>, the simplest choice is
+the Euclidean distance <span class="math notranslate nohighlight">\(f_q(x) = \lVert x - q \rVert_2\)</span> from the query
+point. A <strong>weight function</strong>
+<span class="math notranslate nohighlight">\(W \colon \mathbb{R} \to [0, \infty)\)</span> then maps that value to a nonnegative
+sampling weight:</p>
+<div class="math notranslate nohighlight">
+\[w_q \colon \mathcal{R} \to [0, \infty), \qquad w_q(x) = W(f_q(x)).\]</div>
+<p><strong>Currently, stablebear only supports distance filtering</strong>,
+<span class="math notranslate nohighlight">\(f_q(x) = d(q, x)\)</span>: Euclidean distance
+for a point cloud, or the stored pairwise distance for a distance matrix.
+For additional examples of filter functions, see Agerberg et al.
+<a class="footnote-reference brackets" href="#footcite-agerberg2023" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>See <a class="reference internal" href="distributions.html"><span class="doc">Distributions</span></a> for the available weight functions and their
+parameters.</p>
+<p>The figure below follows four reference points from coordinates to filter
+values and weights, using a
+<a class="reference internal" href="api_distributions.html#stablebear.distributions.Gaussian" title="stablebear.distributions.Gaussian"><code class="xref py py-class docutils literal notranslate"><span class="pre">Gaussian</span></code></a> distribution.</p>
+<figure class="only-light align-default">
+<a class="reference internal image-reference" href="_images/subsampling_filter_function_light.png"><img alt="Four labeled points A through D at distances 0.4, 0.8, 1.2, and 1.6 from query q are mapped onto a distance line, then weighted by a Gaussian distribution, with vertical arrows connecting filter values to their weights. Points close to q receive larger weights." src="_images/subsampling_filter_function_light.png" style="width: 100%;" />
+</a>
+</figure>
+<figure class="only-dark align-default">
+<a class="reference internal image-reference" href="_images/subsampling_filter_function_dark.png"><img alt="Four labeled points A through D at distances 0.4, 0.8, 1.2, and 1.6 from query q are mapped onto a distance line, then weighted by a Gaussian distribution, with vertical arrows connecting filter values to their weights. Points close to q receive larger weights." src="_images/subsampling_filter_function_dark.png" style="width: 100%;" />
+</a>
+</figure>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-secondary sd-bg-text-secondary">
+<span class="sd-summary-text">Show code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_filter_function</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">dark</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">0.24</span><span class="p">,</span> <span class="mf">0.32</span><span class="p">],</span>   <span class="c1"># A: distance 0.4</span>
+        <span class="p">[</span><span class="mf">0.64</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.48</span><span class="p">],</span>  <span class="c1"># B: distance 0.8</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">0.72</span><span class="p">,</span> <span class="mf">0.96</span><span class="p">],</span>  <span class="c1"># C: distance 1.2</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">1.28</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.96</span><span class="p">],</span> <span class="c1"># D: distance 1.6</span>
+    <span class="p">])</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">points</span> <span class="o">-</span> <span class="n">query</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="mf">0.9</span>
+    <span class="n">distribution</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="n">std</span><span class="p">)</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+
+    <span class="n">ink</span> <span class="o">=</span> <span class="s2">"#e7edf5"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#253746"</span>
+    <span class="n">muted</span> <span class="o">=</span> <span class="s2">"#8996a8"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#7b8894"</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">([</span><span class="s2">"#ffa576"</span><span class="p">,</span> <span class="s2">"#73b6f5"</span><span class="p">,</span> <span class="s2">"#6bd1b8"</span><span class="p">,</span> <span class="s2">"#c8a0ee"</span><span class="p">]</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span>
+              <span class="p">[</span><span class="s2">"#c95223"</span><span class="p">,</span> <span class="s2">"#246caa"</span><span class="p">,</span> <span class="s2">"#168570"</span><span class="p">,</span> <span class="s2">"#8257a6"</span><span class="p">])</span>
+    <span class="c1"># Two rows keep text readable at the documentation column's laptop width.</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.2</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">))</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">])</span>
+    <span class="n">cloud_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">line_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">weight_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.97</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.22</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.84</span><span class="p">,</span>
+                        <span class="n">wspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+
+    <span class="c1"># Keep labels about eight points from their markers, including diagonals.</span>
+    <span class="c1"># Each point keeps its letter and color throughout the construction.</span>
+    <span class="k">for</span> <span class="n">point</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="s2">"ABCD"</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+        <span class="n">cloud_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">query</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">query</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                      <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.65</span><span class="p">)</span>
+        <span class="n">cloud_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">point</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">cloud_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span>
+                          <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">"D"</span> <span class="k">else</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                          <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span>
+                          <span class="n">ha</span><span class="o">=</span><span class="s2">"right"</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">"D"</span> <span class="k">else</span> <span class="s2">"left"</span><span class="p">,</span>
+                          <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span> <span class="k">if</span> <span class="n">label</span> <span class="o">==</span> <span class="s2">"D"</span> <span class="k">else</span> <span class="s2">"bottom"</span><span class="p">,</span>
+                          <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">cloud_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">query</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ink</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">cloud_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"q"</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span>
+                      <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"top"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ink</span><span class="p">)</span>
+    <span class="n">cloud_ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.55</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"equal"</span><span class="p">)</span>
+    <span class="n">cloud_ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">cloud_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"1. Measure distance from q"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ink</span><span class="p">)</span>
+
+    <span class="n">line_ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.85</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.55</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">),</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[],</span>
+                <span class="n">xticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Filter value $d = f_q(x)$"</span><span class="p">)</span>
+    <span class="n">line_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">line_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"bottom"</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">((</span><span class="s2">"data"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">line_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"bottom"</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">muted</span><span class="p">)</span>
+    <span class="n">line_ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_label_coords</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">)</span>
+    <span class="n">line_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"2. Place on the filter line"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ink</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">distance</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="s2">"ABCD"</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+        <span class="n">line_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">line_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
+                         <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span>
+                         <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.85</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+    <span class="n">weight_ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">distribution</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">ink</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.8</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">distance</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="s2">"ABCD"</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+        <span class="n">weight_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">weight_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">weight</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">),</span>
+                           <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s2">"arrowstyle"</span><span class="p">:</span> <span class="s2">"-&gt;"</span><span class="p">,</span> <span class="s2">"color"</span><span class="p">:</span> <span class="n">color</span><span class="p">,</span> <span class="s2">"lw"</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">})</span>
+        <span class="n">weight_ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">weight_ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">weight</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                           <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"bottom"</span><span class="p">,</span>
+                           <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+    <span class="n">weight_ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">1.85</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+                  <span class="n">xticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.6</span><span class="p">],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
+                  <span class="n">xlabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Filter value $d$"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Weight $W(d)$"</span><span class="p">)</span>
+    <span class="n">weight_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s2">"top"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">weight_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"bottom"</span><span class="p">]</span><span class="o">.</span><span class="n">set_position</span><span class="p">((</span><span class="s2">"data"</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">weight_ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">spine</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">muted</span><span class="p">)</span>
+        <span class="n">spine</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">weight_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"3. Weight by distribution"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ink</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">line_ax</span><span class="p">,</span> <span class="n">weight_ax</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">ink</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_filter_function</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details><p>For the distance filter shown here, each point’s distance from query <code class="docutils literal notranslate"><span class="pre">q</span></code>
+becomes its value on the one-dimensional <strong>filter line</strong>. Vertical arrows connect these filter values
+to their <code class="docutils literal notranslate"><span class="pre">Gaussian(0,</span> <span class="pre">0.9)</span></code> weights. Letters and colors identify the same
+point in all three panels. Dividing the four weights by their sum gives the
+sampling probabilities. Points close to <code class="docutils literal notranslate"><span class="pre">q</span></code> receive larger weights and are
+more likely to be sampled.</p>
+</section>
+<section id="passing-reference-and-query-datasets">
+<h2>Passing reference and query datasets<a class="headerlink" href="#passing-reference-and-query-datasets" title="Link to this heading">#</a></h2>
+<p>Pass the reference dataset as <code class="docutils literal notranslate"><span class="pre">reference</span></code> and specify the queries with
+<code class="docutils literal notranslate"><span class="pre">query</span></code>. For point clouds <code class="docutils literal notranslate"><span class="pre">R</span></code> and <code class="docutils literal notranslate"><span class="pre">Q</span></code>, the call is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.distributions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Gaussian</span>
+
+<span class="n">samples</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">subsample_relative</span><span class="p">(</span>
+    <span class="n">reference</span><span class="o">=</span><span class="n">R</span><span class="p">,</span>
+    <span class="n">query</span><span class="o">=</span><span class="n">Q</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">n_points</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>   <span class="c1"># Requested number of points per sample</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>   <span class="c1"># Number of samples per query point</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">n_points</span></code> sets the requested sample size; <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> sets how many
+independent samples to draw for each query point.
+The result has shape <code class="docutils literal notranslate"><span class="pre">(Q.shape[0],</span> <span class="pre">5)</span></code>: five samples per query, with ten
+points each. For example, one can loop over the queries and samples to print
+the sampled points:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Query </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">, sample </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">sample</span><span class="p">))</span>
+
+        <span class="k">assert</span> <span class="n">sample</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">query</span></code> argument accepts these forms:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">query</span></code></p></th>
+<th class="head"><p>Queries used</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Q</span></code> (a <a class="reference internal" href="api_base.html#stablebear.point_cloud.PointCloud" title="stablebear.point_cloud.PointCloud"><code class="xref py py-class docutils literal notranslate"><span class="pre">PointCloud</span></code></a>,
+<a class="reference internal" href="api_base.html#stablebear.base_tensor.FloatTensor" title="stablebear.base_tensor.FloatTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FloatTensor</span></code></a>, or coordinate array)</p></td>
+<td><p>The rows of <code class="docutils literal notranslate"><span class="pre">Q</span></code>, with shape <code class="docutils literal notranslate"><span class="pre">(n_query,</span> <span class="pre">dimension)</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>A one-dimensional integer list, array, or
+<a class="reference internal" href="api_base.html#stablebear.base_tensor.IntTensor" title="stablebear.base_tensor.IntTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntTensor</span></code></a></p></td>
+<td><p>The reference points at those indices, in the supplied order.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">None</span></code> (or omitted)</p></td>
+<td><p>Every reference point, in reference order.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For a <a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrix" title="stablebear.distance_matrix.DistanceMatrix"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrix</span></code></a> reference, use index
+queries or omit <code class="docutils literal notranslate"><span class="pre">query</span></code>.
+Query index <code class="docutils literal notranslate"><span class="pre">i</span></code> uses the stored distances <code class="docutils literal notranslate"><span class="pre">D[i,</span> <span class="pre">j]</span></code> to reference points
+<code class="docutils literal notranslate"><span class="pre">j</span></code>. Each sample is a <a class="reference internal" href="glossary.html#term-principal-submatrix"><span class="xref std std-term">principal submatrix</span></a> in drawn index order, as in
+<a class="reference internal" href="subsampling.html"><span class="doc">uniform subsampling</span></a>.</p>
+</section>
+<section id="choosing-distributions">
+<h2>Choosing distributions<a class="headerlink" href="#choosing-distributions" title="Link to this heading">#</a></h2>
+<p>See <a class="reference internal" href="distributions.html"><span class="doc">Distributions</span></a> for Gaussian and
+<a class="reference internal" href="api_distributions.html#stablebear.distributions.Uniform" title="stablebear.distributions.Uniform"><code class="xref py py-class docutils literal notranslate"><span class="pre">Uniform</span></code></a> weight functions and
+<a class="reference internal" href="api_distributions.html#stablebear.distributions.Mixture" title="stablebear.distributions.Mixture"><code class="xref py py-class docutils literal notranslate"><span class="pre">mixtures</span></code></a>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">G</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="n">mixture</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Mixture</span><span class="p">([</span><span class="n">G</span><span class="p">,</span> <span class="n">U</span><span class="p">],</span> <span class="n">coefficients</span><span class="o">=</span><span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>A mixture is one distribution. Passing <code class="docutils literal notranslate"><span class="pre">distribution=[G,</span> <span class="pre">U,</span> <span class="pre">mixture]</span></code> requests
+three separate sampling runs for each query and returns shape
+<code class="docutils literal notranslate"><span class="pre">(n_query,</span> <span class="pre">3,</span> <span class="pre">n_samples)</span></code>. Every nonempty list retains the distribution axis,
+even a one-element list. A single distribution does not add an axis.</p>
+</section>
+<section id="queries-change-the-selected-region">
+<h2>Queries change the selected region<a class="headerlink" href="#queries-change-the-selected-region" title="Link to this heading">#</a></h2>
+<p>We use a synthetic dataset of 100 reference points and
+<code class="docutils literal notranslate"><span class="pre">Gaussian(0,</span> <span class="pre">0.4)</span></code> weights to compare samples at three query locations.</p>
+<a class="only-light reference internal image-reference" href="_images/subsampling_relative_light.png"><img alt="Three Gaussian weight heatmaps over the same scattered point cloud of 100 gray reference points, with query crosses at different locations, orange sampled points concentrated near each query, and a shared weight scale from zero to one." class="only-light" src="_images/subsampling_relative_light.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/subsampling_relative_dark.png"><img alt="Three Gaussian weight heatmaps over the same scattered point cloud of 100 gray reference points, with query crosses at different locations, orange sampled points concentrated near each query, and a shared weight scale from zero to one." class="only-dark" src="_images/subsampling_relative_dark.png" style="width: 100%;" />
+</a>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-secondary sd-bg-text-secondary">
+<span class="sd-summary-text">Show code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearSegmentedColormap</span><span class="p">,</span> <span class="n">ListedColormap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_distance_weight_heatmap</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_relative_subsamples</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">uniform</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dark</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">point_color</span> <span class="o">=</span> <span class="s2">"#b8c5cf"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#526474"</span>
+    <span class="n">selected_color</span> <span class="o">=</span> <span class="s2">"#ff9c70"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#cf512b"</span>
+    <span class="n">query_color</span> <span class="o">=</span> <span class="s2">"#16384b"</span>
+    <span class="n">outline_color</span> <span class="o">=</span> <span class="s2">"#202936"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#ffffff"</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">queries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">]])</span>
+    <span class="k">if</span> <span class="n">uniform</span><span class="p">:</span>
+        <span class="n">distribution</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mf">0.65</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"Uniform distance weights ($0 \leq d &lt; 0.65$)"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">distribution</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s2">"Gaussian distance weights (std = 0.4)"</span>
+    <span class="n">peak</span> <span class="o">=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">subsample_relative</span><span class="p">(</span>
+        <span class="n">sb</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">(</span><span class="n">points</span><span class="p">),</span> <span class="n">queries</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">distribution</span><span class="o">=</span><span class="n">distribution</span><span class="p">,</span>
+        <span class="n">generator</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">)</span>
+    <span class="c1"># Higher weights are lighter in both themes, with a wide luminance range.</span>
+    <span class="n">field_colors</span> <span class="o">=</span> <span class="p">([</span><span class="s2">"#172331"</span><span class="p">,</span> <span class="s2">"#316c90"</span><span class="p">,</span> <span class="s2">"#8bd1ed"</span><span class="p">]</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span>
+                    <span class="p">[</span><span class="s2">"#155477"</span><span class="p">,</span> <span class="s2">"#78acc9"</span><span class="p">,</span> <span class="s2">"#f5f7f9"</span><span class="p">])</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="p">(</span><span class="n">ListedColormap</span><span class="p">([</span><span class="n">field_colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">field_colors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="k">if</span> <span class="n">uniform</span> <span class="k">else</span>
+            <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">"distance_weight"</span><span class="p">,</span> <span class="n">field_colors</span><span class="p">))</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+        <span class="n">heatmap</span> <span class="o">=</span> <span class="n">plot_distance_weight_heatmap</span><span class="p">(</span>
+            <span class="n">distribution</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">queries</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">peak</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">point_color</span><span class="p">,</span>
+                   <span class="n">edgecolors</span><span class="o">=</span><span class="n">outline_color</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="s2">"Reference (100 points)"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">selected</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">selected</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">52</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">selected_color</span><span class="p">,</span>
+                   <span class="n">edgecolors</span><span class="o">=</span><span class="n">outline_color</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="s2">"Sample (10 points)"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">queries</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">query_color</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="s2">"Query"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Query </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"equal"</span><span class="p">,</span>
+               <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">),</span>
+               <span class="n">xticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s2">"top"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">spine</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">"#617080"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#b7c2ca"</span><span class="p">)</span>
+            <span class="n">spine</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Query </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)</span>
+    <span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+    <span class="n">legend</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.47</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">))</span>
+    <span class="c1"># The legend sits on the page background rather than the heatmap peak.</span>
+    <span class="n">legend</span><span class="o">.</span><span class="n">legend_handles</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">"#ffffff"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#16384b"</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.87</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.22</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.86</span><span class="p">,</span>
+                        <span class="n">wspace</span><span class="o">=</span><span class="mf">0.12</span><span class="p">)</span>
+    <span class="n">colorbar_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">((</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.64</span><span class="p">))</span>
+    <span class="n">colorbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">heatmap</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">colorbar_ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Distance weight"</span><span class="p">,</span>
+                 <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">peak</span><span class="p">]</span> <span class="k">if</span> <span class="n">uniform</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">colorbar</span><span class="o">.</span><span class="n">outline</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+</details><p>Each cross marks a query, separate from the reference points shown as small
+gray circles. Larger orange circles show one sample per query. Moving the
+query shifts the region of larger weights and concentrates the sample near
+its new location.</p>
+<p>Lighter shading indicates larger Gaussian weights, with the same color scale
+in every panel. These are weights evaluated at distances, not probabilities
+over the plane; sampling normalizes the weights at the reference points only.</p>
+</section>
+<section id="uniform-distance-weights">
+<h2>Uniform distance weights<a class="headerlink" href="#uniform-distance-weights" title="Link to this heading">#</a></h2>
+<p>We now use <code class="docutils literal notranslate"><span class="pre">Uniform(start=0,</span> <span class="pre">end=0.65)</span></code> with the same reference point cloud
+and queries, drawing ten points without replacement for each query.</p>
+<a class="only-light reference internal image-reference" href="_images/subsampling_relative_uniform_light.png"><img alt="Three uniform distance-weight heatmaps over the same 100 reference points, with light disks of radius 0.65 on a darker blue background around query crosses and ten orange sampled points inside each disk." class="only-light" src="_images/subsampling_relative_uniform_light.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/subsampling_relative_uniform_dark.png"><img alt="Three uniform distance-weight heatmaps over the same 100 reference points, with light disks of radius 0.65 on a darker blue background around query crosses and ten orange sampled points inside each disk." class="only-dark" src="_images/subsampling_relative_uniform_dark.png" style="width: 100%;" />
+</a>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-secondary sd-bg-text-secondary">
+<span class="sd-summary-text">Show code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearSegmentedColormap</span><span class="p">,</span> <span class="n">ListedColormap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_distance_weight_heatmap</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_relative_subsamples</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">uniform</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dark</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">point_color</span> <span class="o">=</span> <span class="s2">"#b8c5cf"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#526474"</span>
+    <span class="n">selected_color</span> <span class="o">=</span> <span class="s2">"#ff9c70"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#cf512b"</span>
+    <span class="n">query_color</span> <span class="o">=</span> <span class="s2">"#16384b"</span>
+    <span class="n">outline_color</span> <span class="o">=</span> <span class="s2">"#202936"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#ffffff"</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">queries</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">0.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">]])</span>
+    <span class="k">if</span> <span class="n">uniform</span><span class="p">:</span>
+        <span class="n">distribution</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mf">0.65</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"Uniform distance weights ($0 \leq d &lt; 0.65$)"</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">distribution</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s2">"Gaussian distance weights (std = 0.4)"</span>
+    <span class="n">peak</span> <span class="o">=</span> <span class="n">distribution</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">subsample_relative</span><span class="p">(</span>
+        <span class="n">sb</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">(</span><span class="n">points</span><span class="p">),</span> <span class="n">queries</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">distribution</span><span class="o">=</span><span class="n">distribution</span><span class="p">,</span>
+        <span class="n">generator</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">)</span>
+    <span class="c1"># Higher weights are lighter in both themes, with a wide luminance range.</span>
+    <span class="n">field_colors</span> <span class="o">=</span> <span class="p">([</span><span class="s2">"#172331"</span><span class="p">,</span> <span class="s2">"#316c90"</span><span class="p">,</span> <span class="s2">"#8bd1ed"</span><span class="p">]</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span>
+                    <span class="p">[</span><span class="s2">"#155477"</span><span class="p">,</span> <span class="s2">"#78acc9"</span><span class="p">,</span> <span class="s2">"#f5f7f9"</span><span class="p">])</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="p">(</span><span class="n">ListedColormap</span><span class="p">([</span><span class="n">field_colors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">field_colors</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="k">if</span> <span class="n">uniform</span> <span class="k">else</span>
+            <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">"distance_weight"</span><span class="p">,</span> <span class="n">field_colors</span><span class="p">))</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">):</span>
+        <span class="n">heatmap</span> <span class="o">=</span> <span class="n">plot_distance_weight_heatmap</span><span class="p">(</span>
+            <span class="n">distribution</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">queries</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">peak</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">point_color</span><span class="p">,</span>
+                   <span class="n">edgecolors</span><span class="o">=</span><span class="n">outline_color</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.45</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="s2">"Reference (100 points)"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">selected</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">selected</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">52</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">selected_color</span><span class="p">,</span>
+                   <span class="n">edgecolors</span><span class="o">=</span><span class="n">outline_color</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="s2">"Sample (10 points)"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">queries</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">query_color</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span>
+                   <span class="n">linewidths</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                   <span class="n">label</span><span class="o">=</span><span class="s2">"Query"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Query </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"equal"</span><span class="p">,</span>
+               <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.15</span><span class="p">,</span> <span class="mf">1.15</span><span class="p">),</span>
+               <span class="n">xticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s2">"top"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">spine</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">"#617080"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#b7c2ca"</span><span class="p">)</span>
+            <span class="n">spine</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Query </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)</span>
+    <span class="n">handles</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">()</span>
+    <span class="n">legend</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.47</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">))</span>
+    <span class="c1"># The legend sits on the page background rather than the heatmap peak.</span>
+    <span class="n">legend</span><span class="o">.</span><span class="n">legend_handles</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s2">"#ffffff"</span> <span class="k">if</span> <span class="n">dark</span> <span class="k">else</span> <span class="s2">"#16384b"</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">0.98</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.87</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.22</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.86</span><span class="p">,</span>
+                        <span class="n">wspace</span><span class="o">=</span><span class="mf">0.12</span><span class="p">)</span>
+    <span class="n">colorbar_ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">((</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="mf">0.64</span><span class="p">))</span>
+    <span class="n">colorbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">heatmap</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">colorbar_ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Distance weight"</span><span class="p">,</span>
+                 <span class="n">ticks</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">peak</span><span class="p">]</span> <span class="k">if</span> <span class="n">uniform</span> <span class="k">else</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">colorbar</span><span class="o">.</span><span class="n">outline</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">colorbar</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_relative_subsamples</span><span class="p">(</span><span class="n">uniform</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details><p>The Uniform weights give a sharp cutoff: the light disk has weight
+<span class="math notranslate nohighlight">\(1 / 0.65 \approx 1.538\)</span> for distances <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">d</span> <span class="pre">&lt;</span> <span class="pre">0.65</span></code>, and the
+surrounding background has weight zero. Reference points inside each disk
+have equal sampling weight. Points outside the disk will not be selected.</p>
+</section>
+<section id="sample-size-and-count">
+<h2>Sample size and count<a class="headerlink" href="#sample-size-and-count" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">n_points</span></code> is the positive number of draws requested per sample.
+<code class="docutils literal notranslate"><span class="pre">n_samples</span></code> is the positive number of samples generated for each
+query/distribution pair, defaulting to one. Samples are independent, so a
+reference point can appear in several samples (even when sampling without
+replacement).</p>
+<p>The sample axis follows the query and optional distribution axes:
+<code class="docutils literal notranslate"><span class="pre">(n_query,</span> <span class="pre">n_samples)</span></code> for a single distribution, or
+<code class="docutils literal notranslate"><span class="pre">(n_query,</span> <span class="pre">n_distributions,</span> <span class="pre">n_samples)</span></code> for a list. Empty and partial
+samples retain those axes.</p>
+</section>
+<section id="eligible-points-and-reporting">
+<h2>Eligible points and reporting<a class="headerlink" href="#eligible-points-and-reporting" title="Link to this heading">#</a></h2>
+<p>See <a class="reference internal" href="subsampling_options.html"><span class="doc">Shared subsampling options</span></a> for <code class="docutils literal notranslate"><span class="pre">replace</span></code>,
+<code class="docutils literal notranslate"><span class="pre">allow_partial</span></code>, <code class="docutils literal notranslate"><span class="pre">discard_duplicates</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">generator</span></code>, as well as inspecting selected indices.</p>
+<p>For relative subsampling, a reference point is eligible when it has positive
+weight for a query/distribution pair. A point at infinite distance from the
+query has zero weight for every distribution, including unbounded Uniform
+distributions. Each pair is checked independently;
+an error under <code class="docutils literal notranslate"><span class="pre">allow_partial=&quot;no&quot;</span></code> identifies the failing pair.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">replace=True,</span> <span class="pre">allow_partial=&quot;drop&quot;</span></code> to require a minimum number of
+eligible points and draw with replacement, as in Step B1 of Agerberg et al.
+<a class="footnote-reference brackets" href="#footcite-agerberg2023" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>If the query set is empty, the result has shape <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">n_samples)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">n_distributions,</span> <span class="pre">n_samples)</span></code>.</p>
+</section>
+<section id="persistence-of-relative-subsamples">
+<h2>Persistence of relative subsamples<a class="headerlink" href="#persistence-of-relative-subsamples" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="tutorial_notebooks/relative_subsampling.html"><span class="doc">relative subsampling tutorial</span></a>
+shows the reference and query points, sampled point clouds, individual stable
+ranks, and their averages. It averages over the sample axis while retaining the query,
+distribution, and homology axes.</p>
+<p>For a distance-matrix reference, the same pipeline starts with, for example,
+<code class="docutils literal notranslate"><span class="pre">query=sb.indices([0,</span> <span class="pre">5,</span> <span class="pre">10])</span></code>. The returned
+<a class="reference internal" href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor" title="stablebear.distance_matrix.DistanceMatrixTensor"><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code></a> has the same axis
+conventions.</p>
+</section>
+<section id="heatmaps">
+<span id="relative-subsampling-heatmaps"></span><h2>Heatmaps<a class="headerlink" href="#heatmaps" title="Link to this heading">#</a></h2>
+<p>Heatmaps help visualize how a distribution weights the nonnegative filter
+values used by <a class="reference internal" href="api_random.html#stablebear.random.subsample_relative" title="stablebear.random.subsample_relative"><code class="xref py py-func docutils literal notranslate"><span class="pre">subsample_relative()</span></code></a>. With distance
+filtering, only the part of the distribution at nonnegative filter values
+contributes; the part at negative values is discarded.</p>
+<p><a class="reference internal" href="api_plotting.html#stablebear.plotting.plot_distance_weight_heatmap" title="stablebear.plotting.plot_distance_weight_heatmap"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_distance_weight_heatmap()</span></code></a> creates a grid and plots
+weights against distance from <code class="docutils literal notranslate"><span class="pre">query</span></code>, which defaults to the origin.
+Pass <code class="docutils literal notranslate"><span class="pre">ax</span></code> to draw on an existing Matplotlib axes. The helper chooses bounds
+automatically from <code class="docutils literal notranslate"><span class="pre">distribution.plot_range()</span></code>. The heatmap is centered on
+<code class="docutils literal notranslate"><span class="pre">query</span></code> and includes
+a 10% margin. Unbounded ranges require an explicit <code class="docutils literal notranslate"><span class="pre">extent</span></code>.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">extent=(xmin,</span> <span class="pre">xmax,</span> <span class="pre">ymin,</span> <span class="pre">ymax)</span></code> to override the bounds and <code class="docutils literal notranslate"><span class="pre">resolution</span></code>
+to set the number of pixels per axis (default 512). The helper returns a
+Matplotlib image for adding a colorbar or adjusting the color scale. Each panel below has its
+own color scale. The colors show distribution weights evaluated at distances,
+not a probability density over the plane.</p>
+<a class="only-light reference internal image-reference" href="_images/weight_heatmaps_light.png"><img alt="Gaussian weights concentrated near the origin, Uniform weights on an annulus, and a mixture combining the two regions." class="only-light" src="_images/weight_heatmaps_light.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/weight_heatmaps_dark.png"><img alt="Gaussian weights concentrated near the origin, Uniform weights on an annulus, and a mixture combining the two regions." class="only-dark" src="_images/weight_heatmaps_dark.png" style="width: 100%;" />
+</a>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-secondary sd-bg-text-secondary">
+<span class="sd-summary-text">Show code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_distance_weight_heatmap</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_weight_heatmaps</span><span class="p">():</span>
+    <span class="n">gaussian</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">uniform</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">mixture</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">distributions</span><span class="o">.</span><span class="n">Mixture</span><span class="p">([</span><span class="n">gaussian</span><span class="p">,</span> <span class="n">uniform</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+    <span class="n">extent</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.65</span><span class="p">,</span> <span class="mf">1.65</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.65</span><span class="p">,</span> <span class="mf">1.65</span><span class="p">)</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="s2">"constrained"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">distribution</span><span class="p">,</span> <span class="n">title</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+        <span class="n">axes</span><span class="p">,</span> <span class="p">[</span><span class="n">gaussian</span><span class="p">,</span> <span class="n">uniform</span><span class="p">,</span> <span class="n">mixture</span><span class="p">],</span> <span class="p">[</span><span class="s2">"Gaussian"</span><span class="p">,</span> <span class="s2">"Uniform"</span><span class="p">,</span> <span class="s2">"Mixture"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">heatmap</span> <span class="o">=</span> <span class="n">plot_distance_weight_heatmap</span><span class="p">(</span><span class="n">distribution</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">"x"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">"equal"</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">heatmap</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Weight"</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_weight_heatmaps</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-agerberg2023" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>,<a role="doc-backlink" href="#id3">3</a>)</span>
+<p>Jens Agerberg, Wojciech Chachólski, and Ryan Ramanujam. Global and relative topological features from homological invariants of subsampled datasets. In <em>Proceedings of 2nd Annual Workshop on Topology, Algebra, and Geometry in Machine Learning (TAG-ML)</em>, volume 221 of Proceedings of Machine Learning Research, 302–312. 2023. URL: <a class="reference external" href="https://proceedings.mlr.press/v221/agerberg23a.html">https://proceedings.mlr.press/v221/agerberg23a.html</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="subsampling.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Subsampling</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="subsampling_options.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Shared subsampling options</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-functions-and-weights">Filter functions and weights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#passing-reference-and-query-datasets">Passing reference and query datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-distributions">Choosing distributions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#queries-change-the-selected-region">Queries change the selected region</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#uniform-distance-weights">Uniform distance weights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-size-and-count">Sample size and count</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eligible-points-and-reporting">Eligible points and reporting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#persistence-of-relative-subsamples">Persistence of relative subsamples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmaps">Heatmaps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/relative_subsampling.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

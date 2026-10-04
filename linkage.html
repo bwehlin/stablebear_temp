@@ -1,0 +1,1129 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Converting SciPy linkage matrices &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/linkage.2791ca88-1d03-40ad-bae5-6782c5a8dfa5.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'linkage';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Point Processes" href="point_processes.html" />
+    <link rel="prev" title="Homological Kernels" href="homological-kernel.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensors.html">Working with Tensors</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="random.html">Random Generation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling.html">Subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relative_subsampling.html">Relative subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling_options.html">Shared subsampling options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing.html">Indexing and Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic.html">Arithmetic &amp; Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation &amp; Reductions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving.html">Saving and loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distances.html">Distances and Norms</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="persistence.html">Persistent Homology</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="homological-kernel.html">Homological Kernels</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Converting SciPy linkage matrices</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="point_processes.html">Point Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpu.html">GPU Acceleration</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="userguide.html" class="nav-link">User guide</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="persistence.html" class="nav-link">Persistent Homology</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Converting SciPy linkage matrices</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="converting-scipy-linkage-matrices">
+<h1>Converting SciPy linkage matrices<a class="headerlink" href="#converting-scipy-linkage-matrices" title="Link to this heading">#</a></h1>
+<p>Use <code class="docutils literal notranslate"><span class="pre">linkage_to_barcode</span></code> to turn an existing hierarchical clustering result
+into a single <code class="docutils literal notranslate"><span class="pre">Barcode</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.cluster.hierarchy</span><span class="w"> </span><span class="kn">import</span> <span class="n">linkage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.persistence</span><span class="w"> </span><span class="kn">import</span> <span class="n">linkage_to_barcode</span>
+
+<span class="n">Z</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">]],</span> <span class="n">method</span><span class="o">=</span><span class="s2">"single"</span><span class="p">)</span>
+<span class="n">bc</span> <span class="o">=</span> <span class="n">linkage_to_barcode</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+<span class="c1"># Intervals: [0, 1), [0, 3), [0, inf).</span>
+<span class="n">reduced_bc</span> <span class="o">=</span> <span class="n">linkage_to_barcode</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">reduced</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Intervals: [0, 1), [0, 3).</span>
+</pre></div>
+</div>
+<p>Only the clustering step requires SciPy. <code class="docutils literal notranslate"><span class="pre">linkage_to_barcode</span></code> converts the
+merges already recorded in <code class="docutils literal notranslate"><span class="pre">Z</span></code>; it does not recompute the clustering.</p>
+<section id="converting-a-dendrogram-to-a-barcode">
+<h2>Converting a dendrogram to a barcode<a class="headerlink" href="#converting-a-dendrogram-to-a-barcode" title="Link to this heading">#</a></h2>
+<p>A <a class="reference internal" href="glossary.html#term-dendrogram"><span class="xref std std-term">dendrogram</span></a> draws the clustering as a tree. In the figures below,
+read it from left to right: observations start at scale zero, and each
+vertical join marks the scale at which two clusters become one. Both panels
+use the same scale increasing to the right. The barcode records these reductions in
+the number of clusters. All bars start at zero, and one bar ends at each
+merge height. One bar continues forever because a single cluster remains
+after all the merges. For now, assume the merge heights are positive and
+nondecreasing.</p>
+<section id="three-observations-two-merges">
+<h3>Three observations, two merges<a class="headerlink" href="#three-observations-two-merges" title="Link to this heading">#</a></h3>
+<p>The example above uses single linkage on three points on a line:
+<code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">=</span> <span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span> <span class="pre">=</span> <span class="pre">1</span></code>, and <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">4</span></code>. First, A and B merge at height 1.
+Their cluster then merges with C at height 3, the distance from B to C.
+The two finite barcode intervals therefore end at 1 and 3. Matching colors
+in the figure connect each merge height to its bar endpoint.</p>
+<a class="only-light reference internal image-reference" href="_images/linkage_three_points_light.png"><img alt="Dendrogram of A=0, B=1, C=4, with A and B merging at height 1 and joining C at height 3. Beside it, the resulting barcode has intervals [0,1), [0,3), and [0,infinity)." class="only-light align-center" src="_images/linkage_three_points_light.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/linkage_three_points_dark.png"><img alt="Dendrogram of A=0, B=1, C=4, with A and B merging at height 1 and joining C at height 3. Beside it, the resulting barcode has intervals [0,1), [0,3), and [0,infinity)." class="only-dark align-center" src="_images/linkage_three_points_dark.png" style="width: 100%;" />
+</a>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-secondary sd-bg-text-secondary">
+<span class="sd-summary-text">Show code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.cluster.hierarchy</span><span class="w"> </span><span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.persistence</span><span class="w"> </span><span class="kn">import</span> <span class="n">linkage_to_barcode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_barcode</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_linkage_pair</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">bc</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Plot a monotone linkage matrix alongside its converted barcode."""</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">Z</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"#2878b5"</span><span class="p">,</span> <span class="s2">"#d87824"</span><span class="p">,</span> <span class="s2">"#29956a"</span><span class="p">]</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">palette</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">palette</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">heights</span><span class="p">)}</span>
+    <span class="n">foreground</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"text.color"</span><span class="p">]</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1.3</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">tree_ax</span><span class="p">,</span> <span class="n">bar_ax</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dendrogram</span><span class="p">(</span>
+        <span class="n">Z</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">tree_ax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">"right"</span><span class="p">,</span>
+        <span class="n">link_color_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cluster</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="n">Z</span><span class="p">[</span><span class="n">cluster</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Dendrogram"</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Observations"</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Scale (merge height)"</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">heights</span><span class="p">])</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">height</span> <span class="ow">in</span> <span class="n">heights</span><span class="p">:</span>
+        <span class="n">tree_ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">height</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                        <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">bar_ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">height</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                       <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">plot_barcode</span><span class="p">(</span><span class="n">bc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">bar_ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">foreground</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+    <span class="c1"># All births are zero; plot_barcode orders these intervals longest first.</span>
+    <span class="n">shown</span> <span class="o">=</span> <span class="n">intervals</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_colors</span><span class="p">([</span>
+        <span class="n">foreground</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">death</span><span class="p">)</span> <span class="k">else</span> <span class="n">colors</span><span class="p">[</span><span class="n">death</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">death</span> <span class="ow">in</span> <span class="n">shown</span>
+    <span class="p">])</span>
+    <span class="n">interval_labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">r</span><span class="s2">"$[0,\infty)$"</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">death</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"[0, </span><span class="si">{</span><span class="n">death</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">)"</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">death</span> <span class="ow">in</span> <span class="n">shown</span>
+    <span class="p">]</span>
+
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Resulting barcode"</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Scale"</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">heights</span><span class="p">])</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)),</span> <span class="n">interval_labels</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">tree_ax</span><span class="p">,</span> <span class="n">bar_ax</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s2">"top"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"left"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">w_pad</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_three_points</span><span class="p">():</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">]],</span> <span class="n">method</span><span class="o">=</span><span class="s2">"single"</span><span class="p">)</span>
+    <span class="n">bc</span> <span class="o">=</span> <span class="n">linkage_to_barcode</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="c1"># bc.to_numpy(): [[0, 1], [0, 3], [0, inf]]</span>
+    <span class="k">return</span> <span class="n">plot_linkage_pair</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">bc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"A (0)"</span><span class="p">,</span> <span class="s2">"B (1)"</span><span class="p">,</span> <span class="s2">"C (4)"</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_three_points</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details><p>At any scale, count the bars that have not yet ended to recover the number
+of clusters. Here there are three clusters below 1, two from 1 up to
+(but not including) 3, and one from 3 onwards. The finite intervals exclude their right endpoints:
+at a merge height, the merge has already happened and the corresponding
+bar is no longer present.</p>
+</section>
+<section id="several-merges-at-the-same-height">
+<h3>Several merges at the same height<a class="headerlink" href="#several-merges-at-the-same-height" title="Link to this heading">#</a></h3>
+<p>Now add a fourth point, <code class="docutils literal notranslate"><span class="pre">D</span> <span class="pre">=</span> <span class="pre">5</span></code>. A and B merge at height 1, and so do C
+and D. The two pairs merge at height 3. This produces <strong>two copies</strong> of
+<code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1)</span></code>, followed by <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">3)</span></code> and <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">inf)</span></code>. Equal merge heights
+therefore appear as repeated intervals; they are not combined into a
+single bar.</p>
+<a class="only-light reference internal image-reference" href="_images/linkage_tied_merges_light.png"><img alt="Dendrogram of A=0, B=1, C=4, D=5. Each neighboring pair merges at height 1, then the pairs merge at height 3. The barcode contains two [0,1) intervals, one [0,3), and one infinite interval." class="only-light align-center" src="_images/linkage_tied_merges_light.png" style="width: 100%;" />
+</a>
+<a class="only-dark reference internal image-reference" href="_images/linkage_tied_merges_dark.png"><img alt="Dendrogram of A=0, B=1, C=4, D=5. Each neighboring pair merges at height 1, then the pairs merge at height 3. The barcode contains two [0,1) intervals, one [0,3), and one infinite interval." class="only-dark align-center" src="_images/linkage_tied_merges_dark.png" style="width: 100%;" />
+</a>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-secondary sd-bg-text-secondary">
+<span class="sd-summary-text">Show code</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.cluster.hierarchy</span><span class="w"> </span><span class="kn">import</span> <span class="n">dendrogram</span><span class="p">,</span> <span class="n">linkage</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.persistence</span><span class="w"> </span><span class="kn">import</span> <span class="n">linkage_to_barcode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.plotting</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_barcode</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">plot_linkage_pair</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">bc</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Plot a monotone linkage matrix alongside its converted barcode."""</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">bc</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">Z</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+    <span class="n">palette</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"#2878b5"</span><span class="p">,</span> <span class="s2">"#d87824"</span><span class="p">,</span> <span class="s2">"#29956a"</span><span class="p">]</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">palette</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">palette</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">heights</span><span class="p">)}</span>
+    <span class="n">foreground</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">"text.color"</span><span class="p">]</span>
+    <span class="n">limit</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1.3</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">tree_ax</span><span class="p">,</span> <span class="n">bar_ax</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dendrogram</span><span class="p">(</span>
+        <span class="n">Z</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">tree_ax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">"right"</span><span class="p">,</span>
+        <span class="n">link_color_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cluster</span><span class="p">:</span> <span class="n">colors</span><span class="p">[</span><span class="n">Z</span><span class="p">[</span><span class="n">cluster</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="mi">2</span><span class="p">]],</span>
+    <span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Dendrogram"</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Observations"</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Scale (merge height)"</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">heights</span><span class="p">])</span>
+    <span class="n">tree_ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">height</span> <span class="ow">in</span> <span class="n">heights</span><span class="p">:</span>
+        <span class="n">tree_ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">height</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                        <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">bar_ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">height</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">height</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span>
+                       <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">"--"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">plot_barcode</span><span class="p">(</span><span class="n">bc</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">bar_ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">foreground</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+    <span class="c1"># All births are zero; plot_barcode orders these intervals longest first.</span>
+    <span class="n">shown</span> <span class="o">=</span> <span class="n">intervals</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">intervals</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">collections</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_colors</span><span class="p">([</span>
+        <span class="n">foreground</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">death</span><span class="p">)</span> <span class="k">else</span> <span class="n">colors</span><span class="p">[</span><span class="n">death</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">death</span> <span class="ow">in</span> <span class="n">shown</span>
+    <span class="p">])</span>
+    <span class="n">interval_labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">r</span><span class="s2">"$[0,\infty)$"</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">death</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"[0, </span><span class="si">{</span><span class="n">death</span><span class="si">:</span><span class="s2">g</span><span class="si">}</span><span class="s2">)"</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">death</span> <span class="ow">in</span> <span class="n">shown</span>
+    <span class="p">]</span>
+
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Resulting barcode"</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Scale"</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">limit</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="n">heights</span><span class="p">])</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)),</span> <span class="n">interval_labels</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s2">"y"</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">tree_ax</span><span class="p">,</span> <span class="n">bar_ax</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s2">"top"</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">bar_ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s2">"left"</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">w_pad</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_tied_merges</span><span class="p">():</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">linkage</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">]],</span> <span class="n">method</span><span class="o">=</span><span class="s2">"single"</span><span class="p">)</span>
+    <span class="n">bc</span> <span class="o">=</span> <span class="n">linkage_to_barcode</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="c1"># bc.to_numpy(): [[0, 1], [0, 1], [0, 3], [0, inf]]</span>
+    <span class="k">return</span> <span class="n">plot_linkage_pair</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">bc</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"A (0)"</span><span class="p">,</span> <span class="s2">"B (1)"</span><span class="p">,</span> <span class="s2">"C (4)"</span><span class="p">,</span> <span class="s2">"D (5)"</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_tied_merges</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details><p>At height 1 the number of clusters drops from four to two, so two bars
+end together. Although the linkage matrix records these as two separate
+rows, both merges take place at the same scale.</p>
+<p>In either example, <code class="docutils literal notranslate"><span class="pre">reduced=True</span></code> removes just the infinite interval.
+The finite bars and their endpoints stay the same. The barcode records
+when the cluster count drops, but does not retain which observations
+merged: different trees can have the same barcode. Its rows are intervals,
+not labels for particular observations.</p>
+</section>
+</section>
+<section id="input-and-validation">
+<h2>Input and validation<a class="headerlink" href="#input-and-validation" title="Link to this heading">#</a></h2>
+<p>Input must be an <code class="docutils literal notranslate"><span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1,</span> <span class="pre">4)</span></code> NumPy array with float32 or float64 precision,
+which is preserved in the output. The input is not modified. Empty <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">4)</span></code>
+input represents a single observation, producing one infinite interval (or an
+empty barcode in reduced mode). Invalid cluster references or counts, non-finite
+entries, and negative heights raise <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<p>Zero-length intervals are omitted: observations that merge at height zero
+are already together at the starting scale. Conversion preserves the input
+clustering and its tie-breaking choices, and validation and conversion run
+in C++ with the Python GIL released.</p>
+</section>
+<section id="non-monotone-merge-heights">
+<h2>Non-monotone merge heights<a class="headerlink" href="#non-monotone-merge-heights" title="Link to this heading">#</a></h2>
+<p>Inversions, such as those from centroid or median linkage, are handled by
+delaying each parent merge until both child clusters exist. Its effective
+height is the maximum of its supplied height and its children’s effective
+heights. For example, child merges at 3.0 and 3.5 followed by a parent merge
+at 3.25 produce finite bars ending at 3.0, 3.5, and 3.5. Heights are not
+sorted, and unrelated branches do not delay one another.</p>
+<p>Conversion emits one <code class="docutils literal notranslate"><span class="pre">UserWarning</span></code> when input merge heights are non-monotone:
+a row’s height is lower than the preceding row’s height. This includes decreases
+on independent branches, even when no parent height needs adjustment. Equal
+heights are allowed and do not trigger a warning.</p>
+</section>
+<section id="mathematical-background">
+<h2>Mathematical background<a class="headerlink" href="#mathematical-background" title="Link to this heading">#</a></h2>
+<p>The construction below is described by Bauer et al. <a class="footnote-reference brackets" href="#footcite-bauer2020cotorsion" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.
+Our exposition largely follows the notes for the KTH TDA course (SF2565) <a class="footnote-reference brackets" href="#footcite-chacholski2026kthtdanotes" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+<section id="linkage-distances-and-merge-heights">
+<h3>Linkage distances and merge heights<a class="headerlink" href="#linkage-distances-and-merge-heights" title="Link to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(X\)</span> be a finite set of observations with a distance
+<span class="math notranslate nohighlight">\(d : X \times X \to [0,\infty)\)</span>. Choose a linkage rule <span class="math notranslate nohighlight">\(\psi\)</span>
+that extends <span class="math notranslate nohighlight">\(d\)</span> to a distance <span class="math notranslate nohighlight">\(\psi d\)</span> between nonempty subsets
+of <span class="math notranslate nohighlight">\(X\)</span>, with</p>
+<div class="math notranslate nohighlight">
+\[\psi d(\{x\},\{y\}) = d(x,y).\]</div>
+<p>For example, single linkage uses
+<span class="math notranslate nohighlight">\(\psi d(A,B)=\min_{x\in A,\,y\in B}d(x,y)\)</span>. For distinct clusters,
+complete linkage uses the maximum of these distances, and average linkage
+uses their arithmetic mean.</p>
+<p>Starting with one cluster per observation, hierarchical clustering
+repeatedly joins a pair of current clusters <span class="math notranslate nohighlight">\(A,B\)</span> attaining the
+smallest current linkage distance <span class="math notranslate nohighlight">\(\psi d(A,B)\)</span>, resolving ties
+according to a tie-breaking rule. Each join is recorded as one row of the
+linkage matrix. The <em>merge height</em> is this distance:</p>
+<div class="math notranslate nohighlight">
+\[h = \psi d(A,B).\]</div>
+<p>It is recorded in the third column of the corresponding linkage row.
+Assume throughout this explanation that these merge heights are
+nondecreasing. The resulting <a class="reference internal" href="glossary.html#term-dendrogram"><span class="xref std std-term">dendrogram</span></a> is also called the
+<span class="math notranslate nohighlight">\(\psi\)</span> linkage of <span class="math notranslate nohighlight">\(d\)</span> and denoted by <span class="math notranslate nohighlight">\(\psi d\)</span>;
+we write <span class="math notranslate nohighlight">\(D\)</span> for this dendrogram below. The linkage matrix specifies
+the chosen pair at each merge, including any tie-breaking choices.</p>
+</section>
+<section id="clusters-and-transition-maps">
+<span id="linkage-cluster-transitions"></span><h3>Clusters and transition maps<a class="headerlink" href="#clusters-and-transition-maps" title="Link to this heading">#</a></h3>
+<p>A linkage matrix describes a dendrogram: a family of partitions of
+<span class="math notranslate nohighlight">\(X\)</span>, indexed by a scale <span class="math notranslate nohighlight">\(t \geq 0\)</span>. To describe
+these partitions in terms of distances between points, let <span class="math notranslate nohighlight">\(u(x,y)\)</span>
+be the merge height at which observations <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> first
+belong to the same cluster, with <span class="math notranslate nohighlight">\(u(x,x)=0\)</span>. This is the distance
+induced by the dendrogram. Define</p>
+<div class="math notranslate nohighlight">
+\[x \sim_t y \quad\Longleftrightarrow\quad u(x,y) \leq t,
+\qquad D_t = X/{\sim_t}.\]</div>
+<p>Here <span class="math notranslate nohighlight">\(X/{\sim_t}\)</span> is the partition of <span class="math notranslate nohighlight">\(X\)</span> induced by the
+equivalence relation <span class="math notranslate nohighlight">\(\sim_t\)</span>: its blocks are the equivalence classes
+of observations that have merged by scale <span class="math notranslate nohighlight">\(t\)</span>. The induced distance satisfies
+<span class="math notranslate nohighlight">\(u(x,z) \leq \max\{u(x,y),u(y,z)\}\)</span>, so this relation is transitive.
+Distinct observations may have distance zero if they merge at height zero.</p>
+<p>For single linkage, this has an equivalent description directly in terms
+of the distance <span class="math notranslate nohighlight">\(d\)</span>: observations
+<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> belong to the same cluster in <span class="math notranslate nohighlight">\(D_t\)</span> if there
+is a chain <span class="math notranslate nohighlight">\(x=x_0,x_1,\ldots,x_k=y\)</span> with
+<span class="math notranslate nohighlight">\(d(x_i,x_{i+1}) \leq t\)</span> for every consecutive pair. Their direct
+distance <span class="math notranslate nohighlight">\(d(x,y)\)</span> can therefore exceed <span class="math notranslate nohighlight">\(t\)</span>. For other linkage
+methods, use the induced distance <span class="math notranslate nohighlight">\(u\)</span>; this chain description in
+terms of the original input distances need not apply.</p>
+<p>For <span class="math notranslate nohighlight">\(s \leq t\)</span>, every cluster at scale <span class="math notranslate nohighlight">\(s\)</span> lies in a
+unique cluster at scale <span class="math notranslate nohighlight">\(t\)</span>, giving a transition map</p>
+<div class="math notranslate nohighlight">
+\[D_{s \leq t} : D_s \longrightarrow D_t,
+\qquad C \longmapsto \text{the cluster containing } C.\]</div>
+<p>This map is <a class="reference internal" href="glossary.html#term-surjective-map"><span class="xref std std-term">surjective</span></a> because every cluster at scale <span class="math notranslate nohighlight">\(t\)</span> is a union
+of clusters at scale <span class="math notranslate nohighlight">\(s\)</span>, so every target cluster has a
+<a class="reference internal" href="glossary.html#term-preimage"><span class="xref std std-term">preimage</span></a>.</p>
+<p>These maps satisfy <span class="math notranslate nohighlight">\(D_{t \leq t} = \mathrm{id}\)</span> and
+<span class="math notranslate nohighlight">\(D_{r \leq t} = D_{s \leq t} \circ D_{r \leq s}\)</span> for
+<span class="math notranslate nohighlight">\(r \leq s \leq t\)</span>: following clusters through an intermediate scale
+has the same result as mapping directly to the final scale. Equivalently,
+the diagrams</p>
+<div class="tikz-diagram docutils container">
+<div class="figure" style="text-align: center"><p><img  src="_images/tikz-1ef550e8a817e648a86ccceb7fc90cb2b865720b.svg" alt="On the left, a straight transition arrow and a curved identity arrow both map D_t to itself; on the right, the map from D_r to D_t equals the composition through D_s." /></p>
+</div></div>
+<p>commute.</p>
+</section>
+<section id="from-clusters-to-vector-spaces">
+<h3>From clusters to vector spaces<a class="headerlink" href="#from-clusters-to-vector-spaces" title="Link to this heading">#</a></h3>
+<p>Fix a field <span class="math notranslate nohighlight">\(K\)</span>. The vector spaces
+<a class="reference internal" href="glossary.html#term-freely-generated-vector-space"><span class="xref std std-term">freely generated by</span></a> the cluster sets,
+together with the linear maps induced by the cluster transitions, are</p>
+<div class="math notranslate nohighlight">
+\[V_t = K D_t = \bigoplus_{C\in D_t} K e_C,
+\qquad
+V_{s\leq t} = K D_{s\leq t} : V_s \longrightarrow V_t,
+\qquad e_C \longmapsto e_{D_{s\leq t}(C)}.\]</div>
+<p>Thus <span class="math notranslate nohighlight">\(\dim_K V_t=|D_t|\)</span>, and the linear maps satisfy the same
+identity and composition relations as the set maps in the
+<a class="reference internal" href="#linkage-cluster-transitions"><span class="std std-ref">previous subsection</span></a>. For a walkthrough of
+the direct sum notation, basis vectors, and linear extension, see
+<a class="reference internal" href="#linkage-linear-algebra-appendix"><span class="std std-ref">Appendix: vector spaces and linear maps</span></a>.</p>
+<p>The family <span class="math notranslate nohighlight">\(V_t\)</span>, together with its transition maps, is a <em>tame vector space parametrized
+by</em> <span class="math notranslate nohighlight">\([0,\infty)\)</span>, also called a persistence module: its vector spaces
+are finite dimensional and change only at the finitely many merge heights.</p>
+</section>
+<section id="a-filtration-and-its-zeroth-homology">
+<h3>A filtration and its zeroth homology<a class="headerlink" href="#a-filtration-and-its-zeroth-homology" title="Link to this heading">#</a></h3>
+<p>To interpret this module as homology, construct an (abstract)
+<a class="reference internal" href="glossary.html#term-simplicial-complex"><span class="xref std std-term">simplicial complex</span></a>
+<span class="math notranslate nohighlight">\(\mathcal{F}_t\)</span> at each scale by filling in a simplex on each cluster:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{F}_t = \bigcup_{C\in D_t} \Delta(C).\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\Delta(C)\)</span> has the observations in <span class="math notranslate nohighlight">\(C\)</span> as its vertices.
+Every nonempty subset forms a simplex: each pair spans an edge, each triple
+a filled triangle, and so on. Thus
+the connected components of <span class="math notranslate nohighlight">\(\mathcal{F}_t\)</span> are exactly the clusters
+in <span class="math notranslate nohighlight">\(D_t\)</span>. Since clusters only merge as the scale increases,
+<span class="math notranslate nohighlight">\(\mathcal{F}_s\subseteq\mathcal{F}_t\)</span> for <span class="math notranslate nohighlight">\(s\leq t\)</span>.
+This nested family of complexes is a <em>filtration</em>.</p>
+<p>For single linkage, the Vietoris–Rips filtration of the original distance
+<span class="math notranslate nohighlight">\(d\)</span> has the same connected components at each scale <a class="footnote-reference brackets" href="#footcite-lee2012persistent" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+<p>Zeroth homology is</p>
+<div class="math notranslate nohighlight">
+\[H_0(\mathcal{F}_t;K)
+= \ker\partial_0 / \operatorname{im}\partial_1.\]</div>
+<p>Here <span class="math notranslate nohighlight">\(\partial_0=0\)</span>, so</p>
+<div class="math notranslate nohighlight">
+\[\ker\partial_0 = C_0(\mathcal{F}_t;K) = KX.\]</div>
+<p>The chain group <span class="math notranslate nohighlight">\(C_0(\mathcal{F}_t;K)\)</span> has one basis vector
+<span class="math notranslate nohighlight">\(e_x\)</span> per vertex of <span class="math notranslate nohighlight">\(\mathcal{F}_t\)</span>, and these vertices are
+exactly the observations in <span class="math notranslate nohighlight">\(X\)</span>. The boundary of an edge from
+<span class="math notranslate nohighlight">\(x\)</span> to <span class="math notranslate nohighlight">\(y\)</span> is <span class="math notranslate nohighlight">\(e_y-e_x\)</span>. Thus
+<span class="math notranslate nohighlight">\(\operatorname{im}\partial_1\)</span> is spanned by these differences for
+observations in the same cluster. Taking the quotient sets those
+differences to zero: all observation vectors within a cluster become the
+same class, leaving one independent class per cluster. Hence</p>
+<div class="math notranslate nohighlight">
+\[H_0(\mathcal{F}_t;K) \cong K D_t = V_t.\]</div>
+<p>For <span class="math notranslate nohighlight">\(s\leq t\)</span>, the inclusion
+<span class="math notranslate nohighlight">\(\iota_{s\leq t}:\mathcal{F}_s\hookrightarrow\mathcal{F}_t\)</span> keeps
+each vertex <span class="math notranslate nohighlight">\(x\)</span> unchanged, so its map on zeroth chain groups is
+<span class="math notranslate nohighlight">\(e_x\mapsto e_x\)</span>. Every edge present at scale <span class="math notranslate nohighlight">\(s\)</span> is still
+present at scale <span class="math notranslate nohighlight">\(t\)</span>, so every boundary relation at scale <span class="math notranslate nohighlight">\(s\)</span>
+also holds at scale <span class="math notranslate nohighlight">\(t\)</span>. Consequently, this map passes to the
+quotients defining homology:</p>
+<div class="math notranslate nohighlight">
+\[H_0(\iota_{s\leq t};K):H_0(\mathcal{F}_s;K)
+\longrightarrow H_0(\mathcal{F}_t;K),
+\qquad [v]_s\longmapsto[v]_t.\]</div>
+<p>Here <span class="math notranslate nohighlight">\([v]_s\)</span> and <span class="math notranslate nohighlight">\([v]_t\)</span> denote the classes of the same vector
+<span class="math notranslate nohighlight">\(v\in KX\)</span> modulo the boundary relations at the respective scales.
+The rule is well-defined because vectors representing the same class at
+scale <span class="math notranslate nohighlight">\(s\)</span> still represent the same class at scale <span class="math notranslate nohighlight">\(t\)</span>.
+In terms of clusters, two observations that belong to the same cluster at
+scale <span class="math notranslate nohighlight">\(s\)</span> remain in the same cluster at scale <span class="math notranslate nohighlight">\(t\)</span>. That cluster
+may now contain additional observations after merging with other clusters,
+but observations already together never become separated.
+Under <span class="math notranslate nohighlight">\(H_0(\mathcal{F}_t;K)\cong K D_t\)</span>, this is exactly
+<span class="math notranslate nohighlight">\(V_{s\leq t}\)</span>: the class of an observation in an earlier cluster
+maps to the class of the later cluster containing it.
+Thus the vector spaces and transition maps together form the <span class="math notranslate nohighlight">\(H_0\)</span>
+persistence module of this filtration.</p>
+</section>
+<section id="what-happens-at-a-merge">
+<h3>What happens at a merge<a class="headerlink" href="#what-happens-at-a-merge" title="Link to this heading">#</a></h3>
+<p>Between merge events, the clusters remain unchanged, so the transition
+maps are <a class="reference internal" href="glossary.html#term-isomorphism"><span class="xref std std-term">isomorphisms</span></a>. If a merge occurs in
+<span class="math notranslate nohighlight">\((s,t]\)</span>, however, the transition <span class="math notranslate nohighlight">\(V_{s\leq t}\)</span> sends distinct
+basis vectors to the same target basis vector and adds their coefficients.
+The map remains surjective, but is no longer
+<a class="reference internal" href="glossary.html#term-injective-map"><span class="xref std std-term">injective</span></a> (one-to-one), so it is not an isomorphism. The dimension drops by one for each binary merge
+in <span class="math notranslate nohighlight">\((s,t]\)</span>.</p>
+<p>For example, when two clusters <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> merge into
+<span class="math notranslate nohighlight">\(C\)</span>, the transition sends both <span class="math notranslate nohighlight">\(e_A\)</span> and <span class="math notranslate nohighlight">\(e_B\)</span> to
+<span class="math notranslate nohighlight">\(e_C\)</span>. On these coordinates it is the map</p>
+<div class="math notranslate nohighlight">
+\[K^2 \longrightarrow K, \qquad (a,b) \longmapsto a+b.\]</div>
+<p>The difference <span class="math notranslate nohighlight">\(e_A-e_B\)</span> maps to zero, so one independent class dies.
+All transitions are surjective: merging clusters introduces no new classes.</p>
+</section>
+<section id="from-the-persistence-module-to-a-barcode">
+<h3>From the persistence module to a barcode<a class="headerlink" href="#from-the-persistence-module-to-a-barcode" title="Link to this heading">#</a></h3>
+<p>A bar <span class="math notranslate nohighlight">\([a,b)\)</span> represents the parametrized vector space</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}K_{[a,b)}(t) =
+\begin{cases}
+   K, &amp; a \leq t &lt; b, \\
+   0, &amp; \text{otherwise},
+\end{cases}\end{split}\]</div>
+<p>with identity transitions while both scales lie in the interval and zero
+transitions otherwise. A tame persistence module decomposes as a <a class="reference internal" href="glossary.html#term-direct-sum-of-vector-spaces"><span class="xref std std-term">direct sum</span></a>
+of such bars, uniquely up to their order. Since all transition maps here
+are surjective, no new classes appear at positive scales, so every bar is
+born at zero. For a linkage matrix this gives</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}V \cong K_{[0,\infty)} \oplus
+   \bigoplus_{\substack{v\text{ a merge} \\ h(v)&gt;0}} K_{[0,h(v))}.\end{split}\]</div>
+<p>Here <span class="math notranslate nohighlight">\(h(v)\)</span> is the height recorded for merge <span class="math notranslate nohighlight">\(v\)</span> in the linkage
+matrix. Each positive merge height contributes a finite bar,
+including multiplicities when several merges occur at the same height.
+Merges at zero are already reflected in <span class="math notranslate nohighlight">\(D_0\)</span> and contribute no
+nonempty interval. The final cluster accounts for the single infinite bar.
+<code class="docutils literal notranslate"><span class="pre">linkage_to_barcode</span></code> returns precisely this multiset of intervals; the
+result is independent of the choice of field <span class="math notranslate nohighlight">\(K\)</span>.</p>
+</section>
+<section id="reduced-homology">
+<h3>Reduced homology<a class="headerlink" href="#reduced-homology" title="Link to this heading">#</a></h3>
+<p>Reduced homology is defined by extending the chain complex one degree
+further: add <span class="math notranslate nohighlight">\(C_{-1}=K\)</span> and replace the zero boundary map out of
+<span class="math notranslate nohighlight">\(C_0(\mathcal{F}_t;K)\)</span> with the <em>augmentation map</em>, which adds the
+vertex coefficients:</p>
+<div class="math notranslate nohighlight">
+\[\cdots \xrightarrow{\partial_2} C_1(\mathcal{F}_t;K)
+\xrightarrow{\partial_1} C_0(\mathcal{F}_t;K)
+\xrightarrow{\varepsilon_t} K \longrightarrow 0,
+\qquad
+\varepsilon_t\left(\sum_{x\in X} a_x e_x\right)=\sum_{x\in X} a_x.\]</div>
+<p>An edge boundary <span class="math notranslate nohighlight">\(e_y-e_x\)</span> has coefficient sum zero, so
+<span class="math notranslate nohighlight">\(\varepsilon_t\partial_1=0\)</span>, as required for a chain complex.
+The definition of homology therefore gives</p>
+<div class="math notranslate nohighlight">
+\[\widetilde H_0(\mathcal{F}_t;K)
+= \ker\varepsilon_t / \operatorname{im}\partial_1.\]</div>
+<p>This construction can also be expressed using the cluster vector space
+<span class="math notranslate nohighlight">\(H_0(\mathcal{F}_t;K)\cong V_t=K D_t\)</span>. Since boundaries have
+coefficient sum zero, the augmentation is well-defined on ordinary
+homology classes and gives a map</p>
+<div class="math notranslate nohighlight">
+\[\overline\varepsilon_t:V_t\longrightarrow K,
+\qquad \sum_{C\in D_t} a_C e_C\longmapsto\sum_{C\in D_t} a_C.\]</div>
+<p>Its <a class="reference internal" href="glossary.html#term-kernel-of-a-linear-map"><span class="xref std std-term">kernel</span></a> consists of the classes
+represented by chains with coefficient sum zero. Hence</p>
+<div class="math notranslate nohighlight">
+\[\widetilde H_0(\mathcal{F}_t;K)
+\cong \widetilde V_t := \ker\overline\varepsilon_t
+= \left\{\sum_{C\in D_t} a_C e_C : \sum_{C\in D_t} a_C=0\right\}.\]</div>
+<p>For two clusters <span class="math notranslate nohighlight">\(A,B\)</span>, every reduced class has the form
+<span class="math notranslate nohighlight">\(a(e_A-e_B)\)</span>. When the clusters merge, both basis vectors map to
+the same vector, so their difference maps to zero. Once only one cluster
+remains, the only vector with coefficient sum zero is the zero vector.
+Thus ordinary <span class="math notranslate nohighlight">\(H_0\)</span> has one independent class per cluster, while
+reduced <span class="math notranslate nohighlight">\(H_0\)</span> has dimension <span class="math notranslate nohighlight">\(|D_t|-1\)</span>: it counts the number of
+clusters beyond one.</p>
+<p>Transition maps add the coefficients of merging clusters, preserving their
+total sum. They therefore send <span class="math notranslate nohighlight">\(\widetilde V_s\)</span> into
+<span class="math notranslate nohighlight">\(\widetilde V_t\)</span>, giving the reduced persistence module. Its barcode
+has the same finite bars as ordinary <span class="math notranslate nohighlight">\(H_0\)</span>, with the single
+<span class="math notranslate nohighlight">\([0,\infty)\)</span> bar removed. This is what
+<code class="docutils literal notranslate"><span class="pre">linkage_to_barcode(Z,</span> <span class="pre">reduced=True)</span></code> returns.</p>
+</section>
+<section id="appendix-vector-spaces-and-linear-maps">
+<span id="linkage-linear-algebra-appendix"></span><h3>Appendix: vector spaces and linear maps<a class="headerlink" href="#appendix-vector-spaces-and-linear-maps" title="Link to this heading">#</a></h3>
+<p>To obtain vector spaces and linear maps, fix a field <span class="math notranslate nohighlight">\(K\)</span>, which
+specifies the allowed coefficients (for example, <span class="math notranslate nohighlight">\(K=\mathbb{R}\)</span>
+allows real coefficients). Assign a <a class="reference internal" href="glossary.html#term-basis-of-a-vector-space"><span class="xref std std-term">basis</span></a>
+vector <span class="math notranslate nohighlight">\(e_C\)</span> to each cluster <span class="math notranslate nohighlight">\(C\in D_t\)</span>. The vector space
+freely generated by these clusters
+is written</p>
+<div class="math notranslate nohighlight">
+\[V_t = K D_t = \bigoplus_{C \in D_t} K e_C.\]</div>
+<p>Here <span class="math notranslate nohighlight">\(K D_t\)</span> denotes the vector space generated by the set
+<span class="math notranslate nohighlight">\(D_t\)</span>, and <span class="math notranslate nohighlight">\(K e_C = \{a e_C : a\in K\}\)</span> is the one-dimensional
+space of scalar multiples of <span class="math notranslate nohighlight">\(e_C\)</span>. The symbol <span class="math notranslate nohighlight">\(\bigoplus\)</span>
+denotes a <a class="reference internal" href="glossary.html#term-direct-sum-of-vector-spaces"><span class="xref std std-term">direct sum</span></a>: we take one
+independent copy of <span class="math notranslate nohighlight">\(K\)</span> for each cluster. Thus every vector in
+<span class="math notranslate nohighlight">\(V_t\)</span> has a unique expression</p>
+<div class="math notranslate nohighlight">
+\[v = \sum_{C\in D_t} a_C e_C, \qquad a_C\in K.\]</div>
+<p>In other words, a vector assigns one coefficient to each cluster. If
+<span class="math notranslate nohighlight">\(D_t=\{A,B,C\}\)</span>, then <span class="math notranslate nohighlight">\(v=a_Ae_A+a_Be_B+a_Ce_C\)</span> corresponds
+to the coordinate triple <span class="math notranslate nohighlight">\((a_A,a_B,a_C)\in K^3\)</span>. This explains why
+<span class="math notranslate nohighlight">\(\dim_K V_t=|D_t|\)</span>: the dimension is the number of clusters.</p>
+<p>The cluster map <span class="math notranslate nohighlight">\(D_{s\leq t}\)</span> induces a linear map by sending each
+basis vector to the basis vector of its containing cluster:</p>
+<div class="math notranslate nohighlight">
+\[V_{s \leq t} = K D_{s \leq t} : V_s \longrightarrow V_t,
+\qquad e_C \longmapsto e_{D_{s \leq t}(C)}.\]</div>
+<p>The notation <span class="math notranslate nohighlight">\(K D_{s\leq t}\)</span> means the linear extension of the
+set map <span class="math notranslate nohighlight">\(D_{s\leq t}\)</span>. To apply it to any vector, apply the rule to
+each basis vector and keep its coefficient:</p>
+<div class="math notranslate nohighlight">
+\[V_{s\leq t}\left(\sum_{C\in D_s} a_C e_C\right)
+= \sum_{C\in D_s} a_C e_{D_{s\leq t}(C)}.\]</div>
+<p>When several clusters map to the same cluster, their coefficients add.
+These linear maps satisfy the same identity and composition relations as
+the set maps.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<div class="docutils container" id="id4">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-bauer2020cotorsion" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Ulrich Bauer, Magnus B. Botnan, Steffen Oppermann, and Johan Steen. Cotorsion torsion triples and the representation theory of filtered hierarchical clustering. <em>Advances in Mathematics</em>, 369:107171, 2020. URL: <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S0001870820301973">https://www.sciencedirect.com/science/article/pii/S0001870820301973</a>, <a class="reference external" href="https://doi.org/https://doi.org/10.1016/j.aim.2020.107171">doi:https://doi.org/10.1016/j.aim.2020.107171</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-chacholski2026kthtdanotes" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Wojciech Chachólski and Martina Scolamiero. TDA course (SF2956) notes. Course notes, KTH Royal Institute of Technology, 2026. URL: <a class="reference external" href="https://canvas.kth.se/courses/65046/files/10627813">https://canvas.kth.se/courses/65046/files/10627813</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-lee2012persistent" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Hyekyoung Lee, Hyejin Kang, Moo K. Chung, Bung-Nyun Kim, and Dong Soo Lee. Persistent brain network homology from the perspective of dendrogram. <em>IEEE Transactions on Medical Imaging</em>, 31(12):2267–2277, 2012. <a class="reference external" href="https://doi.org/10.1109/TMI.2012.2219590">doi:10.1109/TMI.2012.2219590</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="homological-kernel.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Homological Kernels</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="point_processes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Point Processes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-a-dendrogram-to-a-barcode">Converting a dendrogram to a barcode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#three-observations-two-merges">Three observations, two merges</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#several-merges-at-the-same-height">Several merges at the same height</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#input-and-validation">Input and validation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-monotone-merge-heights">Non-monotone merge heights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-background">Mathematical background</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linkage-distances-and-merge-heights">Linkage distances and merge heights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clusters-and-transition-maps">Clusters and transition maps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-clusters-to-vector-spaces">From clusters to vector spaces</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-filtration-and-its-zeroth-homology">A filtration and its zeroth homology</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-happens-at-a-merge">What happens at a merge</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-the-persistence-module-to-a-barcode">From the persistence module to a barcode</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reduced-homology">Reduced homology</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-vector-spaces-and-linear-maps">Appendix: vector spaces and linear maps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/linkage.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

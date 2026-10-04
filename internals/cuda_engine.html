@@ -1,0 +1,1379 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CUDA block execution engine &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="../_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="../_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="../_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="../_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="../_static/tippy/internals/cuda_engine.fe783fa1-0fef-4a03-8a3f-01ba664f96f0.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'internals/cuda_engine';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="../_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Deterministic random generation" href="deterministic_random.html" />
+    <link rel="prev" title="Internals" href="../internals.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CUDA block execution engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deterministic_random.html">Deterministic random generation</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../internals.html" class="nav-link">Internals</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">CUDA block execution engine</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cuda-block-execution-engine">
+<h1>CUDA block execution engine<a class="headerlink" href="#cuda-block-execution-engine" title="Link to this heading">#</a></h1>
+<p>stablebear’s CUDA engine computes pairwise matrix operations (distance matrices, kernel matrices, cross-distance tensors) by partitioning the work into 2D blocks and distributing them across GPUs. The framework is designed to be <strong>function-type agnostic</strong> – the orchestration logic is generic, while function-specific behavior (data layout, kernels) is provided by a policy class.</p>
+<section id="file-structure">
+<h2>File structure<a class="headerlink" href="#file-structure" title="Link to this heading">#</a></h2>
+<p>All files live under <code class="docutils literal notranslate"><span class="pre">include/sbear/cuda/</span></code> (headers) and <code class="docutils literal notranslate"><span class="pre">src/cuda/</span></code> (compiled sources).</p>
+<p><strong>Generic framework</strong> (function-type agnostic):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_block_executor.cuh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaBlockPipeline</span></code>: double-buffered block execution loop.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_block_scheduler.hpp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaBlockScheduler</span></code>: 2D block decomposition for square or rectangular matrices. Pure C++.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_result_writer.hpp</span></code></p></td>
+<td><p>Scatter GPU results into <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code>, <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code>, or <code class="docutils literal notranslate"><span class="pre">Tensor</span></code> (dense). Pure C++.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">offset_data_manager.hpp</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">OffsetDataManager</span></code>: host-side data manager for variable-length objects. Pure C++.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_offset_data_manager.cuh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaOffsetDataManager</span></code>: extends <code class="docutils literal notranslate"><span class="pre">OffsetDataManager</span></code> with GPU upload.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_device_array.cuh</span></code></p></td>
+<td><p>RAII wrapper for <code class="docutils literal notranslate"><span class="pre">cudaMalloc</span></code>/<code class="docutils literal notranslate"><span class="pre">cudaFree</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">block_matrix_support.cuh</span></code></p></td>
+<td><p>Shared utilities: grid dimension calculation, GPU memory query.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>PCF-specific:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_pcf_kernel.cuh</span></code></p></td>
+<td><p>PCF integration kernel (<code class="docutils literal notranslate"><span class="pre">cuda_pcf_block_integrate</span></code>), rectangle iteration device function, <code class="docutils literal notranslate"><span class="pre">TriangleSkipMode</span></code>, <code class="docutils literal notranslate"><span class="pre">PcfBlockKernelParams</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pcf_block_op.cuh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PcfBlockOp</span></code> policy class, <code class="docutils literal notranslate"><span class="pre">CudaPairwiseIntegrationTask</span></code>, <code class="docutils literal notranslate"><span class="pre">CudaCrossIntegrationTask</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_pcf_data_manager.cuh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaPcfDataManager</span></code> type alias and <code class="docutils literal notranslate"><span class="pre">init_pcf_data()</span></code> flattener.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Public API and wiring:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>File</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_matrix_integrate_api.hpp</span></code></p></td>
+<td><p>Factory function declarations for pdist and cdist (pure C++ header, no NVCC).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">cuda_matrix_integrate.cu</span></code></p></td>
+<td><p>NVCC-compiled factory implementations.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="block-decomposition">
+<h2>Block decomposition<a class="headerlink" href="#block-decomposition" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">CudaBlockScheduler</span></code> partitions an <code class="docutils literal notranslate"><span class="pre">nRows</span> <span class="pre">x</span> <span class="pre">nCols</span></code> matrix into 2D blocks. It supports two modes:</p>
+<ul class="simple">
+<li><p><strong>LowerTriangle</strong> – for symmetric operations (<code class="docutils literal notranslate"><span class="pre">pdist</span></code>, <code class="docutils literal notranslate"><span class="pre">l2_kernel</span></code>) where <code class="docutils literal notranslate"><span class="pre">nRows</span> <span class="pre">==</span> <span class="pre">nCols</span></code>. Blocks entirely above the diagonal are skipped.</p></li>
+<li><p><strong>Full</strong> – for cross-distance operations (<code class="docutils literal notranslate"><span class="pre">cdist</span></code>) where every <code class="docutils literal notranslate"><span class="pre">(i,</span> <span class="pre">j)</span></code> pair is computed. The matrix may be rectangular (<code class="docutils literal notranslate"><span class="pre">nRows</span> <span class="pre">!=</span> <span class="pre">nCols</span></code>).</p></li>
+</ul>
+<section id="algorithm">
+<h3>Algorithm<a class="headerlink" href="#algorithm" title="Link to this heading">#</a></h3>
+<p>The scheduler computes a block decomposition in three steps:</p>
+<p><strong>Step 1: Compute block side length.</strong> The block side determines how large each block can be. It is derived from <code class="docutils literal notranslate"><span class="pre">maxOutputElements</span></code> (the GPU memory budget, in number of output scalars) and <code class="docutils literal notranslate"><span class="pre">nSplitsHint</span></code> (how many blocks we want the budget to be divided into):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>elementsPerBlock = maxOutputElements / nSplitsHint
+blockSide        = floor(sqrt(elementsPerBlock))
+blockSide        = clamp(blockSide, 1, max(nRows, nCols))
+</pre></div>
+</div>
+<p>The square root targets roughly square blocks, which is a good default for 2D CUDA grids.</p>
+<p><strong>Step 2: Subdivide rows and columns into bands.</strong> The <code class="docutils literal notranslate"><span class="pre">subdivide(blockSide,</span> <span class="pre">n)</span></code> function chops a range <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">n)</span></code> into consecutive bands of length <code class="docutils literal notranslate"><span class="pre">blockSide</span></code>, with the last band absorbing the remainder:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>subdivide(3, 10)  -&gt;  [0,2], [3,5], [6,8], [9,9]
+subdivide(4, 8)   -&gt;  [0,3], [4,7]
+subdivide(5, 3)   -&gt;  [0,2]
+</pre></div>
+</div>
+<p>Row bands and column bands are computed independently: <code class="docutils literal notranslate"><span class="pre">rowBands</span> <span class="pre">=</span> <span class="pre">subdivide(blockSide,</span> <span class="pre">nRows)</span></code>, <code class="docutils literal notranslate"><span class="pre">colBands</span> <span class="pre">=</span> <span class="pre">subdivide(blockSide,</span> <span class="pre">nCols)</span></code>. This means rectangular matrices are handled naturally – the row and column band counts can differ.</p>
+<p><strong>Step 3: Form the block grid and filter.</strong> Every <code class="docutils literal notranslate"><span class="pre">(rowBand,</span> <span class="pre">colBand)</span></code> pair becomes a candidate block. In <strong>Full</strong> mode, all candidates are kept. In <strong>LowerTriangle</strong> mode, a block is discarded if its entire column range lies above the diagonal (i.e., <code class="docutils literal notranslate"><span class="pre">colBand.first</span> <span class="pre">&gt;</span> <span class="pre">rowBand.last</span></code>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>LowerTriangle, 9x9, blockSide=3:
+
+         col 0-2   col 3-5   col 6-8
+        +---------+---------+---------+
+row 0-2 |    A    |    -    |    -    |    colBand [3,5].first &gt; rowBand [0,2].last -&gt; skip
+        +---------+---------+---------+
+row 3-5 |    B    |    C    |    -    |
+        +---------+---------+---------+
+row 6-8 |    D    |    E    |    F    |
+        +---------+---------+---------+
+
+A, C, F = diagonal blocks (straddle the diagonal, partially computed)
+B, D, E = below-diagonal blocks (fully computed)
+    -   = above-diagonal blocks (skipped entirely)
+</pre></div>
+</div>
+<p>Within each diagonal block (A, C, F), the kernel’s <code class="docutils literal notranslate"><span class="pre">TriangleSkipMode</span></code> skips individual threads where <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">j</span></code> (for distance matrices) or <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">j</span></code> (for kernel matrices).</p>
+<p><strong>Full</strong> example (<code class="docutils literal notranslate"><span class="pre">cdist</span></code>, 2 row functions x 3 column functions, block side length 2):</p>
+<p>The matrix is rectangular, so all blocks are computed.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>         col 0-1   col 2
+        +---------+------+
+row 0-1 |    A    |   B  |
+        +---------+------+
+
+A = 2x2 block, B = 2x1 block
+</pre></div>
+</div>
+<p>Finally, blocks are sorted by descending work (<code class="docutils literal notranslate"><span class="pre">rowHeight</span> <span class="pre">*</span> <span class="pre">colWidth</span></code>) for better load balancing when distributing across GPUs.</p>
+</section>
+<section id="memory-budget-and-nsplitshint">
+<h3>Memory budget and nSplitsHint<a class="headerlink" href="#memory-budget-and-nsplitshint" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">maxOutputElements</span></code> comes from the available GPU memory (via <code class="docutils literal notranslate"><span class="pre">get_max_output_elements</span></code> in <code class="docutils literal notranslate"><span class="pre">block_matrix_support.cuh</span></code>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>maxOutputElements = (free GPU RAM * 0.8) / 2 / sizeof(T)
+</pre></div>
+</div>
+<p>The factor of 2 reserves half of GPU memory for the output buffer and half for function data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">nSplitsHint</span></code> controls how many blocks the memory budget is split into. A larger hint produces smaller blocks, which matters for two reasons:</p>
+<ol class="arabic simple">
+<li><p><strong>Multi-GPU load balancing.</strong> With only one or two large blocks, some GPUs sit idle while others finish. More blocks means work can be distributed more evenly.</p></li>
+<li><p><strong>Pipeline overlap.</strong> The double-buffered pipeline (see below) overlaps computation with data transfer. Smaller blocks allow the pipeline to start transferring results sooner.</p></li>
+</ol>
+<p>In production, the hint is set to <code class="docutils literal notranslate"><span class="pre">nGpus</span> <span class="pre">*</span> <span class="pre">32</span></code> – enough blocks to keep all GPUs busy with a comfortable margin for uneven block sizes. For single-GPU or testing scenarios, <code class="docutils literal notranslate"><span class="pre">nSplitsHint</span> <span class="pre">=</span> <span class="pre">1</span></code> uses the full memory budget as one block (unless the matrix is larger, in which case <code class="docutils literal notranslate"><span class="pre">subdivide</span></code> still produces multiple blocks).</p>
+<section id="minimum-block-side-gpu-occupancy-floor">
+<h4>Minimum block side (GPU occupancy floor)<a class="headerlink" href="#minimum-block-side-gpu-occupancy-floor" title="Link to this heading">#</a></h4>
+<p>A high <code class="docutils literal notranslate"><span class="pre">nSplitsHint</span></code> can produce very small blocks, leading to poor GPU occupancy – each kernel launch has too few threads to keep the SMs busy. To prevent this, <code class="docutils literal notranslate"><span class="pre">Config::minBlockSide</span></code> sets a floor on the block side length. The block side is clamped: <code class="docutils literal notranslate"><span class="pre">side</span> <span class="pre">=</span> <span class="pre">max(side,</span> <span class="pre">minBlockSide)</span></code>, then capped at the matrix dimension as usual.</p>
+<p>In production, <code class="docutils literal notranslate"><span class="pre">minBlockSide</span></code> is derived from the GPU hardware via <code class="docutils literal notranslate"><span class="pre">get_min_block_side(nGpus)</span></code> (in <code class="docutils literal notranslate"><span class="pre">block_matrix_support.cuh</span></code>), which queries <code class="docutils literal notranslate"><span class="pre">cudaDevAttrMultiProcessorCount</span></code> across all devices and targets ~50% max occupancy:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>smCount       = min SM count across GPUs
+targetThreads = smCount * 1024
+minBlockSide  = floor(sqrt(targetThreads))
+</pre></div>
+</div>
+<p>For example, an A100 with 108 SMs gives <code class="docutils literal notranslate"><span class="pre">minBlockSide</span> <span class="pre">=</span> <span class="pre">floor(sqrt(108</span> <span class="pre">*</span> <span class="pre">1024))</span> <span class="pre">=</span> <span class="pre">332</span></code>, ensuring each kernel launch has at least ~110K threads – enough to keep the GPU busy even for compute-bound PCF integration kernels.</p>
+<p>When the floor kicks in, the scheduler produces fewer blocks than <code class="docutils literal notranslate"><span class="pre">nSplitsHint</span></code> requested. This is the right tradeoff: slightly uneven multi-GPU distribution is much cheaper than underutilizing all GPUs on every kernel launch.</p>
+<p><code class="docutils literal notranslate"><span class="pre">minBlockSide</span></code> is optional and defaults to 0 (no floor), which preserves the original behavior for tests and non-GPU use.</p>
+</section>
+</section>
+<section id="higher-rank-tensors">
+<h3>Higher-rank tensors<a class="headerlink" href="#higher-rank-tensors" title="Link to this heading">#</a></h3>
+<p>For <code class="docutils literal notranslate"><span class="pre">cdist(X,</span> <span class="pre">Y)</span></code> where X and Y are tensors with rank &gt; 1, the scheduler still operates on a 2D grid. The inputs are flattened: <code class="docutils literal notranslate"><span class="pre">nRows</span> <span class="pre">=</span> <span class="pre">product(X.shape)</span></code>, <code class="docutils literal notranslate"><span class="pre">nCols</span> <span class="pre">=</span> <span class="pre">product(Y.shape)</span></code>. The output tensor is created with the concatenated shape <code class="docutils literal notranslate"><span class="pre">(*X.shape,</span> <span class="pre">*Y.shape)</span></code> but its underlying storage is a flat contiguous buffer. Since the 2D row-major indexing <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">*</span> <span class="pre">nCols</span> <span class="pre">+</span> <span class="pre">j</span></code> produces the same layout as the multi-dimensional shape, the scheduler does not need to be aware of batch dimensions.</p>
+</section>
+<section id="triangle-skip-modes">
+<h3>Triangle skip modes<a class="headerlink" href="#triangle-skip-modes" title="Link to this heading">#</a></h3>
+<p>The kernel uses a <code class="docutils literal notranslate"><span class="pre">TriangleSkipMode</span></code> enum (defined in <code class="docutils literal notranslate"><span class="pre">cuda_pcf_kernel.cuh</span></code>) to control which <code class="docutils literal notranslate"><span class="pre">(i,</span> <span class="pre">j)</span></code> pairs are computed:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode</p></th>
+<th class="head"><p>Computes</p></th>
+<th class="head"><p>Used by</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>All <code class="docutils literal notranslate"><span class="pre">(i,</span> <span class="pre">j)</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cdist</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">LowerTriangleSkipDiag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;</span> <span class="pre">j</span></code> only</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pdist</span></code> (DistanceMatrix)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">LowerTriangle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;=</span> <span class="pre">j</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">l2_kernel</span></code> (SymmetricMatrix)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="double-buffered-pipeline">
+<h2>Double-buffered pipeline<a class="headerlink" href="#double-buffered-pipeline" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">CudaBlockPipeline</span></code> (in <code class="docutils literal notranslate"><span class="pre">cuda_block_executor.cuh</span></code>) uses <strong>double buffering</strong> to overlap GPU computation with host-side result transfer:</p>
+<p>Each GPU worker alternates between two buffers (<code class="docutils literal notranslate"><span class="pre">buf[0]</span></code> and <code class="docutils literal notranslate"><span class="pre">buf[1]</span></code>). While the GPU computes block N+1, the CPU scatters block N’s results — this is the core overlap that double buffering enables.</p>
+<pre  class="mermaid">
+        gantt
+    title Double-buffered block pipeline (one GPU)
+    dateFormat x
+    axisFormat %s
+    section Block 0 - buf 0
+    Upload and launch kernel    :a1, 0, 1
+    GPU kernel running          :a2, 1, 8
+    Async D2H copy              :a3, 8, 9
+    section Block 1 - buf 1
+    Upload and launch kernel    :b1, 9, 10
+    GPU kernel running          :b2, 10, 17
+    D2H buf 0 finishing         :crit, b3, 10, 11
+    Scatter buf 0 on CPU        :crit, b4, 11, 12
+    Async D2H copy              :b5, 17, 18
+    section Block 2 - buf 0
+    Upload and launch kernel    :c1, 18, 19
+    GPU kernel running          :c2, 19, 26
+    D2H buf 1 finishing         :crit, c3, 19, 20
+    Scatter buf 1 on CPU        :crit, c4, 20, 21
+    Async D2H copy              :c5, 26, 27
+    section Finalize
+    D2H buf 0 finishing         :crit, d1, 27, 28
+    Scatter buf 0 on CPU        :crit, d2, 28, 29
+    </pre><p>The red bars show work that overlaps with the GPU kernel. The async D2H copy from the previous block runs on a separate CUDA stream concurrently with the kernel, and the CPU scatter follows once the D2H completes — all while the GPU is still computing. The sequence for each block is:</p>
+<ol class="arabic simple">
+<li><p>Upload data and launch kernel (returns immediately — kernel runs async on GPU)</p></li>
+<li><p>While the GPU computes: the previous block’s async D2H transfer completes on the download stream, then the CPU scatters those results into the output matrix</p></li>
+<li><p>Synchronize with the kernel (wait for GPU to finish)</p></li>
+<li><p>Start async D2H copy of this block’s results on the download stream</p></li>
+<li><p>Move to the next block</p></li>
+</ol>
+<p>Each GPU maintains:</p>
+<ul class="simple">
+<li><p><strong>Two output buffers</strong> (device memory) – alternated between blocks.</p></li>
+<li><p><strong>Two pinned host scratch buffers</strong> (<code class="docutils literal notranslate"><span class="pre">cudaMallocHost</span></code>) – required for truly asynchronous <code class="docutils literal notranslate"><span class="pre">cudaMemcpyAsync</span></code>.</p></li>
+<li><p><strong>A download stream</strong> – separate from the compute stream, enabling D2H transfer to overlap with the next block’s data upload and kernel launch.</p></li>
+<li><p><strong>A single set of function-specific storage</strong> (e.g., PCF offset/point arrays) – shared across blocks since the previous kernel is always complete before the next block begins.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">PinnedHostBuffer</span></code> class wraps <code class="docutils literal notranslate"><span class="pre">cudaMallocHost</span></code>/<code class="docutils literal notranslate"><span class="pre">cudaFreeHost</span></code> with RAII semantics.</p>
+</section>
+<section id="streaming-function-data">
+<h2>Streaming function data<a class="headerlink" href="#streaming-function-data" title="Link to this heading">#</a></h2>
+<p>For large datasets, all function data may not fit in GPU memory simultaneously. The data manager uploads only the subset needed for each block:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>For a block covering rows [r0, r0+rH) x cols [c0, c0+cW):
+
+1. Extract host offset/element data for row functions [r0 .. r0+rH-1]
+2. Extract host offset/element data for col functions [c0 .. c0+cW-1]
+3. Re-index offsets to 0-based for each subset
+4. Upload to pre-allocated device arrays via cudaMemcpy
+</pre></div>
+</div>
+<p>The data management is split into two layers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">OffsetDataManager&lt;ElementT&gt;</span></code> (pure C++, <code class="docutils literal notranslate"><span class="pre">offset_data_manager.hpp</span></code>) – host-side init, offset queries, element storage. No CUDA dependency.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">CudaOffsetDataManager&lt;ElementT&gt;</span></code> (<code class="docutils literal notranslate"><span class="pre">cuda_offset_data_manager.cuh</span></code>) – extends the base with <code class="docutils literal notranslate"><span class="pre">upload_subset()</span></code> for GPU device transfers.</p></li>
+</ul>
+<p>Both are generic over the element type. Function-type-specific flattening (e.g., PCF breakpoints into <code class="docutils literal notranslate"><span class="pre">SimplePoint</span></code> structs) is done by a free function at init time:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Generic: OffsetDataManager&lt;ElementT&gt; (base class)</span>
+<span class="c1">// sizeFn:    (const Obj&amp;) -&gt; size_t            -- number of elements</span>
+<span class="c1">// elementFn: (const Obj&amp;, size_t i) -&gt; ElementT -- extract i-th element</span>
+<span class="n">manager</span><span class="p">.</span><span class="n">init</span><span class="p">(</span><span class="n">begin</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">sizeFn</span><span class="p">,</span><span class="w"> </span><span class="n">elementFn</span><span class="p">);</span>
+
+<span class="c1">// PCF-specific convenience:</span>
+<span class="n">init_pcf_data</span><span class="p">(</span><span class="n">manager</span><span class="p">,</span><span class="w"> </span><span class="n">pcfBegin</span><span class="p">,</span><span class="w"> </span><span class="n">pcfEnd</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For <code class="docutils literal notranslate"><span class="pre">pdist</span></code>, both row and column uploads come from the same data manager. For <code class="docutils literal notranslate"><span class="pre">cdist</span></code>, separate data managers are used for the row functions (X) and column functions (Y).</p>
+<p>GPU device arrays are allocated once at their maximum required size (computed across all blocks) and reused.</p>
+</section>
+<section id="result-scatter">
+<h2>Result scatter<a class="headerlink" href="#result-scatter" title="Link to this heading">#</a></h2>
+<p>After each block’s results are downloaded to the host scratch buffer, they are scattered into the final output. The scatter logic depends on the output type:</p>
+<ul class="simple">
+<li><p><strong>DistanceMatrix</strong>: write only entries where <span class="math notranslate nohighlight">\(i &gt; j\)</span> (lower triangle, diagonal excluded). Uses compressed storage: <code class="docutils literal notranslate"><span class="pre">max(i,j)</span> <span class="pre">*</span> <span class="pre">(max(i,j)-1)</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">min(i,j)</span></code>.</p></li>
+<li><p><strong>SymmetricMatrix</strong>: write entries where <span class="math notranslate nohighlight">\(i \geq j\)</span> (lower triangle, diagonal included).</p></li>
+<li><p><strong>Tensor</strong> (dense): write all entries at their row-major position. Used by <code class="docutils literal notranslate"><span class="pre">cdist</span></code> – the output tensor has the concatenated shape <code class="docutils literal notranslate"><span class="pre">(*X.shape,</span> <span class="pre">*Y.shape)</span></code> and is allocated before the computation begins.</p></li>
+</ul>
+<p>For <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> and <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code>, the scatter validates that skipped entries (upper triangle and, for distance matrices, the diagonal) are zero. A non-zero value at a skipped position indicates a bug in the computation and raises <code class="docutils literal notranslate"><span class="pre">std::logic_error</span></code>.</p>
+<p>Since blocks cover non-overlapping regions, scatter operations from different blocks never write to the same output element. No locking is required.</p>
+</section>
+<section id="blockop-policy">
+<h2>BlockOp policy<a class="headerlink" href="#blockop-policy" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">CudaBlockPipeline</span></code> is generic over the function type. A <strong>BlockOp</strong> policy class encapsulates all function-specific behavior:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// BlockOp concept (duck-typed):</span>
+<span class="c1">//</span>
+<span class="c1">// typename BlockOp::GpuStorage</span>
+<span class="c1">//   Per-GPU device arrays for function-specific data. Move-constructible.</span>
+<span class="c1">//</span>
+<span class="c1">// GpuStorage init_gpu_storage(size_t gpuId, const CudaBlockScheduler&amp; scheduler)</span>
+<span class="c1">//   Allocate device arrays for one GPU, sized for the largest block.</span>
+<span class="c1">//</span>
+<span class="c1">// void exec_block(GpuStorage&amp; storage, const BlockInfo&amp; block,</span>
+<span class="c1">//                 CudaDeviceArray&lt;Tv&gt;&amp; gpuOutputMatrix, dim3 blockDim)</span>
+<span class="c1">//   Upload data for this block, launch kernel, synchronize.</span>
+<span class="c1">//   The output matrix is pre-cleared before this call.</span>
+</pre></div>
+</div>
+<p>For PCFs, the policy is <code class="docutils literal notranslate"><span class="pre">PcfBlockOp</span></code> (in <code class="docutils literal notranslate"><span class="pre">pcf_block_op.cuh</span></code>). It takes separate row and column data managers, enabling both <code class="docutils literal notranslate"><span class="pre">pdist</span></code> (same source for both) and <code class="docutils literal notranslate"><span class="pre">cdist</span></code> (different sources).</p>
+</section>
+<section id="pcf-specific-implementation">
+<h2>PCF-specific implementation<a class="headerlink" href="#pcf-specific-implementation" title="Link to this heading">#</a></h2>
+<section id="pcf-data-layout">
+<h3>PCF data layout<a class="headerlink" href="#pcf-data-layout" title="Link to this heading">#</a></h3>
+<p>Each piecewise constant function is defined by a sequence of breakpoints <span class="math notranslate nohighlight">\((t_k, v_k)\)</span>, where the function takes value <span class="math notranslate nohighlight">\(v_k\)</span> on the interval <span class="math notranslate nohighlight">\([t_k, t_{k+1})\)</span>. On the GPU, these are stored as flat arrays of <code class="docutils literal notranslate"><span class="pre">SimplePoint</span></code> structs:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Tt</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">Tv</span><span class="o">&gt;</span>
+<span class="k">struct</span><span class="w"> </span><span class="nc">SimplePoint</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">Tt</span><span class="w"> </span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="n">Tv</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="p">};</span>
+</pre></div>
+</div>
+<p>An offset array maps each function index to its starting position in the points array:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>PCF 0: points[0..2]     offsets = [0, 3, 5, 8, ...]
+PCF 1: points[3..4]
+PCF 2: points[5..7]
+...
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CudaPcfDataManager</span></code> is a type alias for <code class="docutils literal notranslate"><span class="pre">CudaOffsetDataManager&lt;SimplePoint&lt;Tt,</span> <span class="pre">Tv&gt;&gt;</span></code>, with a free function <code class="docutils literal notranslate"><span class="pre">init_pcf_data()</span></code> that handles the PCF-specific flattening.</p>
+</section>
+<section id="rectangle-iteration-kernel">
+<h3>Rectangle iteration kernel<a class="headerlink" href="#rectangle-iteration-kernel" title="Link to this heading">#</a></h3>
+<p>The kernel (in <code class="docutils literal notranslate"><span class="pre">cuda_pcf_kernel.cuh</span></code>) walks two PCFs simultaneously, advancing through their breakpoints in time order:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>f: |---3---|---1---|---0---|
+g: |----2----|---0----|
+
+Rectangles: [0,1)x(3,2)  [1,2)x(1,2)  [2,3)x(1,0)  [3,4)x(0,0)
+</pre></div>
+</div>
+<p>For each rectangle <span class="math notranslate nohighlight">\([l, r) \times (f_v, g_v)\)</span>, an operation-specific function computes the contribution. The result is accumulated:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>L1 distance:       sum += (r - l) * |f_v - g_v|
+Lp distance:       sum += (r - l) * |f_v - g_v|^p,  finalize: sum^(1/p)
+L2 inner product:  sum += (r - l) * f_v * g_v
+</pre></div>
+</div>
+<p>Each CUDA thread computes one <span class="math notranslate nohighlight">\((i, j)\)</span> pair. The <code class="docutils literal notranslate"><span class="pre">TriangleSkipMode</span></code> controls which pairs are skipped.</p>
+</section>
+</section>
+<section id="operation-data-flows">
+<h2>Operation data flows<a class="headerlink" href="#operation-data-flows" title="Link to this heading">#</a></h2>
+<p>All operations share the same <code class="docutils literal notranslate"><span class="pre">CudaBlockPipeline</span></code> – they differ in the task class, operation functor, output type, and triangle mode.</p>
+<p><strong>pdist</strong> — pairwise distance (symmetric, lower triangle, diagonal excluded):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Python: sb.pdist(X)
+  -&gt; C++: create DistanceMatrix(n), one CudaPcfDataManager
+  -&gt; CudaPairwiseIntegrationTask:
+       One function set, one data manager (shared for row and col)
+       Operation = OperationL1Dist or OperationLpDist
+       TriangleSkipMode = LowerTriangleSkipDiag
+       BlockTriangleMode = LowerTriangle
+       ResultWriter = DistanceMatrixResultWriter
+  -&gt; Result: compressed n*(n-1)/2 DistanceMatrix
+</pre></div>
+</div>
+<p><strong>l2_kernel</strong> — inner product kernel matrix (symmetric, lower triangle, diagonal included):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Python: sb.l2_kernel(X)
+  -&gt; C++: create SymmetricMatrix(n), one CudaPcfDataManager
+  -&gt; CudaPairwiseIntegrationTask:
+       One function set, one data manager (shared for row and col)
+       Operation = OperationL2InnerProduct
+       TriangleSkipMode = LowerTriangle  (includes diagonal)
+       BlockTriangleMode = LowerTriangle
+       ResultWriter = SymmetricMatrixResultWriter
+  -&gt; Result: compressed n*(n+1)/2 SymmetricMatrix
+</pre></div>
+</div>
+<p><strong>cdist</strong> — cross-distance or cross-kernel (rectangular, all pairs):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Python: sb.cdist(X, Y)
+  -&gt; C++: create Tensor&lt;Tv&gt; with shape (*X.shape, *Y.shape)
+  -&gt; C++: create separate row/col CudaPcfDataManagers
+  -&gt; CudaCrossIntegrationTask:
+       Two function sets, two data managers
+       Operation = any (L1, Lp, or L2 inner product)
+       TriangleSkipMode = None
+       BlockTriangleMode = Full
+       Scheduler: nRows = product(X.shape), nCols = product(Y.shape)
+       ResultWriter = DenseResultWriter
+  -&gt; Result: properly shaped Tensor, no reshape needed
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-text">Summary of operation configurations</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 16.0%" />
+<col style="width: 16.0%" />
+<col style="width: 18.0%" />
+<col style="width: 22.0%" />
+<col style="width: 16.0%" />
+<col style="width: 12.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Operation</p></th>
+<th class="head"><p>Task class</p></th>
+<th class="head"><p>Output type</p></th>
+<th class="head"><p>TriangleSkipMode</p></th>
+<th class="head"><p>ResultWriter</p></th>
+<th class="head"><p>BlockMode</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pdist</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaPairwiseIntegrationTask</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LowerTriangleSkipDiag</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DistanceMatrixResultWriter</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LowerTriangle</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">l2_kernel</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaPairwiseIntegrationTask</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LowerTriangle</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SymmetricMatrixResultWriter</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">LowerTriangle</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">cdist</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">CudaCrossIntegrationTask</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Tensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DenseResultWriter</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Full</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The CPU fallback uses the same split: <code class="docutils literal notranslate"><span class="pre">CpuPairwiseIntegrationTask</span></code> for pdist/l2_kernel and <code class="docutils literal notranslate"><span class="pre">CpuCrossIntegrationTask</span></code> for cdist (in <code class="docutils literal notranslate"><span class="pre">matrix_integrate.hpp</span></code>).</p>
+</section>
+<section id="adding-a-new-function-type">
+<h2>Adding a new function type<a class="headerlink" href="#adding-a-new-function-type" title="Link to this heading">#</a></h2>
+<p>To add support for a new piecewise function type (e.g., piecewise linear functions):</p>
+<ol class="arabic simple">
+<li><p><strong>Define the GPU data layout</strong> – create a point struct and a <code class="docutils literal notranslate"><span class="pre">CudaOffsetDataManager</span></code> type alias with a flattener function (analogous to <code class="docutils literal notranslate"><span class="pre">CudaPcfDataManager</span></code> + <code class="docutils literal notranslate"><span class="pre">init_pcf_data</span></code>).</p></li>
+<li><p><strong>Write the kernel</strong> – implement the device-side iteration function and integration kernel (analogous to <code class="docutils literal notranslate"><span class="pre">cuda_pcf_iterate_rectangles</span></code> and <code class="docutils literal notranslate"><span class="pre">cuda_pcf_block_integrate</span></code> in <code class="docutils literal notranslate"><span class="pre">cuda_pcf_kernel.cuh</span></code>).</p></li>
+<li><p><strong>Create a BlockOp</strong> – implement the <code class="docutils literal notranslate"><span class="pre">GpuStorage</span></code>/<code class="docutils literal notranslate"><span class="pre">init_gpu_storage</span></code>/<code class="docutils literal notranslate"><span class="pre">exec_block</span></code> interface (analogous to <code class="docutils literal notranslate"><span class="pre">PcfBlockOp</span></code>).</p></li>
+<li><p><strong>Add task classes and factory functions</strong> – create pairwise and cross integration task classes (analogous to <code class="docutils literal notranslate"><span class="pre">CudaPairwiseIntegrationTask</span></code> / <code class="docutils literal notranslate"><span class="pre">CudaCrossIntegrationTask</span></code>), and add factory functions in <code class="docutils literal notranslate"><span class="pre">cuda_matrix_integrate_api.hpp</span></code> / <code class="docutils literal notranslate"><span class="pre">cuda_matrix_integrate.cu</span></code>.</p></li>
+</ol>
+<p>The block scheduler, result writers, <code class="docutils literal notranslate"><span class="pre">CudaBlockPipeline</span></code>, offset data manager, and Python integration patterns are all reused unchanged.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../internals.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Internals</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="deterministic_random.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Deterministic random generation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-structure">File structure</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#block-decomposition">Block decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#algorithm">Algorithm</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-budget-and-nsplitshint">Memory budget and nSplitsHint</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-block-side-gpu-occupancy-floor">Minimum block side (GPU occupancy floor)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-rank-tensors">Higher-rank tensors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#triangle-skip-modes">Triangle skip modes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#double-buffered-pipeline">Double-buffered pipeline</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#streaming-function-data">Streaming function data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#result-scatter">Result scatter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#blockop-policy">BlockOp policy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pcf-specific-implementation">PCF-specific implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pcf-data-layout">PCF data layout</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rectangle-iteration-kernel">Rectangle iteration kernel</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operation-data-flows">Operation data flows</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-a-new-function-type">Adding a new function type</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/internals/cuda_engine.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

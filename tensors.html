@@ -1,0 +1,1009 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Working with Tensors &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/tensors.43b27bd9-1dc8-420d-b14a-00c8d1884efc.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tensors';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Random Generation" href="random.html" />
+    <link rel="prev" title="Core Concepts" href="concepts.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Working with Tensors</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="random.html">Random Generation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling.html">Subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relative_subsampling.html">Relative subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling_options.html">Shared subsampling options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing.html">Indexing and Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic.html">Arithmetic &amp; Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation &amp; Reductions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving.html">Saving and loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distances.html">Distances and Norms</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="persistence.html">Persistent Homology</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="homological-kernel.html">Homological Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linkage.html">Converting SciPy linkage matrices</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="point_processes.html">Point Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpu.html">GPU Acceleration</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="userguide.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Working with Tensors</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="working-with-tensors">
+<h1>Working with Tensors<a class="headerlink" href="#working-with-tensors" title="Link to this heading">#</a></h1>
+<p>This guide covers the practical details of creating, manipulating, and persisting tensors in stablebear.</p>
+<section id="creating-tensors">
+<h2>Creating tensors<a class="headerlink" href="#creating-tensors" title="Link to this heading">#</a></h2>
+<section id="using-zeros">
+<h3>Using zeros<a class="headerlink" href="#using-zeros" title="Link to this heading">#</a></h3>
+<p>The most common way to create a tensor is <code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code>, which allocates a tensor of a given shape filled with “zero” elements:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="c1"># 1-D tensor of 100 PCFs (32-bit, the default)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,))</span>
+
+<span class="c1"># 3-D tensor of 64-bit PCFs</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">pcf64</span><span class="p">)</span>
+
+<span class="c1"># Scalar float tensor</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For PCF dtypes, “zero” is a function that is identically zero. For numeric dtypes, it is the number 0. For point cloud dtypes, it is an empty point cloud.</p>
+</section>
+<section id="generating-random-data">
+<h3>Generating random data<a class="headerlink" href="#generating-random-data" title="Link to this heading">#</a></h3>
+<p>For quick experimentation, <a class="reference internal" href="api_random.html#module-stablebear.random" title="stablebear.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stablebear.random</span></code></a> provides functions that generate tensors of noisy trigonometric PCFs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">noisy_sin</span><span class="p">,</span> <span class="n">noisy_cos</span>
+
+<span class="c1"># 200 noisy sin(2*pi*t) functions, each with 100 breakpoints</span>
+<span class="n">sines</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">200</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># 2-D: 10 x 50 noisy cosine functions with 30 breakpoints each</span>
+<span class="n">cosines</span> <span class="o">=</span> <span class="n">noisy_cos</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>These functions return <code class="docutils literal notranslate"><span class="pre">PcfTensor</span></code> by default. Pass <code class="docutils literal notranslate"><span class="pre">dtype=sb.pcf64</span></code> for 64-bit.</p>
+</section>
+<section id="from-lists">
+<h3>From lists<a class="headerlink" href="#from-lists" title="Link to this heading">#</a></h3>
+<p>All tensor types can be constructed directly from Python lists or tuples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="c1"># Numeric tensors — same as wrapping in np.array()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">IntTensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">BoolTensor</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>For non-numeric tensors, nested lists define the shape:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]])</span>
+
+<span class="c1"># 1-D tensor</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PcfTensor</span><span class="p">([</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">])</span>             <span class="c1"># shape (2,)</span>
+
+<span class="c1"># 2-D tensor from nested lists</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PcfTensor</span><span class="p">([[</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">],</span> <span class="p">[</span><span class="n">g</span><span class="p">,</span> <span class="n">f</span><span class="p">]])</span>  <span class="c1"># shape (2, 2)</span>
+</pre></div>
+</div>
+<p>This works the same way for <code class="docutils literal notranslate"><span class="pre">IntPcfTensor</span></code> and <code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code>.
+The precision (32- or 64-bit) is inferred from the elements.
+An empty list produces a shape <code class="docutils literal notranslate"><span class="pre">(0,)</span></code> tensor.</p>
+<p><code class="docutils literal notranslate"><span class="pre">NestedTensor</span></code> stores a rectangular outer tensor whose elements are tensors.
+Construct the child tensors explicitly; their shapes may differ, but every
+child must have the same leaf dtype and nesting depth:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">selections</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]),</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span>
+    <span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([]),</span>
+<span class="p">])</span>
+
+<span class="n">selections</span><span class="o">.</span><span class="n">shape</span>       <span class="c1"># (3,)</span>
+<span class="n">selections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>    <span class="c1"># (3,)</span>
+<span class="n">selections</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>    <span class="c1"># (1,)</span>
+<span class="nb">repr</span><span class="p">(</span><span class="n">selections</span><span class="p">)</span>        <span class="c1"># 'Tensor&lt;Tensor&lt;uint64&gt;&gt;'</span>
+</pre></div>
+</div>
+<p>Construction (including <code class="docutils literal notranslate"><span class="pre">sb.NestedTensor(existing_nested)</span></code>) and assignment
+recursively copy supplied children. Reusing a child twice creates independent
+stored values. Ordinary outer views, such as slices and transposes, share
+storage: leaf mutations and child replacements are visible through the
+parent and its other views. <code class="docutils literal notranslate"><span class="pre">copy()</span></code> and <code class="docutils literal notranslate"><span class="pre">copy.deepcopy()</span></code> recursively copy
+logical values, including noncontiguous views; empty copies retain their dtype
+and depth. Reshaping shares storage when the layout permits it and copies
+noncontiguous storage when necessary.</p>
+<p>The outer tensor can have multiple dimensions:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">selections</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span>
+    <span class="p">[</span><span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">])],</span>
+    <span class="p">[</span><span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([</span><span class="mi">4</span><span class="p">]),</span> <span class="n">sb</span><span class="o">.</span><span class="n">indices</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">])],</span>
+<span class="p">])</span>
+
+<span class="n">selections</span><span class="o">.</span><span class="n">shape</span>       <span class="c1"># (2, 2)</span>
+<span class="n">selections</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>       <span class="c1"># array([2, 6, 7], dtype=uint64)</span>
+</pre></div>
+</div>
+<p>Nesting can continue to any depth at runtime:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">deeper</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">selections</span><span class="p">,</span> <span class="n">selections</span><span class="o">.</span><span class="n">copy</span><span class="p">()])</span>
+<span class="nb">repr</span><span class="p">(</span><span class="n">deeper</span><span class="p">)</span>  <span class="c1"># 'Tensor&lt;Tensor&lt;Tensor&lt;uint64&gt;&gt;&gt;'</span>
+</pre></div>
+</div>
+<p>Depth counts tensor levels, independently of the number of axes at each level.
+For nonempty input, depth and dtype are inferred from the children; neither
+argument is required. An explicitly supplied depth checks the inferred depth
+and does not add nesting levels.
+The following tested depth-3 example combines depth-2 children with vector,
+matrix, scalar, and empty outer shapes. Their numeric leaves also have different
+shapes. An empty child retains its depth and dtype but contains no leaves and
+therefore has no inner shapes. Here <code class="docutils literal notranslate"><span class="pre">np</span></code> is NumPy and <code class="docutils literal notranslate"><span class="pre">sb</span></code> is stablebear.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Depth 2 means an outer tensor containing numeric tensors: two tensor levels.</span>
+<span class="c1"># Shapes and numbers of axes can differ without changing the depth.</span>
+<span class="n">pair</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NestedTensor</span><span class="p">([</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>               <span class="c1"># shape (3,)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>       <span class="c1"># shape (2, 2)</span>
+<span class="p">])</span>                                                      <span class="c1"># shape (2,)</span>
+<span class="k">assert</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="k">assert</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NestedTensor</span><span class="p">([</span>
+    <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>                   <span class="c1"># shape ()</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>  <span class="c1"># shape (2, 1, 4)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>             <span class="c1"># shape (2,)</span>
+    <span class="p">],</span>
+    <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">15</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>       <span class="c1"># shape (1, 3)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">16</span><span class="p">],</span> <span class="p">[</span><span class="mi">17</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>         <span class="c1"># shape (2, 1)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>                  <span class="c1"># shape (0,)</span>
+    <span class="p">],</span>
+<span class="p">])</span>                                                     <span class="c1"># shape (2, 3)</span>
+<span class="k">assert</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][()]</span> <span class="o">==</span> <span class="mi">42</span>
+<span class="k">assert</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span>
+<span class="k">assert</span> <span class="n">grid</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">15</span>
+
+<span class="n">scalar</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NestedTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">))</span>  <span class="c1"># shape ()</span>
+
+<span class="c1"># No children to infer a type from: explicitly declare Tensor&lt;Tensor&lt;int64&gt;&gt;.</span>
+<span class="c1"># Only the outer shape (0,) exists; there are no numeric leaves or inner shapes.</span>
+<span class="n">empty</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NestedTensor</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Infer depth 3 and dtype int64 from the depth-2 children.</span>
+<span class="n">nested</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NestedTensor</span><span class="p">([</span><span class="n">pair</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="n">empty</span><span class="p">])</span>
+
+<span class="k">assert</span> <span class="n">nested</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="o">.</span><span class="n">depth</span> <span class="o">==</span> <span class="mi">3</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">()</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
+
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">()</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,)</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">2</span><span class="p">][()]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+
+<span class="c1"># Each bracket indexes one tensor level; commas index axes within a level.</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">6</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">][()]</span> <span class="o">==</span> <span class="mi">42</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mi">7</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">15</span>
+<span class="k">assert</span> <span class="n">nested</span><span class="p">[</span><span class="mi">2</span><span class="p">][()][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Numeric leaf tensors may use <code class="docutils literal notranslate"><span class="pre">float32</span></code>, <code class="docutils literal notranslate"><span class="pre">float64</span></code>, <code class="docutils literal notranslate"><span class="pre">int32</span></code>, <code class="docutils literal notranslate"><span class="pre">int64</span></code>,
+<code class="docutils literal notranslate"><span class="pre">uint32</span></code>, or <code class="docutils literal notranslate"><span class="pre">uint64</span></code>. All leaves in one nested tensor must have the same
+dtype. Use an explicit empty child tensor for an empty element. Since neither
+the leaf dtype nor nesting depth can be inferred from an empty outer tensor,
+provide both explicitly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">empty</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">NestedTensor</span><span class="p">([],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="from-numpy-arrays">
+<h3>From NumPy arrays<a class="headerlink" href="#from-numpy-arrays" title="Link to this heading">#</a></h3>
+<p>Point-cloud, distance-matrix, and symmetric-matrix tensors can be built
+directly from a single NumPy array, avoiding an explicit element-assignment
+loop.</p>
+<p>For a <code class="xref py py-class docutils literal notranslate"><span class="pre">PointCloudTensor</span></code>, the trailing two axes form each
+<code class="docutils literal notranslate"><span class="pre">(n_points,</span> <span class="pre">dim)</span></code> point cloud and the leading axes form the tensor shape. Point
+clouds always have rank 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>        <span class="c1"># 3 x 5 grid of (4, 2) point clouds</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PointCloudTensor</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>           <span class="c1"># shape (3, 5)</span>
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>        <span class="c1"># 10 point clouds of 8 points in 2-D</span>
+<span class="n">clouds</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PointCloudTensor</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>     <span class="c1"># shape (10,)</span>
+</pre></div>
+</div>
+<p>A list of point cloud arrays (which may have differing numbers of points) builds a
+1-D tensor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ragged</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PointCloudTensor</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Selecting one element returns a <code class="docutils literal notranslate"><span class="pre">PointCloud</span></code> façade. It is always rank 2 and
+supports normal row and column indexing, NumPy conversion, copying, and
+assignment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cloud</span> <span class="o">=</span> <span class="n">ragged</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cloud</span><span class="o">.</span><span class="n">shape</span>             <span class="c1"># (3, 2)</span>
+<span class="n">cloud</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>             <span class="c1"># first coordinate of each point</span>
+<span class="n">cloud</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.0</span>       <span class="c1"># updates ragged[0]</span>
+</pre></div>
+</div>
+<p>Coordinate indexing follows NumPy: scalar indexing reads a single value,
+basic slices remain views, and integer-array or boolean indexing returns
+independent values. Multiple integer arrays use NumPy’s paired indexing.
+Writes through retained coordinate views update the owning point cloud; for indexed
+point clouds, the first successful write materializes the shared tensor state.
+Invalid assignments leave that state unchanged.</p>
+<p><code class="docutils literal notranslate"><span class="pre">np.asarray(cloud)</span></code> shares coordinates when the point cloud has ordinary storage.
+For an indexed point cloud it returns an independent array, because arbitrary point
+indices cannot be represented by NumPy strides. Coordinate slices retain their
+write-through behavior until explicitly converted to an array.</p>
+<p><code class="docutils literal notranslate"><span class="pre">PointCloud</span></code> intentionally omits rank-changing tensor operations such as
+<code class="docutils literal notranslate"><span class="pre">squeeze</span></code> and <code class="docutils literal notranslate"><span class="pre">reshape</span></code>. Convert it with <code class="docutils literal notranslate"><span class="pre">np.asarray(cloud)</span></code> when general
+array operations are needed. Use <code class="docutils literal notranslate"><span class="pre">cloud.copy()</span></code> to obtain an independent
+<code class="docutils literal notranslate"><span class="pre">PointCloud</span></code>. A standalone point cloud can also be constructed directly with
+<code class="docutils literal notranslate"><span class="pre">sb.PointCloud(coordinates)</span></code>.</p>
+<p>Point selection and subsampling may return a <code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code> backed by
+shared coordinates and row indices for each point cloud. Use <code class="docutils literal notranslate"><span class="pre">clouds.to_dense()</span></code> when
+an independent tensor with ordinary point-cloud storage is required. The
+original indexed tensor and its views remain indexed and unchanged. Calling
+<code class="docutils literal notranslate"><span class="pre">to_dense()</span></code> on an already-dense tensor returns an independent copy.</p>
+<p>For matrix tensors, the trailing two axes of the array form each <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">n</span></code>
+matrix and the leading axes form the tensor shape:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>         <span class="c1"># 6 distance matrices, each 4 x 4</span>
+<span class="n">dmats</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">DistanceMatrixTensor</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>   <span class="c1"># shape (6,)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>         <span class="c1"># 2 x 3 grid of 5 x 5 matrices</span>
+<span class="n">smats</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">SymmetricMatrixTensor</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>     <span class="c1"># shape (2, 3)</span>
+</pre></div>
+</div>
+<p>The precision is inferred from the array dtype (<code class="docutils literal notranslate"><span class="pre">float32</span></code> → the 32-bit
+variant, otherwise 64-bit) and can be overridden with <code class="docutils literal notranslate"><span class="pre">dtype=</span></code>. These
+batch constructors are the natural entry point for computing persistent
+homology across many point clouds or distance matrices in one parallel call.</p>
+</section>
+<section id="using-the-tensor-factory">
+<h3>Using the tensor factory<a class="headerlink" href="#using-the-tensor-factory" title="Link to this heading">#</a></h3>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">tensor()</span></code> factory is a NumPy-like front end that
+dispatches to the right constructor based on <code class="docutils literal notranslate"><span class="pre">dtype</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>                  <span class="c1"># FloatTensor (inferred)</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">pcloud64</span><span class="p">)</span>          <span class="c1"># PointCloudTensor</span>
+<span class="n">dmats</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">distmat64</span><span class="p">)</span>  <span class="c1"># DistanceMatrixTensor</span>
+</pre></div>
+</div>
+<p>When passed a <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> or a nested collection of PCFs, the factory infers a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PcfTensor</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">IntPcfTensor</span></code> from
+the PCF value dtype. A single <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> becomes a one-element tensor.</p>
+</section>
+<section id="from-serialized-numpy-data">
+<h3>From serialized NumPy data<a class="headerlink" href="#from-serialized-numpy-data" title="Link to this heading">#</a></h3>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">from_serial_content()</span></code> constructs a tensor from PCF data already stored in NumPy arrays — a flat content array and an enumeration array that describes how to split it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="c1"># Three PCFs packed into a single content array</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.14</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>   <span class="c1"># PCF 0 (3 points)</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.8</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>  <span class="c1"># PCF 1 (4 points)</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>                   <span class="c1"># PCF 2 (2 points)</span>
+<span class="p">])</span>
+
+<span class="c1"># Each row gives (start, end) indices into content</span>
+<span class="n">enumeration</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+
+<span class="n">F</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">from_serial_content</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">enumeration</span><span class="p">)</span>
+<span class="c1"># F is a PcfTensor of shape (3,)</span>
+</pre></div>
+</div>
+<p>The enumeration array can be multidimensional. If it has shape <code class="docutils literal notranslate"><span class="pre">(n1,</span> <span class="pre">n2,</span> <span class="pre">...,</span> <span class="pre">nk,</span> <span class="pre">2)</span></code>, the resulting tensor has shape <code class="docutils literal notranslate"><span class="pre">(n1,</span> <span class="pre">n2,</span> <span class="pre">...,</span> <span class="pre">nk)</span></code>.</p>
+</section>
+</section>
+<section id="shape-and-copying">
+<h2>Shape and copying<a class="headerlink" href="#shape-and-copying" title="Link to this heading">#</a></h2>
+<p>Every tensor has a <code class="xref py py-attr docutils literal notranslate"><span class="pre">shape</span></code> property, along with <code class="docutils literal notranslate"><span class="pre">ndim</span></code>, <code class="docutils literal notranslate"><span class="pre">size</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">len()</span></code> — matching the NumPy interface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">X</span><span class="o">.</span><span class="n">shape</span>        <span class="c1"># (10, 5, 4)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">ndim</span>         <span class="c1"># 3</span>
+<span class="n">X</span><span class="o">.</span><span class="n">size</span>         <span class="c1"># 200</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>         <span class="c1"># 10  (first axis)</span>
+</pre></div>
+</div>
+<p>To create an independent copy (not a view):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To collapse all dimensions into one:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">flat</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  <span class="c1"># shape (200,)</span>
+</pre></div>
+</div>
+<p>To change the shape without changing the data, use <code class="docutils literal notranslate"><span class="pre">reshape</span></code>. One dimension
+may be <code class="docutils literal notranslate"><span class="pre">-1</span></code> to infer its size:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>     <span class="c1"># shape (3, 4)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>    <span class="c1"># shape (2, 6) — inferred</span>
+</pre></div>
+</div>
+<p>For contiguous tensors, <code class="docutils literal notranslate"><span class="pre">reshape</span></code> returns a view (shared data). For
+non-contiguous tensors (e.g. from slicing with a step), it copies first.</p>
+<p>To reverse the order of axes, use the <code class="docutils literal notranslate"><span class="pre">.T</span></code> property. For finer control,
+<code class="docutils literal notranslate"><span class="pre">transpose</span></code> accepts an explicit axis permutation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">A</span><span class="o">.</span><span class="n">T</span>              <span class="c1"># shape (4, 3)</span>
+<span class="n">A</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># same as .T for 2-D</span>
+
+<span class="n">B</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">B</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># shape (4, 2, 3)</span>
+</pre></div>
+</div>
+<p>Transpose always returns a view.</p>
+<p>To swap exactly two axes, use <code class="docutils literal notranslate"><span class="pre">swapaxes</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">C</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>     <span class="c1"># shape (4, 3, 2)</span>
+<span class="n">C</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span>   <span class="c1"># same — negative indices count from the last axis</span>
+</pre></div>
+</div>
+<p>To remove size-1 dimensions, use <code class="docutils literal notranslate"><span class="pre">squeeze</span></code>. With no argument it removes all
+of them; with an axis argument it removes only that one:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">X</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>      <span class="c1"># shape (6,)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>     <span class="c1"># shape (6, 1)</span>
+</pre></div>
+</div>
+<p>Squeeze always returns a view. Squeezing an axis whose size is not 1 raises
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<p>The inverse operation, <code class="docutils literal notranslate"><span class="pre">expand_dims</span></code>, inserts a size-1 dimension at the given
+position (negative indexing supported):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">Y</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>    <span class="c1"># shape (1, 6)</span>
+<span class="n">Y</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># shape (6, 1)</span>
+</pre></div>
+</div>
+<p>Expand dims also returns a view.</p>
+</section>
+<section id="type-casting">
+<h2>Type casting<a class="headerlink" href="#type-casting" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">astype</span></code> converts a tensor to a different dtype. Same-family precision changes
+(e.g. float32 to float64) and numeric cross-family casts (e.g. int to float)
+are supported:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>    <span class="c1"># FloatTensor, float64</span>
+<span class="n">X</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>      <span class="c1"># IntTensor, int32 (truncates)</span>
+</pre></div>
+</div>
+<p>PCF and point cloud tensors support precision changes within their family:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">F</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">pcf32</span><span class="p">)</span>
+<span class="n">F</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">sb</span><span class="o">.</span><span class="n">pcf64</span><span class="p">)</span>      <span class="c1"># PcfTensor, pcf64</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">astype</span></code> always returns a new tensor (copy).</p>
+</section>
+<section id="joining-tensors">
+<h2>Joining tensors<a class="headerlink" href="#joining-tensors" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">concatenate</span></code> joins tensors along an existing axis:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>  <span class="c1"># (2, 2)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>          <span class="c1"># (1, 2)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>   <span class="c1"># (3, 2)</span>
+</pre></div>
+</div>
+<p>All tensors must have the same shape except along the join axis.</p>
+<p><code class="docutils literal notranslate"><span class="pre">stack</span></code> joins tensors along a new axis (all shapes must match):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>  <span class="c1"># (3,)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>  <span class="c1"># (3,)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>    <span class="c1"># (2, 3)</span>
+<span class="n">sb</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    <span class="c1"># (3, 2)</span>
+</pre></div>
+</div>
+</section>
+<section id="splitting-tensors">
+<h2>Splitting tensors<a class="headerlink" href="#splitting-tensors" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">split</span></code> divides a tensor into parts along an axis. Pass an integer for equal
+splits, or a list of indices for custom split points:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Equal split: 4 rows into 2 parts of 2 rows each</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>       <span class="c1"># each shape (2, 3)</span>
+
+<span class="c1"># Index split: split at rows 1 and 3</span>
+<span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># shapes (1,3), (2,3), (1,3)</span>
+</pre></div>
+</div>
+<p>The returned parts are views sharing data with the original tensor. An equal
+split raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the axis size is not divisible by the number of
+sections.</p>
+<p><code class="docutils literal notranslate"><span class="pre">array_split</span></code> works the same way but allows uneven divisions — the first
+sections get one extra element when the size is not evenly divisible:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+<span class="n">parts</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">array_split</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>   <span class="c1"># sizes: 3, 2, 2, 2</span>
+</pre></div>
+</div>
+</section>
+<section id="iterating">
+<h2>Iterating<a class="headerlink" href="#iterating" title="Link to this heading">#</a></h2>
+<p>Iterating over a tensor yields sub-tensors along the first axis, just like
+NumPy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>   <span class="c1"># (4,)</span>
+</pre></div>
+</div>
+<p>For a 1-D tensor, iteration yields scalar elements.</p>
+<p>This also enables <code class="docutils literal notranslate"><span class="pre">list()</span></code>, <code class="docutils literal notranslate"><span class="pre">tuple()</span></code>, and unpacking:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">X</span>   <span class="c1"># three rows</span>
+</pre></div>
+</div>
+<p>Nested iteration works as expected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">matrix</span> <span class="ow">in</span> <span class="n">Y</span><span class="p">:</span>          <span class="c1"># shape (3, 4)</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">matrix</span><span class="p">:</span>    <span class="c1"># shape (4,)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="concepts.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Core Concepts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="random.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Random Generation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tensors">Creating tensors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-zeros">Using zeros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generating-random-data">Generating random data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-lists">From lists</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-numpy-arrays">From NumPy arrays</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-tensor-factory">Using the tensor factory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-serialized-numpy-data">From serialized NumPy data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-and-copying">Shape and copying</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-casting">Type casting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joining-tensors">Joining tensors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-tensors">Splitting tensors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating">Iterating</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tensors.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

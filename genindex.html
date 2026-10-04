@@ -1,0 +1,1486 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = "pre.mermaid {\n    /* Same as .mermaid-container > pre */\n    display: block;\n    width: 100%;\n}\n\npre.mermaid > svg {\n    /* Same as .mermaid-container > pre > svg */\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}";
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = ".mermaid-container {\n    position: relative;\n    display: flex;\n    flex-direction: row;\n    width: 100%;\n}\n\n.mermaid-container > pre {\n    display: block;\n    width: 100%;\n}\n\n.mermaid-container > pre > svg {\n    height: 500px;\n    width: 100%;\n    max-width: 100% !important;\n}\n\n.mermaid-fullscreen-btn {\n    position: absolute;\n    width: 28px;\n    height: 28px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.3);\n    border-radius: 4px;\n    cursor: pointer;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    transition: all 0.2s;\n    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);\n    font-size: 14px;\n    line-height: 1;\n    padding: 0;\n    color: #333;\n}\n\n.mermaid-fullscreen-btn:hover {\n    opacity: 100% !important;\n    background: rgba(255, 255, 255, 1);\n    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-btn.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.3);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-btn.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal {\n    display: none;\n    position: fixed !important;\n    top: 0 !important;\n    left: 0 !important;\n    width: 95vw;\n    height: 100vh;\n    background: rgba(255, 255, 255, 0.98);\n    z-index: 9999;\n    padding: 20px;\n    overflow: auto;\n}\n\n.mermaid-fullscreen-modal.dark-theme {\n    background: rgba(0, 0, 0, 0.98);\n}\n\n.mermaid-fullscreen-modal.active {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen {\n    position: relative;\n    width: 95vw;\n    height: 90vh;\n    max-width: 95vw;\n    max-height: 90vh;\n    background: white;\n    border-radius: 8px;\n    padding: 20px;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);\n    overflow: auto;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen.dark-theme {\n    background: #1a1a1a;\n    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);\n}\n\n.mermaid-container-fullscreen pre.mermaid {\n    width: 100%;\n    height: 100%;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n}\n\n.mermaid-container-fullscreen .mermaid svg {\n    height: 100% !important;\n    width: 100% !important;\n    cursor: grab;\n}\n\n.mermaid-fullscreen-close {\n    position: fixed !important;\n    top: 20px !important;\n    right: 20px !important;\n    width: 40px;\n    height: 40px;\n    background: rgba(255, 255, 255, 0.95);\n    border: 1px solid rgba(0, 0, 0, 0.2);\n    border-radius: 50%;\n    cursor: pointer;\n    z-index: 10000;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);\n    transition: all 0.2s;\n    font-size: 24px;\n    line-height: 1;\n    color: #333;\n}\n\n.mermaid-fullscreen-close:hover {\n    background: white;\n    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);\n    transform: scale(1.1);\n}\n\n.mermaid-fullscreen-close.dark-theme {\n    background: rgba(50, 50, 50, 0.95);\n    border: 1px solid rgba(255, 255, 255, 0.2);\n    color: #e0e0e0;\n}\n\n.mermaid-fullscreen-close.dark-theme:hover {\n    background: rgba(60, 60, 60, 1);\n    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);\n}\n\n.mermaid-fullscreen-modal .mermaid-fullscreen-btn {\n    display: none !important;\n}";
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+let closeModal = () => {};
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('active')) {
+        closeModal();
+    }
+});
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if (false) {
+                                        addZoomToSvgs(d3.selectAll("").select(function() {
+                                            return this.querySelector("svg");
+                                        }));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if (false) {
+        const mermaids_to_add_zoom = 0 === -1 ? mermaids_active.length : 0;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("").select(function() {
+                return this.querySelector("svg");
+            });
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if (!true) return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = "\u26f6";
+        fullscreenBtn.style.opacity = "50%";
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scrollX, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.display = 'block';
+
+                if (false) {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+
+
+const load = async () => {
+    initStyles();
+
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...{"startOnLoad": false},
+                ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...{"startOnLoad": false},
+    ...{ darkMode: darkTheme, theme: darkTheme ? "dark" : "default" },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.comparison.allclose">allclose() (in module stablebear.comparison)</a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.NumericTensor.array_equal">array_equal() (stablebear.base_tensor.NumericTensor method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.tensor_create.array_split">array_split() (in module stablebear.tensor_create)</a>
+</li>
+      <li><a href="api_base.html#stablebear.functional.pcf.Pcf.astype">astype() (stablebear.functional.pcf.Pcf method)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.point_cloud.PointCloudTensor.astype">(stablebear.point_cloud.PointCloudTensor method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.barcode.Barcode">Barcode (class in stablebear.persistence.barcode)</a>
+</li>
+      <li><a href="api_persistence.html#stablebear.persistence.barcode_summary.barcode_to_accumulated_persistence">barcode_to_accumulated_persistence() (in module stablebear.persistence.barcode_summary)</a>
+</li>
+      <li><a href="api_persistence.html#stablebear.persistence.barcode_summary.barcode_to_betti_curve">barcode_to_betti_curve() (in module stablebear.persistence.barcode_summary)</a>
+</li>
+      <li><a href="api_persistence.html#stablebear.persistence.barcode_summary.barcode_to_stable_rank">barcode_to_stable_rank() (in module stablebear.persistence.barcode_summary)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.ph_tensor.BarcodeTensor">BarcodeTensor (class in stablebear.persistence.ph_tensor)</a>
+</li>
+      <li><a href="glossary.html#term-basis-of-a-vector-space"><strong>basis of a vector space</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.BoolTensor">BoolTensor (class in stablebear.base_tensor)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.build_type">build_type() (in module stablebear.system)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.distance.cdist">cdist() (in module stablebear.distance)</a>
+</li>
+      <li><a href="api_persistence.html#stablebear.persistence.homology.ComplexType">ComplexType (class in stablebear.persistence.homology)</a>
+</li>
+      <li><a href="api_persistence.html#stablebear.persistence.homological_kernel.compute_homological_kernel">compute_homological_kernel() (in module stablebear.persistence.homological_kernel)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.homology.compute_persistent_homology">compute_persistent_homology() (in module stablebear.persistence.homology)</a>
+</li>
+      <li><a href="api_base.html#stablebear.tensor_create.concatenate">concatenate() (in module stablebear.tensor_create)</a>
+</li>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrix.copy">copy() (stablebear.distance_matrix.DistanceMatrix method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-dendrogram"><strong>dendrogram</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.gpu.detect_nvidia_gpus">detect_nvidia_gpus() (in module stablebear.gpu)</a>
+</li>
+      <li><a href="glossary.html#term-direct-sum-of-vector-spaces"><strong>direct sum of vector spaces</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrix">DistanceMatrix (class in stablebear.distance_matrix)</a>
+</li>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor">DistanceMatrixTensor (class in stablebear.distance_matrix)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.homology.DistanceType">DistanceType (class in stablebear.persistence.homology)</a>
+</li>
+      <li><a href="api_distributions.html#stablebear.distributions.Distribution">Distribution (class in stablebear.distributions)</a>
+</li>
+      <li><a href="api_base.html#stablebear.typing.dtype">dtype (class in stablebear.typing)</a>
+</li>
+      <li><a href="api_base.html#stablebear.typing.Dtype">Dtype (in module stablebear.typing)</a>
+</li>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrix.dtype">dtype (stablebear.distance_matrix.DistanceMatrix property)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix.dtype">(stablebear.symmetric_matrix.SymmetricMatrix property)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.homology.DistanceType.Euclidean">Euclidean (stablebear.persistence.homology.DistanceType attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.functional.pcf.Rectangle.f_value">f_value (stablebear.functional.pcf.Rectangle property)</a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.FloatTensor">FloatTensor (class in stablebear.base_tensor)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.force_cpu">force_cpu() (in module stablebear.system)</a>
+</li>
+      <li><a href="glossary.html#term-freely-generated-vector-space"><strong>freely generated vector space</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrix.from_dense">from_dense() (stablebear.distance_matrix.DistanceMatrix class method)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix.from_dense">(stablebear.symmetric_matrix.SymmetricMatrix class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrixTensor.from_numpy">from_numpy() (stablebear.distance_matrix.DistanceMatrixTensor class method)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrixTensor.from_numpy">(stablebear.symmetric_matrix.SymmetricMatrixTensor class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api_base.html#stablebear.serialize.from_serial_content">from_serial_content() (in module stablebear.serialize)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.functional.pcf.Rectangle.g_value">g_value (stablebear.functional.pcf.Rectangle property)</a>
+</li>
+      <li><a href="api_distributions.html#stablebear.distributions.Gaussian">Gaussian (class in stablebear.distributions)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_random.html#stablebear.random.Generator">Generator (class in stablebear.random)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.get_parallel_eval_threshold">get_parallel_eval_threshold() (in module stablebear.system)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.gpu.has_nvidia_gpu">has_nvidia_gpu() (in module stablebear.gpu)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.tensor_create.indices">indices() (in module stablebear.tensor_create)</a>
+</li>
+      <li><a href="glossary.html#term-injective-map"><strong>injective map</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.IntPcfTensor">IntPcfTensor (class in stablebear.base_tensor)</a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.IntTensor">IntTensor (class in stablebear.base_tensor)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.barcode.Barcode.is_isomorphic_to">is_isomorphic_to() (stablebear.persistence.barcode.Barcode method)</a>
+
+      <ul>
+        <li><a href="api_persistence.html#stablebear.persistence.ph_tensor.BarcodeTensor.is_isomorphic_to">(stablebear.persistence.ph_tensor.BarcodeTensor method)</a>
+</li>
+      </ul></li>
+      <li><a href="glossary.html#term-isomorphism"><strong>isomorphism</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.functional.pcf.iterate_rectangles">iterate_rectangles() (in module stablebear.functional.pcf)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-kernel-of-a-linear-map"><strong>kernel of a linear map</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.inner_product.l2_kernel">l2_kernel() (in module stablebear.inner_product)</a>
+</li>
+      <li><a href="api_base.html#stablebear.functional.pcf.Rectangle.left">left (stablebear.functional.pcf.Rectangle property)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.limit_cpus">limit_cpus() (in module stablebear.system)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.limit_gpus">limit_gpus() (in module stablebear.system)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.linkage.linkage_to_barcode">linkage_to_barcode() (in module stablebear.persistence.linkage)</a>
+</li>
+      <li><a href="api_base.html#stablebear.io.load">load() (in module stablebear.io)</a>
+</li>
+      <li><a href="api_base.html#stablebear.distance.lp_distance">lp_distance() (in module stablebear.distance)</a>
+</li>
+      <li><a href="api_base.html#stablebear.norms.lp_norm">lp_norm() (in module stablebear.norms)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.reductions.max_time">max_time() (in module stablebear.reductions)</a>
+</li>
+      <li><a href="api_base.html#stablebear.reductions.mean">mean() (in module stablebear.reductions)</a>
+</li>
+      <li><a href="api_distributions.html#stablebear.distributions.Mixture">Mixture (class in stablebear.distributions)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.base_tensor">stablebear.base_tensor</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.comparison">stablebear.comparison</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.distance">stablebear.distance</a>
+</li>
+        <li><a href="api_distributions.html#module-stablebear.distributions">stablebear.distributions</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.functional.pcf">stablebear.functional.pcf</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.gpu">stablebear.gpu</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.inner_product">stablebear.inner_product</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.io">stablebear.io</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.norms">stablebear.norms</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence">stablebear.persistence</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence.barcode">stablebear.persistence.barcode</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence.barcode_summary">stablebear.persistence.barcode_summary</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence.homological_kernel">stablebear.persistence.homological_kernel</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence.homology">stablebear.persistence.homology</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence.linkage">stablebear.persistence.linkage</a>
+</li>
+        <li><a href="api_persistence.html#module-stablebear.persistence.ph_tensor">stablebear.persistence.ph_tensor</a>
+</li>
+        <li><a href="api_plotting.html#module-stablebear.plotting">stablebear.plotting</a>
+</li>
+        <li><a href="api_point_process.html#module-stablebear.point_process">stablebear.point_process</a>
+</li>
+        <li><a href="api_random.html#module-stablebear.random">stablebear.random</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.reductions">stablebear.reductions</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.serialize">stablebear.serialize</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.symmetric_matrix">stablebear.symmetric_matrix</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.system">stablebear.system</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.tensor_create">stablebear.tensor_create</a>
+</li>
+        <li><a href="api_base.html#module-stablebear.typing">stablebear.typing</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.typing.dtype.name">name (stablebear.typing.dtype property)</a>
+</li>
+      <li><a href="api_random.html#stablebear.random.noisy_cos">noisy_cos() (in module stablebear.random)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_random.html#stablebear.random.noisy_sin">noisy_sin() (in module stablebear.random)</a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.NumericTensor">NumericTensor (class in stablebear.base_tensor)</a>
+</li>
+      <li><a href="api_base.html#stablebear.gpu.nvidia_gpu_count">nvidia_gpu_count() (in module stablebear.gpu)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.functional.pcf.Pcf">Pcf (class in stablebear.functional.pcf)</a>
+</li>
+      <li><a href="api_base.html#stablebear.base_tensor.PcfTensor">PcfTensor (class in stablebear.base_tensor)</a>
+</li>
+      <li><a href="api_base.html#stablebear.distance.pdist">pdist() (in module stablebear.distance)</a>
+</li>
+      <li><a href="api_plotting.html#stablebear.plotting.plot">plot() (in module stablebear.plotting)</a>
+</li>
+      <li><a href="api_plotting.html#stablebear.plotting.plot_barcode">plot_barcode() (in module stablebear.plotting)</a>
+</li>
+      <li><a href="api_plotting.html#stablebear.plotting.plot_distance_weight_heatmap">plot_distance_weight_heatmap() (in module stablebear.plotting)</a>
+</li>
+      <li><a href="api_distributions.html#stablebear.distributions.Distribution.plot_range">plot_range() (stablebear.distributions.Distribution method)</a>
+
+      <ul>
+        <li><a href="api_distributions.html#stablebear.distributions.Gaussian.plot_range">(stablebear.distributions.Gaussian method)</a>
+</li>
+        <li><a href="api_distributions.html#stablebear.distributions.Mixture.plot_range">(stablebear.distributions.Mixture method)</a>
+</li>
+        <li><a href="api_distributions.html#stablebear.distributions.Uniform.plot_range">(stablebear.distributions.Uniform method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.point_cloud.PointCloud">PointCloud (class in stablebear.point_cloud)</a>
+</li>
+      <li><a href="api_base.html#stablebear.point_cloud.PointCloudTensor">PointCloudTensor (class in stablebear.point_cloud)</a>
+</li>
+      <li><a href="glossary.html#term-preimage"><strong>preimage</strong></a>
+</li>
+      <li><a href="glossary.html#term-principal-submatrix"><strong>principal submatrix</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.functional.pcf.Rectangle">Rectangle (class in stablebear.functional.pcf)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.functional.pcf.Rectangle.right">right (stablebear.functional.pcf.Rectangle property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_point_process.html#stablebear.point_process.sample_poisson">sample_poisson() (in module stablebear.point_process)</a>
+</li>
+      <li><a href="api_base.html#stablebear.io.save">save() (in module stablebear.io)</a>
+</li>
+      <li><a href="api_random.html#stablebear.random.seed">seed() (in module stablebear.random)</a>
+
+      <ul>
+        <li><a href="api_random.html#stablebear.random.Generator.seed">(stablebear.random.Generator method)</a>
+</li>
+      </ul></li>
+      <li><a href="api_base.html#stablebear.system.set_block_size">set_block_size() (in module stablebear.system)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.set_cuda_threshold">set_cuda_threshold() (in module stablebear.system)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.set_device_verbose">set_device_verbose() (in module stablebear.system)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.set_min_block_side">set_min_block_side() (in module stablebear.system)</a>
+</li>
+      <li><a href="api_base.html#stablebear.system.set_parallel_eval_threshold">set_parallel_eval_threshold() (in module stablebear.system)</a>
+</li>
+      <li><a href="glossary.html#term-simplicial-complex"><strong>simplicial complex</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.functional.pcf.Pcf.size">size (stablebear.functional.pcf.Pcf property)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix.size">(stablebear.symmetric_matrix.SymmetricMatrix property)</a>
+</li>
+      </ul></li>
+      <li><a href="api_base.html#stablebear.tensor_create.split">split() (in module stablebear.tensor_create)</a>
+</li>
+      <li>
+    stablebear.base_tensor
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.base_tensor">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.comparison
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.comparison">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.distance
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.distance">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.distributions
+
+      <ul>
+        <li><a href="api_distributions.html#module-stablebear.distributions">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.functional.pcf
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.functional.pcf">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.gpu
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.gpu">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.inner_product
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.inner_product">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.io
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.io">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.norms
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.norms">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.persistence
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.persistence.barcode
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence.barcode">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    stablebear.persistence.barcode_summary
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence.barcode_summary">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.persistence.homological_kernel
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence.homological_kernel">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.persistence.homology
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence.homology">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.persistence.linkage
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence.linkage">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.persistence.ph_tensor
+
+      <ul>
+        <li><a href="api_persistence.html#module-stablebear.persistence.ph_tensor">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.plotting
+
+      <ul>
+        <li><a href="api_plotting.html#module-stablebear.plotting">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.point_process
+
+      <ul>
+        <li><a href="api_point_process.html#module-stablebear.point_process">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.random
+
+      <ul>
+        <li><a href="api_random.html#module-stablebear.random">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.reductions
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.reductions">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.serialize
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.serialize">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.symmetric_matrix
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.symmetric_matrix">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.system
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.system">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.tensor_create
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.tensor_create">module</a>
+</li>
+      </ul></li>
+      <li>
+    stablebear.typing
+
+      <ul>
+        <li><a href="api_base.html#module-stablebear.typing">module</a>
+</li>
+      </ul></li>
+      <li><a href="api_base.html#stablebear.tensor_create.stack">stack() (in module stablebear.tensor_create)</a>
+</li>
+      <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix.storage_count">storage_count (stablebear.symmetric_matrix.SymmetricMatrix property)</a>
+</li>
+      <li><a href="api_random.html#stablebear.random.subsample">subsample() (in module stablebear.random)</a>
+</li>
+      <li><a href="api_random.html#stablebear.random.subsample_relative">subsample_relative() (in module stablebear.random)</a>
+</li>
+      <li><a href="api_base.html#stablebear.reductions.sum">sum() (in module stablebear.reductions)</a>
+</li>
+      <li><a href="glossary.html#term-surjective-map"><strong>surjective map</strong></a>
+</li>
+      <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix">SymmetricMatrix (class in stablebear.symmetric_matrix)</a>
+</li>
+      <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrixTensor">SymmetricMatrixTensor (class in stablebear.symmetric_matrix)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.tensor_create.tensor">tensor() (in module stablebear.tensor_create)</a>
+</li>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrix.to_dense">to_dense() (stablebear.distance_matrix.DistanceMatrix method)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix.to_dense">(stablebear.symmetric_matrix.SymmetricMatrix method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.distance_matrix.DistanceMatrix.to_numpy">to_numpy() (stablebear.distance_matrix.DistanceMatrix method)</a>
+
+      <ul>
+        <li><a href="api_base.html#stablebear.functional.pcf.Pcf.to_numpy">(stablebear.functional.pcf.Pcf method)</a>
+</li>
+        <li><a href="api_persistence.html#stablebear.persistence.barcode.Barcode.to_numpy">(stablebear.persistence.barcode.Barcode method)</a>
+</li>
+        <li><a href="api_base.html#stablebear.symmetric_matrix.SymmetricMatrix.to_numpy">(stablebear.symmetric_matrix.SymmetricMatrix method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_distributions.html#stablebear.distributions.Uniform">Uniform (class in stablebear.distributions)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_persistence.html#stablebear.persistence.homology.ComplexType.VietorisRips">VietorisRips (stablebear.persistence.homology.ComplexType attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_distributions.html#stablebear.distributions.Distribution.weight">weight() (stablebear.distributions.Distribution method)</a>
+
+      <ul>
+        <li><a href="api_distributions.html#stablebear.distributions.Gaussian.weight">(stablebear.distributions.Gaussian method)</a>
+</li>
+        <li><a href="api_distributions.html#stablebear.distributions.Mixture.weight">(stablebear.distributions.Mixture method)</a>
+</li>
+        <li><a href="api_distributions.html#stablebear.distributions.Uniform.weight">(stablebear.distributions.Uniform method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api_base.html#stablebear.tensor_create.zeros">zeros() (in module stablebear.tensor_create)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

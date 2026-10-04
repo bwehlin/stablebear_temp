@@ -1,0 +1,906 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Distances and Norms &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/distances.85b4d1f8-d4dc-4f25-af63-654d79f35f5c.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'distances';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Persistent Homology" href="persistence.html" />
+    <link rel="prev" title="Saving and loading" href="saving.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="concepts.html">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensors.html">Working with Tensors</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="random.html">Random Generation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling.html">Subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relative_subsampling.html">Relative subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling_options.html">Shared subsampling options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing.html">Indexing and Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic.html">Arithmetic &amp; Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation &amp; Reductions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving.html">Saving and loading</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Distances and Norms</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="persistence.html">Persistent Homology</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="homological-kernel.html">Homological Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linkage.html">Converting SciPy linkage matrices</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="point_processes.html">Point Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpu.html">GPU Acceleration</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="userguide.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Distances and Norms</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="distances-and-norms">
+<h1>Distances and Norms<a class="headerlink" href="#distances-and-norms" title="Link to this heading">#</a></h1>
+<p>stablebear provides GPU-accelerated computation of pairwise distance matrices and norms for collections of piecewise constant functions. These are key building blocks for downstream machine learning tasks such as clustering, classification, and dimensionality reduction.</p>
+<section id="mathematical-background">
+<h2>Mathematical background<a class="headerlink" href="#mathematical-background" title="Link to this heading">#</a></h2>
+<p>Given two PCFs <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span>, the <span class="math notranslate nohighlight">\(L_p\)</span> distance between them is</p>
+<div class="math notranslate nohighlight">
+\[d_p(f, g) = \left( \int_0^\infty |f(t) - g(t)|^p \, dt \right)^{1/p}.\]</div>
+<p>The <span class="math notranslate nohighlight">\(L_p\)</span> norm of a single PCF <span class="math notranslate nohighlight">\(f\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[\| f \|_p = \left( \int_0^\infty |f(t)|^p \, dt \right)^{1/p}.\]</div>
+<p>For piecewise constant functions, these integrals reduce to finite sums over the breakpoint intervals, which stablebear evaluates exactly.</p>
+</section>
+<section id="distance-between-two-pcfs">
+<h2>Distance between two PCFs<a class="headerlink" href="#distance-between-two-pcfs" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">lp_distance()</span></code> computes the <span class="math notranslate nohighlight">\(L_p\)</span> distance between two individual PCFs, returning a scalar.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+
+<span class="n">d</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">lp_distance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>        <span class="c1"># L1 distance (default)</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">lp_distance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># L2 distance</span>
+</pre></div>
+</div>
+<p>This is the simplest distance API and is useful for quick comparisons or unit testing. For computing distances between all pairs in a collection, use <code class="xref py py-func docutils literal notranslate"><span class="pre">pdist()</span></code> or <code class="xref py py-func docutils literal notranslate"><span class="pre">cdist()</span></code> instead.</p>
+</section>
+<section id="pairwise-distances">
+<h2>Pairwise distances<a class="headerlink" href="#pairwise-distances" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">pdist()</span></code> computes the full pairwise <span class="math notranslate nohighlight">\(L_p\)</span> distance matrix for a 1-D tensor of PCFs. The result is a <code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> — a compressed symmetric matrix where entry <span class="math notranslate nohighlight">\((i, j)\)</span> is the <span class="math notranslate nohighlight">\(L_p\)</span> distance between the <span class="math notranslate nohighlight">\(i\)</span>-th and <span class="math notranslate nohighlight">\(j\)</span>-th PCF.</p>
+<section id="basic-usage">
+<h3>Basic usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">noisy_sin</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">50</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># L1 distance matrix (default)</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># D.size is 50, D[i, j] gives the distance between X[i] and X[j]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">p</span></code> parameter controls which <span class="math notranslate nohighlight">\(L_p\)</span> distance is computed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">D1</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># L1 distance</span>
+<span class="n">D2</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># L2 distance</span>
+</pre></div>
+</div>
+</section>
+<section id="progress-output">
+<h3>Progress output<a class="headerlink" href="#progress-output" title="Link to this heading">#</a></h3>
+<p>By default, progress output is suppressed. To show a progress bar during computation, pass <code class="docutils literal notranslate"><span class="pre">verbose=True</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="input-requirements">
+<h3>Input requirements<a class="headerlink" href="#input-requirements" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pdist</span></code> requires a <strong>1-D</strong> PCF tensor. If your data is in a higher-dimensional tensor, slice out the dimension you want first:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="c1"># ... fill A ...</span>
+
+<span class="c1"># Distances between the 50 PCFs in the first row</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+</pre></div>
+</div>
+</section>
+<section id="gpu-acceleration">
+<h3>GPU acceleration<a class="headerlink" href="#gpu-acceleration" title="Link to this heading">#</a></h3>
+<p>For large collections of PCFs, <code class="docutils literal notranslate"><span class="pre">pdist</span></code> automatically offloads the computation to the GPU when one is available. The number of pairwise integrals grows as <span class="math notranslate nohighlight">\(n(n-1)/2\)</span>, so GPU acceleration can provide dramatic speedups for large <span class="math notranslate nohighlight">\(n\)</span>.</p>
+</section>
+</section>
+<section id="cross-distances">
+<h2>Cross-distances<a class="headerlink" href="#cross-distances" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">cdist()</span></code> computes the pairwise <span class="math notranslate nohighlight">\(L_p\)</span> distances between two tensors of PCFs. Unlike <code class="docutils literal notranslate"><span class="pre">pdist</span></code>, the two input tensors can differ in shape and size. The result is a <code class="xref py py-class docutils literal notranslate"><span class="pre">FloatTensor</span></code> whose shape is the concatenation of the two input shapes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">noisy_sin</span><span class="p">,</span> <span class="n">noisy_cos</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">30</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">noisy_cos</span><span class="p">((</span><span class="mi">20</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>          <span class="c1"># shape (30, 20)</span>
+<span class="n">D2</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>   <span class="c1"># L2 cross-distances</span>
+</pre></div>
+</div>
+<p>Higher-dimensional tensors are supported – the output shape is <code class="docutils literal notranslate"><span class="pre">(*X.shape,</span> <span class="pre">*Y.shape)</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">noisy_cos</span><span class="p">((</span><span class="mi">8</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>   <span class="c1"># shape (5, 10, 8)</span>
+</pre></div>
+</div>
+</section>
+<section id="l2-kernel-matrices">
+<h2>L2 kernel matrices<a class="headerlink" href="#l2-kernel-matrices" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">l2_kernel()</span></code> computes the pairwise <span class="math notranslate nohighlight">\(L_2\)</span> inner-product (kernel) matrix for a 1-D tensor of PCFs. The result is a <code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code> where entry <span class="math notranslate nohighlight">\((i, j)\)</span> is</p>
+<div class="math notranslate nohighlight">
+\[K_{ij} = \langle f_i, f_j \rangle_{L_2}
+       = \int_0^\infty f_i(t) \, f_j(t) \, dt.\]</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">l2_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># K[i, j] gives the L2 inner product between X[i] and X[j]</span>
+</pre></div>
+</div>
+<p>The kernel matrix is symmetric and includes diagonal entries (self inner products). To use it with scikit-learn, convert to a dense NumPy array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">K_dense</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">l2_kernel</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="distance-matrices">
+<h2>Distance matrices<a class="headerlink" href="#distance-matrices" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> provides a compressed storage format for distance matrices. Since a distance matrix is symmetric with zeros on the diagonal, it stores only the strict lower triangle — <span class="math notranslate nohighlight">\(n(n-1)/2\)</span> elements instead of <span class="math notranslate nohighlight">\(n^2\)</span>. Entries are enforced to be nonnegative, and writes to the diagonal are rejected unless the value is zero.</p>
+<p>Construct a matrix from either a full square NumPy array or a one-dimensional
+compact array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="kn">import</span> <span class="n">DistanceMatrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">float32</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">DistanceMatrix</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+
+<span class="c1"># SciPy condensed order: (0,1), (0,2), (0,3), (1,2), (1,3), (2,3)</span>
+<span class="n">compact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">])</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">DistanceMatrix</span><span class="p">(</span><span class="n">compact</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a matrix <code class="docutils literal notranslate"><span class="pre">D</span></code>, compact input follows SciPy condensed order: the strict
+upper triangle is read row by row:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">D</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">D</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The diagonal is omitted. More generally, the entries are ordered first by
+<code class="docutils literal notranslate"><span class="pre">i</span></code> and then by <code class="docutils literal notranslate"><span class="pre">j</span></code> for <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">j</span></code>. Compact input must be one-dimensional;
+a two-dimensional triangular array with the other half omitted or zeroed is
+not a compact representation.</p>
+<p>Square input must be exactly symmetric, nonnegative, and have a zero diagonal.
+Compact input has an implicit zero diagonal. NaN is rejected; positive infinity
+is allowed. An empty compact array represents a 1×1 distance matrix, matching
+SciPy’s convention. Use an empty <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code> array for a size-zero matrix.</p>
+<p>Without an explicit <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, input arrays must have dtype <code class="docutils literal notranslate"><span class="pre">float32</span></code> or
+<code class="docutils literal notranslate"><span class="pre">float64</span></code>. Pass <code class="docutils literal notranslate"><span class="pre">dtype=float32</span></code> or <code class="docutils literal notranslate"><span class="pre">dtype=float64</span></code> to convert other array
+dtypes before construction. Construction copies the values, including from
+non-contiguous views. The older <code class="docutils literal notranslate"><span class="pre">DistanceMatrix.from_dense(array)</span></code> method
+is deprecated since 0.4.7; pass square arrays to the constructor.</p>
+<p>Matrices can also be allocated by size:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">DistanceMatrix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="k">assert</span> <span class="n">m</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.5</span>   <span class="c1"># symmetric access</span>
+<span class="k">assert</span> <span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0</span>   <span class="c1"># diagonal is always zero</span>
+</pre></div>
+</div>
+<p>To convert to a full NumPy array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dense</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>   <span class="c1"># shape (100, 100), dtype float32</span>
+</pre></div>
+</div>
+<section id="tensors-of-distance-matrices">
+<h3>Tensors of distance matrices<a class="headerlink" href="#tensors-of-distance-matrices" title="Link to this heading">#</a></h3>
+<p>Distance matrices can be stored in tensors just like PCFs or point clouds.
+Use the <code class="docutils literal notranslate"><span class="pre">distmat32</span></code> or <code class="docutils literal notranslate"><span class="pre">distmat64</span></code> dtypes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="c1"># A 1-D tensor holding 10 distance matrices</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">distmat64</span><span class="p">)</span>
+
+<span class="c1"># Assign a matrix into the tensor</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">DistanceMatrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+<span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.14</span>
+<span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
+
+<span class="c1"># Read it back — symmetric access works as expected</span>
+<span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>   <span class="c1"># 3.14</span>
+<span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># 3.14</span>
+</pre></div>
+</div>
+<p>Slicing, copying, flattening, and equality comparison all work as for other
+tensor types:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sub</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>           <span class="c1"># slice — shape (3,)</span>
+<span class="n">T2</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>          <span class="c1"># independent deep copy</span>
+<span class="n">flat</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>     <span class="c1"># shape (10,)</span>
+<span class="n">T</span> <span class="o">==</span> <span class="n">T2</span>                <span class="c1"># True</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="symmetric-matrices">
+<h2>Symmetric matrices<a class="headerlink" href="#symmetric-matrices" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">SymmetricMatrix</span></code> provides a more general compressed storage format for symmetric matrices without the distance matrix constraints. It stores the lower triangle including the diagonal — <span class="math notranslate nohighlight">\(n(n+1)/2\)</span> elements instead of <span class="math notranslate nohighlight">\(n^2\)</span>.</p>
+<p>Construct a matrix from either a full square NumPy array or a one-dimensional
+compact array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="kn">import</span> <span class="n">SymmetricMatrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">float32</span>
+
+<span class="n">square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">SymmetricMatrix</span><span class="p">(</span><span class="n">square</span><span class="p">)</span>
+
+<span class="c1"># Upper triangle in row-major order: (0,0), (0,1), (0,2), (1,1), ...</span>
+<span class="n">compact</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">])</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">SymmetricMatrix</span><span class="p">(</span><span class="n">compact</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For a matrix <code class="docutils literal notranslate"><span class="pre">A</span></code>, compact order is the upper triangle, including the
+diagonal, read row by row:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>This extends SciPy condensed order by retaining the diagonal. More generally,
+the entries are ordered first by <code class="docutils literal notranslate"><span class="pre">i</span></code> and then by <code class="docutils literal notranslate"><span class="pre">j</span></code> for <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&lt;=</span> <span class="pre">j</span></code>.
+Compact input must be one-dimensional; a two-dimensional
+triangular array with the other half omitted or zeroed is not a compact
+representation.</p>
+<p>Square input must be exactly symmetric. Both forms preserve diagonal entries
+and allow positive or negative infinity; NaN is rejected. An empty compact or
+<code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code> square array represents a size-zero matrix. Dtype inference,
+explicit conversion, copying, and non-contiguous input behave as for
+<code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code>. The older <code class="docutils literal notranslate"><span class="pre">SymmetricMatrix.from_dense(array)</span></code>
+method is deprecated since 0.4.7.</p>
+<p>Matrices can also be allocated by size:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="n">SymmetricMatrix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">m</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="k">assert</span> <span class="n">m</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="mf">2.5</span>   <span class="c1"># symmetric access</span>
+</pre></div>
+</div>
+<p>To convert to a full NumPy array:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dense</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>   <span class="c1"># shape (100, 100), dtype float32</span>
+</pre></div>
+</div>
+<p>Tensors of symmetric matrices use the <code class="docutils literal notranslate"><span class="pre">symmat32</span></code> or <code class="docutils literal notranslate"><span class="pre">symmat64</span></code> dtypes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">T</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">symmat64</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="norms">
+<h2>Norms<a class="headerlink" href="#norms" title="Link to this heading">#</a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">lp_norm()</span></code> computes the <span class="math notranslate nohighlight">\(L_p\)</span> norm of every PCF in a tensor, returning a NumPy array of the same shape.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">noisy_sin</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">50</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># L1 norms of all 50 PCFs</span>
+<span class="n">norms</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">lp_norm</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># norms.shape is (50,)</span>
+</pre></div>
+</div>
+<p>For higher-dimensional tensors, the output shape matches the input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="c1"># ... fill A ...</span>
+
+<span class="n">norms</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">lp_norm</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># norms.shape is (3, 10)</span>
+</pre></div>
+</div>
+</section>
+<section id="using-distances-in-machine-learning">
+<h2>Using distances in machine learning<a class="headerlink" href="#using-distances-in-machine-learning" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pdist</span></code> returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">DistanceMatrix</span></code>. Call <code class="xref py py-meth docutils literal notranslate"><span class="pre">to_dense()</span></code> to obtain a standard NumPy array for use with scikit-learn and other libraries.</p>
+<section id="clustering">
+<h3>Clustering<a class="headerlink" href="#clustering" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgglomerativeClustering</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
+
+<span class="n">clustering</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span>
+    <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">'precomputed'</span><span class="p">,</span>
+    <span class="n">linkage</span><span class="o">=</span><span class="s1">'average'</span>
+<span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">clustering</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="multidimensional-scaling">
+<h3>Multidimensional scaling<a class="headerlink" href="#multidimensional-scaling" title="Link to this heading">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDS</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
+
+<span class="n">mds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dissimilarity</span><span class="o">=</span><span class="s1">'precomputed'</span><span class="p">)</span>
+<span class="n">coords</span> <span class="o">=</span> <span class="n">mds</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="classification-with-distance-based-kernels">
+<h3>Classification with distance-based kernels<a class="headerlink" href="#classification-with-distance-based-kernels" title="Link to this heading">#</a></h3>
+<p>A common approach is to convert a distance matrix into a kernel matrix and use it with a kernel SVM. For example, using a Gaussian (RBF) kernel:</p>
+<div class="math notranslate nohighlight">
+\[K_{ij} = \exp\!\left(-\frac{D_{ij}^2}{2\sigma^2}\right)\]</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <span class="n">SVC</span>
+
+<span class="n">D</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">pdist</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">to_dense</span><span class="p">()</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">D</span><span class="p">[</span><span class="n">D</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">D</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">'precomputed'</span><span class="p">)</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="saving.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Saving and loading</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="persistence.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Persistent Homology</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-background">Mathematical background</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-between-two-pcfs">Distance between two PCFs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pairwise-distances">Pairwise distances</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-usage">Basic usage</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#progress-output">Progress output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#input-requirements">Input requirements</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-acceleration">GPU acceleration</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-distances">Cross-distances</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#l2-kernel-matrices">L2 kernel matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-matrices">Distance matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensors-of-distance-matrices">Tensors of distance matrices</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-matrices">Symmetric matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#norms">Norms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-distances-in-machine-learning">Using distances in machine learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering">Clustering</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multidimensional-scaling">Multidimensional scaling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-with-distance-based-kernels">Classification with distance-based kernels</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/distances.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

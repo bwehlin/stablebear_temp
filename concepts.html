@@ -1,0 +1,1041 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Core Concepts &#8212; stablebear 0.5.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/lightbox.css?v=57076102" />
+    <link rel="stylesheet" type="text/css" href="_static/diagrams.css?v=2fb2f2b5" />
+    <link rel="stylesheet" type="text/css" href="_static/glossary.css?v=8d723454" />
+    <link rel="stylesheet" type="text/css" href="_static/notebooks.css?v=d879d767" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
+
+    <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
+    <script src="_static/documentation_options.js?v=1dd76d02"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script defer="defer" src="_static/tippy/concepts.e5c9f320-1b9d-4344-b492-2999685bfff8.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'concepts';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <script src="_static/lightbox.js?v=3041caf6"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Working with Tensors" href="tensors.html" />
+    <link rel="prev" title="User guide" href="userguide.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">stablebear 0.5.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="getting_started.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="userguide.html">
+    User guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="stablebear.html">
+    Python API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="glossary.html">
+    Mathematical glossary
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="acknowledgments.html">
+    About
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="internals.html">
+    Internals
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changelog.html">
+    Changelog
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Core Concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tensors.html">Working with Tensors</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="random.html">Random Generation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributions.html">Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling.html">Subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relative_subsampling.html">Relative subsampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="subsampling_options.html">Shared subsampling options</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="indexing.html">Indexing and Masking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arithmetic.html">Arithmetic &amp; Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation &amp; Reductions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="saving.html">Saving and loading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distances.html">Distances and Norms</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="persistence.html">Persistent Homology</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="homological-kernel.html">Homological Kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="linkage.html">Converting SciPy linkage matrices</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="point_processes.html">Point Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gpu.html">GPU Acceleration</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="userguide.html" class="nav-link">User guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Core Concepts</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="core-concepts">
+<h1>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading">#</a></h1>
+<p>This page introduces the foundational ideas behind stablebear: piecewise
+constant functions, point clouds and distance matrices, collections stored in
+tensors, and the type system.</p>
+<section id="piecewise-constant-functions">
+<h2>Piecewise constant functions<a class="headerlink" href="#piecewise-constant-functions" title="Link to this heading">#</a></h2>
+<p>A <strong>piecewise constant function</strong> (PCF) is a function that takes a constant value on each of a finite number of intervals. For example, the function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}f(t) = \begin{cases}
+  1 &amp; \text{if } 0 \le t &lt; 2 \\
+  3 &amp; \text{if } 2 \le t &lt; 5 \\
+  0 &amp; \text{if } 5 \le t &lt; 7
+\end{cases}\end{split}\]</div>
+<p>is a PCF with three pieces.</p>
+<p>In stablebear, a PCF is represented as an <span class="math notranslate nohighlight">\(n \times 2\)</span> array of <code class="docutils literal notranslate"><span class="pre">(time,</span> <span class="pre">value)</span></code> pairs, where each row gives a breakpoint time and the value the function takes starting at that time. The function above would be represented as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+ <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>The value at each breakpoint is the value on the interval starting at that time and continuing until the next breakpoint (or until the end of the function’s domain).</p>
+<p>The breakpoints must be listed in non-decreasing order of time, and the first time must be <code class="docutils literal notranslate"><span class="pre">0</span></code> (PCFs are defined on <span class="math notranslate nohighlight">\([0, \infty)\)</span>). Breakpoints given out of order, a first time other than <code class="docutils literal notranslate"><span class="pre">0</span></code>, or any negative time raise a <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<section id="why-pcfs">
+<h3>Why PCFs?<a class="headerlink" href="#why-pcfs" title="Link to this heading">#</a></h3>
+<p>Many invariants in <strong>Topological Data Analysis</strong> (TDA) are naturally piecewise constant. Examples include:</p>
+<ul class="simple">
+<li><p><strong>Stable rank functions</strong></p></li>
+<li><p><strong>Betti curves</strong> – the Betti number as a function of the filtration parameter</p></li>
+<li><p><strong>Euler characteristic curves</strong> – the Euler characteristic as a function of the filtration parameter</p></li>
+</ul>
+<p>By representing these invariants as PCFs, stablebear enables efficient statistical analysis: computing means, distances, and norms over large collections of such functions, potentially leveraging GPU acceleration.</p>
+</section>
+<section id="the-pcf-class">
+<h3>The Pcf class<a class="headerlink" href="#the-pcf-class" title="Link to this heading">#</a></h3>
+<p>An individual PCF is represented by <code class="xref py py-class docutils literal notranslate"><span class="pre">Pcf</span></code>. You create one from a NumPy array or a list:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="c1"># From a NumPy array</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># From a list (defaults to float32)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>You can convert a <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> back to a NumPy array with <code class="xref py py-meth docutils literal notranslate"><span class="pre">to_numpy()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>  <span class="c1"># shape (3, 2), dtype float32</span>
+</pre></div>
+</div>
+<p>Individual PCFs support arithmetic (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">/</span></code>, <code class="docutils literal notranslate"><span class="pre">**</span></code>) with
+other PCFs and with scalars:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">f</span> <span class="o">**</span> <span class="mf">0.5</span>    <span class="c1"># square root: values become [2.0, 3.0]</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">f</span> <span class="o">*</span> <span class="mf">2.0</span>     <span class="c1"># scale: values become [8.0, 18.0]</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="arithmetic.html"><span class="doc">Arithmetic &amp; Comparisons</span></a> for the full arithmetic reference, including broadcasting.</p>
+</section>
+<section id="iterating-over-rectangles">
+<h3>Iterating over rectangles<a class="headerlink" href="#iterating-over-rectangles" title="Link to this heading">#</a></h3>
+<p>Given two PCFs <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span>, <code class="xref py py-func docutils literal notranslate"><span class="pre">iterate_rectangles()</span></code> produces the list of intervals on which both functions are constant. Each interval is returned as a <a class="reference internal" href="api_base.html#stablebear.functional.pcf.Rectangle" title="stablebear.functional.pcf.Rectangle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rectangle</span></code></a> with four properties: <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> (the time boundaries) and <code class="docutils literal notranslate"><span class="pre">f_value</span></code> and <code class="docutils literal notranslate"><span class="pre">g_value</span></code> (the values of each function on that interval).</p>
+<p>This corresponds to the rectangle decomposition described in <a class="footnote-reference brackets" href="#footcite-wehlin2024" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> and is useful for inspecting how two PCFs interact or for implementing custom integration-like operations:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+
+<span class="n">rects</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">iterate_rectangles</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">rects</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"[</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">left</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">right</span><span class="si">}</span><span class="s2">): f=</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">f_value</span><span class="si">}</span><span class="s2">, g=</span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">g_value</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># [0.0, 2.0): f=1.0, g=2.0</span>
+<span class="c1"># [2.0, 3.0): f=3.0, g=2.0</span>
+<span class="c1"># [3.0, 5.0): f=3.0, g=1.0</span>
+<span class="c1"># [5.0, inf): f=0.0, g=0.0</span>
+</pre></div>
+</div>
+<p>Optional <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> parameters restrict the iteration to a sub-interval:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rects</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">iterate_rectangles</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">4.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">iterate_rectangles</span></code> is intended for exploration and prototyping. For
+performance-critical workloads such as computing distances or norms over
+large collections, use the dedicated functions (<code class="xref py py-func docutils literal notranslate"><span class="pre">pdist()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">lp_norm()</span></code>, etc.) which are implemented in optimized
+C++/CUDA.</p>
+</div>
+</section>
+</section>
+<section id="point-clouds-and-distance-matrices">
+<span id="id2"></span><h2>Point clouds and distance matrices<a class="headerlink" href="#point-clouds-and-distance-matrices" title="Link to this heading">#</a></h2>
+<p>A <strong>point cloud</strong> is a collection of points described by their coordinates.
+In an array of shape <code class="docutils literal notranslate"><span class="pre">(n_points,</span> <span class="pre">dimension)</span></code>, each row is one point and each
+column is a coordinate. For example, these three points lie in the plane:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="n">coordinates</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>  <span class="c1"># point 0</span>
+    <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>  <span class="c1"># point 1</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span>  <span class="c1"># point 2</span>
+<span class="p">])</span>
+<span class="n">cloud</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PointCloud</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">cloud</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <strong>point index</strong> is its row number, starting at zero. Index <code class="docutils literal notranslate"><span class="pre">1</span></code> refers
+to the whole point <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">0)</span></code>; it is not a coordinate value. The order matters
+when referring to points by index, even though rearranging the rows does not
+change the geometry.</p>
+<p>A <strong>distance matrix</strong> describes points through their pairwise distances.
+Entry <code class="docutils literal notranslate"><span class="pre">D[i,</span> <span class="pre">j]</span></code> is the distance between points <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>. For the
+Euclidean distances in this example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">DistanceMatrix</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mf">5.0</span>
+</pre></div>
+</div>
+<p>Both axes of this <code class="docutils literal notranslate"><span class="pre">(3,</span> <span class="pre">3)</span></code> array refer to points. Its columns are not spatial
+coordinates. The matrix is symmetric, distances are nonnegative, and its
+diagonal is zero because a point has zero distance to itself. Stablebear
+stores only the distinct off-diagonal entries internally.</p>
+<p>A distance matrix can also be supplied directly when coordinates are
+unavailable. It retains the distances and point indices, but does not store
+the original coordinates. For example, row <code class="docutils literal notranslate"><span class="pre">1</span></code> gives distances <code class="docutils literal notranslate"><span class="pre">[3,</span> <span class="pre">0,</span> <span class="pre">5]</span></code>
+from point 1 to all three points. It cannot tell us distances from a new
+external coordinate such as <code class="docutils literal notranslate"><span class="pre">(1,</span> <span class="pre">1)</span></code> without additional information.</p>
+<section id="one-dataset-versus-a-collection">
+<h3>One dataset versus a collection<a class="headerlink" href="#one-dataset-versus-a-collection" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">PointCloud</span></code> and <code class="docutils literal notranslate"><span class="pre">DistanceMatrix</span></code> each represent one dataset.
+<code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code> and <code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code> hold collections of these
+datasets: a tensor of shape <code class="docutils literal notranslate"><span class="pre">(10,)</span></code> holds ten point clouds or ten matrices.
+The number of points and coordinate dimensions belong to each element, not
+to the collection’s shape. See <a class="reference internal" href="tensors.html"><span class="doc">Working with Tensors</span></a> for constructing collections
+from arrays, and <a class="reference internal" href="subsampling.html"><span class="doc">Subsampling</span></a> for selecting points from a dataset.</p>
+</section>
+</section>
+<section id="tensors">
+<h2>Tensors<a class="headerlink" href="#tensors" title="Link to this heading">#</a></h2>
+<p>While you <em>can</em> work with individual <code class="docutils literal notranslate"><span class="pre">Pcf</span></code> objects, stablebear is designed for working with <strong>collections</strong> of PCFs. These collections are stored in <strong>tensors</strong> – multidimensional arrays, similar to NumPy’s <code class="docutils literal notranslate"><span class="pre">ndarray</span></code>.</p>
+<p>A tensor can have any number of dimensions. For example:</p>
+<ul class="simple">
+<li><p>A 1-D tensor of shape <code class="docutils literal notranslate"><span class="pre">(100,)</span></code> holds 100 PCFs.</p></li>
+<li><p>A 2-D tensor of shape <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">50)</span></code> holds 500 PCFs arranged in a 10-by-50 grid.</p></li>
+</ul>
+<section id="creating-tensors">
+<h3>Creating tensors<a class="headerlink" href="#creating-tensors" title="Link to this heading">#</a></h3>
+<p>The primary way to create a tensor is with <code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">stablebear</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sb</span>
+
+<span class="c1"># A 1-D tensor of 100 "zero" PCFs (32-bit, the default)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">100</span><span class="p">,))</span>
+
+<span class="c1"># A 2-D tensor of 64-bit PCFs</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">pcf64</span><span class="p">)</span>
+
+<span class="c1"># A tensor of scalar floats</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What “zero” means depends on the dtype: for PCF types, it is a function that is identically zero; for numeric types, it is the number 0; for point cloud types, it is an empty point cloud.</p>
+<p>You can also generate random PCF tensors for experimentation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">noisy_sin</span><span class="p">,</span> <span class="n">noisy_cos</span>
+
+<span class="c1"># 200 noisy sin(2*pi*t) functions, each sampled at 100 time points</span>
+<span class="n">sines</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">200</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># A 2-D array: 10 x 50 noisy cosine functions</span>
+<span class="n">cosines</span> <span class="o">=</span> <span class="n">noisy_cos</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="indexing-and-slicing">
+<h3>Indexing and slicing<a class="headerlink" href="#indexing-and-slicing" title="Link to this heading">#</a></h3>
+<p>Tensors support NumPy-style indexing and slicing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Single element -- returns a Pcf</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Slicing -- returns a tensor (view)</span>
+<span class="n">row</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>        <span class="c1"># shape (5, 4)</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">:,</span> <span class="mi">2</span><span class="p">]</span>     <span class="c1"># shape (6, 4)</span>
+</pre></div>
+</div>
+<p>You can also assign into tensors:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">stablebear.random</span><span class="w"> </span><span class="kn">import</span> <span class="n">noisy_sin</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">10</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">noisy_sin</span><span class="p">((</span><span class="mi">10</span><span class="p">,),</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Boolean masks can select elements by condition:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">BoolTensor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]))</span>
+
+<span class="n">X</span><span class="p">[:,</span> <span class="n">mask</span><span class="p">]</span>   <span class="c1"># shape (3, 2) — select columns where mask is True</span>
+<span class="n">X</span><span class="p">[</span><span class="n">X</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>  <span class="c1"># flat 1D — all elements matching the condition</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="indexing.html"><span class="doc">Indexing and Masking</span></a> for full details on <a class="reference internal" href="indexing.html#masking-numpy-differences"><span class="std std-ref">boolean masking</span></a>.</p>
+</section>
+<section id="tensor-types">
+<h3>Tensor types<a class="headerlink" href="#tensor-types" title="Link to this heading">#</a></h3>
+<p>There are several concrete tensor types, each corresponding to a dtype:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 20.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Tensor class</p></th>
+<th class="head"><p>dtype</p></th>
+<th class="head"><p>Contents</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">PcfTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pcf32</span></code> / <code class="docutils literal notranslate"><span class="pre">pcf64</span></code></p></td>
+<td><p>Piecewise constant functions</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IntPcfTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pcf32i</span></code> / <code class="docutils literal notranslate"><span class="pre">pcf64i</span></code></p></td>
+<td><p>Integer-valued piecewise constant functions</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">FloatTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">float32</span></code> / <code class="docutils literal notranslate"><span class="pre">float64</span></code></p></td>
+<td><p>Floating-point scalars</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">IntTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int32</span></code> / <code class="docutils literal notranslate"><span class="pre">int64</span></code> / <code class="docutils literal notranslate"><span class="pre">uint32</span></code> / <code class="docutils literal notranslate"><span class="pre">uint64</span></code></p></td>
+<td><p>Integer scalars</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">NestedTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">float32</span></code> / <code class="docutils literal notranslate"><span class="pre">float64</span></code> / <code class="docutils literal notranslate"><span class="pre">int32</span></code> / <code class="docutils literal notranslate"><span class="pre">int64</span></code> / <code class="docutils literal notranslate"><span class="pre">uint32</span></code> / <code class="docutils literal notranslate"><span class="pre">uint64</span></code></p></td>
+<td><p>Recursively nested tensors with a uniform leaf dtype</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">PointCloudTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pcloud32</span></code> / <code class="docutils literal notranslate"><span class="pre">pcloud64</span></code></p></td>
+<td><p>Point clouds</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BarcodeTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">barcode32</span></code> / <code class="docutils literal notranslate"><span class="pre">barcode64</span></code></p></td>
+<td><p>Persistence barcodes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">SymmetricMatrixTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">symmat32</span></code> / <code class="docutils literal notranslate"><span class="pre">symmat64</span></code></p></td>
+<td><p>Symmetric matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DistanceMatrixTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">distmat32</span></code> / <code class="docutils literal notranslate"><span class="pre">distmat64</span></code></p></td>
+<td><p>Distance matrices</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BoolTensor</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">boolean</span></code></p></td>
+<td><p>Boolean values (returned by comparison operators)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>You can construct tensor types directly from Python lists:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Numeric tensors</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">])</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">IntTensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+
+<span class="c1"># Non-numeric tensors from lists of elements</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]])</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]])</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">PcfTensor</span><span class="p">([</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>You can also use <code class="xref py py-func docutils literal notranslate"><span class="pre">zeros()</span></code> or functions like <a class="reference internal" href="api_random.html#stablebear.random.noisy_sin" title="stablebear.random.noisy_sin"><code class="xref py py-func docutils literal notranslate"><span class="pre">noisy_sin()</span></code></a> that return the appropriate tensor type automatically. See <a class="reference internal" href="tensors.html"><span class="doc">Working with Tensors</span></a> for all construction methods.</p>
+</section>
+</section>
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading">#</a></h2>
+<p>Since PCFs represent functions, they can be evaluated by calling them as such. Pass a single time to get a single value, or an array of times to evaluate at many points at once:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">Pcf</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>    <span class="c1"># 1.0  (on the interval [0, 2))</span>
+<span class="n">f</span><span class="p">(</span><span class="mf">3.5</span><span class="p">)</span>    <span class="c1"># 3.0  (on the interval [2, 5))</span>
+</pre></div>
+</div>
+<p>PCF tensors are also callable – evaluating every element at the given time(s):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">sb</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">sb</span><span class="o">.</span><span class="n">pcf32</span><span class="p">)</span>
+<span class="c1"># ... fill X with PCFs ...</span>
+
+<span class="n">X</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>        <span class="c1"># shape (3, 4) -- one value per PCF</span>
+<span class="n">X</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>  <span class="c1"># shape (3, 4, 3) -- each PCF evaluated at 3 times</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="tensors.html"><span class="doc">Working with Tensors</span></a> for full details on scalar, array, and tensor evaluation, including accepted input types and output shapes.</p>
+</section>
+<section id="the-dtype-system">
+<h2>The dtype system<a class="headerlink" href="#the-dtype-system" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">dtype</span></code> parameter controls the element type of a tensor, analogous to NumPy’s <code class="docutils literal notranslate"><span class="pre">dtype</span></code>. stablebear defines the following dtypes in <a class="reference internal" href="api_base.html#module-stablebear.typing" title="stablebear.typing"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stablebear.typing</span></code></a> (also re-exported from the top-level <code class="docutils literal notranslate"><span class="pre">stablebear</span></code> module):</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-text">Dtype overview</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 15.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>dtype</p></th>
+<th class="head"><p>Precision</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pcf32</span></code> / <code class="docutils literal notranslate"><span class="pre">pcf64</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Piecewise constant functions (<code class="docutils literal notranslate"><span class="pre">pcf32</span></code> is the default)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">pcf32i</span></code> / <code class="docutils literal notranslate"><span class="pre">pcf64i</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Integer-valued piecewise constant functions</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">float32</span></code> / <code class="docutils literal notranslate"><span class="pre">float64</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Scalar floating-point values</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">int32</span></code> / <code class="docutils literal notranslate"><span class="pre">int64</span></code> / <code class="docutils literal notranslate"><span class="pre">uint32</span></code> / <code class="docutils literal notranslate"><span class="pre">uint64</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Scalar integer values (signed and unsigned)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">pcloud32</span></code> / <code class="docutils literal notranslate"><span class="pre">pcloud64</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Point clouds</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">barcode32</span></code> / <code class="docutils literal notranslate"><span class="pre">barcode64</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Persistence barcodes</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">symmat32</span></code> / <code class="docutils literal notranslate"><span class="pre">symmat64</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Symmetric matrices — n(n+1)/2 storage</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">distmat32</span></code> / <code class="docutils literal notranslate"><span class="pre">distmat64</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Distance matrices — n(n-1)/2 storage, zero diagonal, nonnegative</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="pcf-types">
+<h3>PCF types<a class="headerlink" href="#pcf-types" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pcf32</span></code> – 32-bit floating-point piecewise constant functions (the default dtype)</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pcf64</span></code> – 64-bit floating-point piecewise constant functions</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pcf32i</span></code> – 32-bit integer piecewise constant functions</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pcf64i</span></code> – 64-bit integer piecewise constant functions</p></li>
+</ul>
+<p>Use <code class="docutils literal notranslate"><span class="pre">pcf32</span></code> for most work. Use <code class="docutils literal notranslate"><span class="pre">pcf64</span></code> when you need higher numerical precision.
+<code class="docutils literal notranslate"><span class="pre">pcf32i</span></code> and <code class="docutils literal notranslate"><span class="pre">pcf64i</span></code> provide integer-valued PCFs. They support construction,
+evaluation, arithmetic, and serialization, but not norms or distances.</p>
+</section>
+<section id="numeric-types">
+<h3>Numeric types<a class="headerlink" href="#numeric-types" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float32</span></code> – 32-bit floating-point scalars</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float64</span></code> – 64-bit floating-point scalars</p></li>
+</ul>
+<p>These are used for tensors that hold scalar values, such as the results of norm or distance computations.</p>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int32</span></code> – 32-bit signed integer scalars</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int64</span></code> – 64-bit signed integer scalars</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">uint32</span></code> – 32-bit unsigned integer scalars</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">uint64</span></code> – 64-bit unsigned integer scalars</p></li>
+</ul>
+<p>These are used for tensors that hold integer values.</p>
+</section>
+<section id="point-cloud-types">
+<h3>Point cloud types<a class="headerlink" href="#point-cloud-types" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pcloud32</span></code> – 32-bit point clouds</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pcloud64</span></code> – 64-bit point clouds</p></li>
+</ul>
+<p>Used when working with point cloud data, e.g., as input to persistent homology computations.</p>
+</section>
+<section id="barcode-types">
+<h3>Barcode types<a class="headerlink" href="#barcode-types" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">barcode32</span></code> – 32-bit persistence barcodes</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">barcode64</span></code> – 64-bit persistence barcodes</p></li>
+</ul>
+<p>Used to store persistence barcodes produced by homology computations.</p>
+</section>
+<section id="symmetric-matrix-types">
+<h3>Symmetric matrix types<a class="headerlink" href="#symmetric-matrix-types" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">symmat32</span></code> – 32-bit symmetric matrices</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">symmat64</span></code> – 64-bit symmetric matrices</p></li>
+</ul>
+<p>Compressed symmetric matrices using lower-triangular storage (n*(n+1)/2 elements for an n×n matrix).</p>
+</section>
+<section id="distance-matrix-types">
+<h3>Distance matrix types<a class="headerlink" href="#distance-matrix-types" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">distmat32</span></code> – 32-bit distance matrices</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">distmat64</span></code> – 64-bit distance matrices</p></li>
+</ul>
+<p>Compressed distance matrices with implicit zero diagonal and nonnegative entries (n*(n-1)/2 elements for an n×n matrix).</p>
+</section>
+<section id="precision-32-bit-vs-64-bit">
+<h3>Precision: 32-bit vs. 64-bit<a class="headerlink" href="#precision-32-bit-vs-64-bit" title="Link to this heading">#</a></h3>
+<p>Each dtype family comes in 32-bit and 64-bit variants. The 32-bit variants use less memory and are faster, especially on GPUs where single-precision throughput is typically much higher. Use 64-bit variants when numerical precision is important for your application.</p>
+</section>
+</section>
+<section id="cpu-and-gpu-execution">
+<h2>CPU and GPU execution<a class="headerlink" href="#cpu-and-gpu-execution" title="Link to this heading">#</a></h2>
+<p>stablebear automatically detects available NVIDIA GPUs and uses them for computations when beneficial. The library decides at runtime whether to execute a given operation on the CPU or GPU based on problem size. See <a class="reference internal" href="gpu.html"><span class="doc">GPU Acceleration</span></a> for details on GPU detection, controlling execution, and performance considerations.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<div class="docutils container" id="id3">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-wehlin2024" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Björn H. Wehlin. Massively parallel computation of similarity matrices from piecewise constant invariants. 2024. <a class="reference external" href="https://arxiv.org/abs/2404.07183">arXiv:2404.07183</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="userguide.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tensors.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Working with Tensors</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#piecewise-constant-functions">Piecewise constant functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-pcfs">Why PCFs?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pcf-class">The Pcf class</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterating-over-rectangles">Iterating over rectangles</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-clouds-and-distance-matrices">Point clouds and distance matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-dataset-versus-a-collection">One dataset versus a collection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tensors">Tensors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-tensors">Creating tensors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-and-slicing">Indexing and slicing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-types">Tensor types</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-dtype-system">The dtype system</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pcf-types">PCF types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#numeric-types">Numeric types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#point-cloud-types">Point cloud types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#barcode-types">Barcode types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#symmetric-matrix-types">Symmetric matrix types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-matrix-types">Distance matrix types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-32-bit-vs-64-bit">Precision: 32-bit vs. 64-bit</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cpu-and-gpu-execution">CPU and GPU execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/concepts.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, Björn H. Wehlin.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.19.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
